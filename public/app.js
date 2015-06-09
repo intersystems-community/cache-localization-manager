@@ -23,18 +23,28 @@ var App = React.createClass({
 });
 
 var Menu = React.createClass({
+    getInitialState: function() {
+        return {selected: 0};
+    },
+    clicked: function(index) {
+        this.setState({selected: index});
+    },
     render: function() {
-        var menuItems = this.props.items.map(function(item) {
+        var menuItems = this.props.items.map(function(item, index) {
+            var menuItemClass = 'pure-menu-item';
+            if (this.state.selected == index) {
+                menuItemClass += ' pure-menu-selected'
+            }
             return (
-                <li className="pure-menu-item">
+                <li className={menuItemClass} onClick={this.clicked.bind(this, index)}>
                     <a href="#" className="pure-menu-link">
                         {item}
                     </a>
                 </li>
             );
-        });
+        }.bind(this));
         return (
-            <div className="pure-menu">
+            <div className="pure-menu custom-menu">
                 <span className="pure-menu-heading">
                     {this.props.heading}
                 </span>

@@ -10,3 +10,16 @@
 .stretch-horizontal {
     width: 100%;
 }
+
+.custom-menu .pure-menu-selected {
+    background: #1f8dd6;
+}
+
+.custom-menu .pure-menu-selected .pure-menu-link {
+    color: #fff;
+}
+
+.custom-menu li.pure-menu-selected a:hover,
+.custom-menu li.pure-menu-selected a:focus {
+    background: none;
+}
