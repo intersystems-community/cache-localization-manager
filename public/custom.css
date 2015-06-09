@@ -1,0 +1,12 @@
+.restricted-width {
+    display: inline-block;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;  
+}
+
+.stretch-horizontal {
+    width: 100%;
+}
