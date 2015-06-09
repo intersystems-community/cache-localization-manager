@@ -1,21 +1,34 @@
 var App = React.createClass({
+    getInitialState: function() {
+        return {domain: this.props.domains[0], language: this.props.languages[0], data: []};
+    },
+    onDomainChanged: function(domain) {
+        this.loadMessageList({domain: domain, language: this.state.language})
+    },
+    onLanguageChanged: function(language) {
+        this.loadMessageList({domain: this.state.domain, language: language})
+    },
+    loadMessageList: function(newState) {
+        $.ajax({
+            url: 'messages.json',
+            dataType: 'json',
+            cache: false,
+            data: newState,
+            success: function(data) {
+                newState.data = data;
+                this.setState(newState);
+            }.bind(this)
+        });
+    },
     render: function() {
-        var data = [
-            {id: 'hello', text: 'Hello please'},
-            {id: 'any', text: 'Anything you want'},
-            {id: 'really', text: 'REally?&&...'}
-        ];
-
-        var domains = ['all', 'sample', 'docs', 'privet']
-        var langs = ['en', 'en-gb', 'fr', 'es', 'ru', 'ua', 'pt-br']
         return (
             <div className="pure-g">
                 <div className="pure-u-1-3 pure-u-md-1-4">
-                    <Menu heading="Domain" items={domains} />
-                    <Menu heading="Language" items={langs} />
+                    <Menu heading="Domain" items={domains} onItemSelected={this.onDomainChanged}/>
+                    <Menu heading="Language" items={langs} onItemSelected={this.onLanguageChanged}/>
                 </div>
                 <div className="pure-u-2-3 pure-u-md-1-2">
-                    <MessageList data={data} />
+                    <MessageList data={this.state.data} />
                 </div>
             </div>
         );
@@ -28,6 +41,7 @@ var Menu = React.createClass({
     },
     clicked: function(index) {
         this.setState({selected: index});
+        this.props.onItemSelected(this.props.items[index])
     },
     render: function() {
         var menuItems = this.props.items.map(function(item, index) {
@@ -92,8 +106,10 @@ var Message = React.createClass({
     }
 });
 
+var domains = ['all', 'sample', 'docs', 'privet'];
+var langs = ['en', 'en-gb', 'fr', 'es', 'ru', 'ua', 'pt-br'];
 
 React.render(
-    <App />,
+    <App domains={domains} languages={langs} />,
     document.getElementById('content')
 );
