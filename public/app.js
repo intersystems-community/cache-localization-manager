@@ -50,7 +50,7 @@ var Menu = React.createClass({
                 menuItemClass += ' pure-menu-selected'
             }
             return (
-                <li className={menuItemClass} onClick={this.clicked.bind(this, index)}>
+                <li className={menuItemClass} onClick={this.clicked.bind(this, index)} key={index}>
                     <a href="#" className="pure-menu-link">
                         {item}
                     </a>
@@ -72,9 +72,9 @@ var Menu = React.createClass({
 
 var MessageList = React.createClass({
     render: function() {
-        var messageNodes = this.props.data.map(function(message) {
+        var messageNodes = this.props.data.map(function(message, index) {
             return (
-                <Message id={message.id}>
+                <Message id={message.id} key={index}>
                     {message.text}
                 </Message>
             );
@@ -109,6 +109,7 @@ var Message = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
         var textareaValue = React.findDOMNode(this.refs.textarea).value;
+        //TODO: call callback to update message on server
         this.setState({editor: false, text: textareaValue});
     },
     render: function() {
