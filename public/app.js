@@ -96,11 +96,42 @@ var MessageList = React.createClass({
 });
 
 var Message = React.createClass({
+    getInitialState: function() {
+        return {editor: false, text: this.props.children};
+    },
+    messageClicked: function() {
+        this.setState({editor: true, text: this.state.text});
+    },
+    cancelEditing: function(e) {
+        e.preventDefault();
+        this.setState({editor: false, text: this.state.text});
+    },
+    handleSubmit: function(e) {
+        e.preventDefault();
+        var textareaValue = React.findDOMNode(this.refs.textarea).value;
+        this.setState({editor: false, text: textareaValue});
+    },
     render: function() {
+        var message = this.state.text;
+        if (this.state.editor) {
+            message = (
+                <td>
+                    <form className="pure-form" onSubmit={this.handleSubmit}>
+                        <fieldset>
+                            <textarea ref="textarea" defaultValue={this.state.text}/>
+                            <button className="pure-button" type="buttton" onClick={this.cancelEditing}>Cancel</button>
+                            <button className="pure-button pure-button-primary" type="submit">Submit</button>
+                        </fieldset>
+                    </form>
+                </td>
+            );
+        } else {
+            message = (<td onClick={this.messageClicked}>{this.state.text}</td>);
+        }
         return (
             <tr className="Message">
                 <td>{this.props.id}</td>
-                <td>{this.props.children}</td>
+                {message}
             </tr>
         );
     }
