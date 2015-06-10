@@ -23,3 +23,19 @@
 .custom-menu li.pure-menu-selected a:focus {
     background: none;
 }
+
+.clickable-message {
+    cursor: pointer;
+}
+
+.clickable-message.error {
+    background: #F2DEDE  
+}
+
+.clickable-message.success {
+    background: #DFF0D8   
+}
+
+.clickable-message.pending {
+    background: #FCF8E3   
+}

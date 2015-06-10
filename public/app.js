@@ -97,24 +97,40 @@ var MessageList = React.createClass({
 
 var Message = React.createClass({
     getInitialState: function() {
-        return {editor: false, text: this.props.children};
+        return {status: 'none', text: this.props.children};
     },
     messageClicked: function() {
-        this.setState({editor: true, text: this.state.text});
+        this.setState({status: 'editor', text: this.state.text});
     },
     cancelEditing: function(e) {
         e.preventDefault();
-        this.setState({editor: false, text: this.state.text});
+        this.setState({status: 'none', text: this.state.text});
     },
     handleSubmit: function(e) {
         e.preventDefault();
         var textareaValue = React.findDOMNode(this.refs.textarea).value;
-        //TODO: call callback to update message on server
-        this.setState({editor: false, text: textareaValue});
+        var newState = {status: 'pending', text: textareaValue}; 
+        this.setState(newState);
+        $.ajax({
+            url: 'message',
+            type: 'PUT',
+            data: {
+                id: this.props.id,
+                text: textareaValue
+            },
+            success: function() {
+                newState.status = 'success';
+                this.setState(newState);
+            }.bind(this),
+            error: function() {
+                newState.status = 'error';
+                this.setState(newState);
+            }.bind(this)
+        });
     },
     render: function() {
         var message = this.state.text;
-        if (this.state.editor) {
+        if (this.state.status === 'editor') {
             message = (
                 <td>
                     <form className="pure-form" onSubmit={this.handleSubmit}>
@@ -127,7 +143,8 @@ var Message = React.createClass({
                 </td>
             );
         } else {
-            message = (<td onClick={this.messageClicked}>{this.state.text}</td>);
+            var className = 'clickable-message ' + this.state.status;
+            message = (<td onClick={this.messageClicked} className={className}>{this.state.text}</td>);
         }
         return (
             <tr className="Message">
