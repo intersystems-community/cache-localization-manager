@@ -1,6 +1,6 @@
 var App = React.createClass({
     getInitialState: function() {
-        return {domain: this.props.domains[0], language: this.props.languages[0], data: []};
+        return {domain: "", language: "", data: []};
     },
     onDomainChanged: function(domain) {
         this.loadMessageList({domain: domain, language: this.state.language})
@@ -9,23 +9,35 @@ var App = React.createClass({
         this.loadMessageList({domain: this.state.domain, language: language})
     },
     loadMessageList: function(newState) {
+        if (!newState.domain || !newState.language) {
+            newState.data = [];
+            this.setState(newState);
+            return;
+        }
         $.ajax({
-            url: 'messages.json',
+            url: '/clm/messages',
             dataType: 'json',
             cache: false,
             data: newState,
             success: function(data) {
                 newState.data = data;
                 this.setState(newState);
-            }.bind(this)
+            }.bind(this),
+            error: function(xhr, status, error) {
+                console.log("Loading failure");
+            }
         });
     },
     render: function() {
+        var languages = [];
+        if (this.state.domain) {
+            languages = this.props.domains[this.state.domain];
+        }
         return (
             <div className="pure-g">
                 <div className="pure-u-1-3 pure-u-md-1-4">
-                    <Menu heading="Domain" items={domains} onItemSelected={this.onDomainChanged}/>
-                    <Menu heading="Language" items={langs} onItemSelected={this.onLanguageChanged}/>
+                    <Menu heading="Domain" items={Object.keys(this.props.domains)} onItemSelected={this.onDomainChanged}/>
+                    <Menu heading="Language" items={languages} onItemSelected={this.onLanguageChanged}/>
                 </div>
                 <div className="pure-u-2-3 pure-u-md-1-2">
                     <MessageList data={this.state.data} />
@@ -37,7 +49,7 @@ var App = React.createClass({
 
 var Menu = React.createClass({
     getInitialState: function() {
-        return {selected: 0};
+        return {selected: -1};
     },
     clicked: function(index) {
         this.setState({selected: index});
@@ -112,11 +124,13 @@ var Message = React.createClass({
         var newState = {status: 'pending', text: textareaValue}; 
         this.setState(newState);
         $.ajax({
-            url: 'message',
+            url: '/clm/messages',
             type: 'PUT',
             data: {
                 id: this.props.id,
-                text: textareaValue
+                text: textareaValue,
+                domain: "",
+                language: ""
             },
             success: function() {
                 newState.status = 'success';
@@ -155,10 +169,7 @@ var Message = React.createClass({
     }
 });
 
-var domains = ['all', 'sample', 'docs', 'privet'];
-var langs = ['en', 'en-gb', 'fr', 'es', 'ru', 'ua', 'pt-br'];
-
 React.render(
-    <App domains={domains} languages={langs} />,
+    <App domains={domains}/>,
     document.getElementById('content')
 );
