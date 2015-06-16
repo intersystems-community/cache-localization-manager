@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2014.1.1 (Build 702U)" ts="2015-06-16 16:45:03">
+<Class name="CLM.Utils">
+<TimeChanged>63719,56677.018022</TimeChanged>
+<TimeCreated>63714,61614.83778</TimeCreated>
+
+<Method name="GetGlobalStructure">
+<ClassMethod>1</ClassMethod>
+<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String="^CacheMsg"]]></FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set result = ##class(%ZEN.proxyObject).%New()
+	
+	
+	set domain = ""
+	while(1) {
+		set domain = $order(@global@(domain))
+		if (domain = "") {
+			quit
+		}
+		
+		set language = ""
+		set languageList = ##class(%ListOfDataTypes).%New()
+		while (1)
+		{
+			set language = $order(@global@(domain, language))
+			if (language = "") {
+				quit
+			}
+			do languageList.Insert(language)
+		}
+		
+		set $property(result, domain) = languageList 
+	}
+	
+	return $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="GetMessageList">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>domain:%String,language:%String,global:%String="^CacheMsg"</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	set result = ##class(%ListOfObjects).%New()
+	
+	set id = ""
+	while (1) {
+		set id = $order(@global@(domain, language, id))
+		if (id = "") {
+			quit
+		}
+		set message = ##class(%ZEN.proxyObject).%New()
+		set message.id = id
+		set message.text = (@global@(domain, language, id))
+		do result.Insert(message)
+	}
+	return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result)
+]]></Implementation>
+</Method>
+
+<Method name="PutMessage">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>domain:%String,language:%String,id:%String,text:%String,global:%String="^CacheMsg"</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	w domain _ ", " _ language _ ", " _ id
+	return $$$OK
+]]></Implementation>
+</Method>
+</Class>
+</Export>
