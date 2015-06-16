@@ -3,7 +3,7 @@ var App = React.createClass({
         return {domain: "", language: "", data: []};
     },
     onDomainChanged: function(domain) {
-        this.loadMessageList({domain: domain, language: this.state.language})
+        this.loadMessageList({domain: domain, language: ""})
     },
     onLanguageChanged: function(language) {
         this.loadMessageList({domain: this.state.domain, language: language})
@@ -37,10 +37,10 @@ var App = React.createClass({
             <div className="pure-g">
                 <div className="pure-u-1-3 pure-u-md-1-4">
                     <Menu heading="Domain" items={Object.keys(this.props.domains)} onItemSelected={this.onDomainChanged}/>
-                    <Menu heading="Language" items={languages} onItemSelected={this.onLanguageChanged}/>
+                    <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
                 </div>
                 <div className="pure-u-2-3 pure-u-md-1-2">
-                    <MessageList data={this.state.data} />
+                    <MessageList data={this.state.data} key={this.state.domain + this.state.language} />
                 </div>
             </div>
         );
