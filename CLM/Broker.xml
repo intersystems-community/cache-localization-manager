@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2014.1.1 (Build 702U)" ts="2015-06-16 16:44:35">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2014.1.1 (Build 702U)" ts="2015-06-16 17:23:58">
 <Class name="CLM.Broker">
 <Super>isc.AbstractREST</Super>
-<TimeChanged>63719,60137.394475</TimeChanged>
+<TimeChanged>63719,62110.675027</TimeChanged>
 <TimeCreated>63714,58855.014604</TimeCreated>
 
 <XData name="UrlMap">
@@ -31,7 +31,7 @@
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set domain = %request.Data("domain", 1)
-	set language = %request.Data("langauge", 1)
+	set language = %request.Data("language", 1)
 	set id = %request.Data("id", 1)
 	set text = %request.Data("text", 1)
 	quit ##class(CLM.Utils).PutMessage(domain, language, id, text)

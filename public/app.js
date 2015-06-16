@@ -24,7 +24,7 @@ var App = React.createClass({
                 this.setState(newState);
             }.bind(this),
             error: function(xhr, status, error) {
-                console.log("Loading failure");
+                console.error("Loading failure");
             }
         });
     },
@@ -40,7 +40,7 @@ var App = React.createClass({
                     <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
                 </div>
                 <div className="pure-u-2-3 pure-u-md-1-2">
-                    <MessageList data={this.state.data} key={this.state.domain + this.state.language} />
+                    <MessageList data={this.state.data} domain={this.state.domain} language={this.state.language} key={this.state.domain + this.state.language} />
                 </div>
             </div>
         );
@@ -86,11 +86,11 @@ var MessageList = React.createClass({
     render: function() {
         var messageNodes = this.props.data.map(function(message, index) {
             return (
-                <Message id={message.id} key={index}>
+                <Message id={message.id} key={index} domain={this.props.domain} language={this.props.language}>
                     {message.text}
                 </Message>
             );
-        });
+        }.bind(this));
         return (
             <table className="messageList pure-table pure-table-horizontal stretch-horizontal">
                 <thead>
@@ -126,17 +126,18 @@ var Message = React.createClass({
         $.ajax({
             url: '/clm/messages',
             type: 'PUT',
+            dataType: 'text',
             data: {
                 id: this.props.id,
                 text: textareaValue,
-                domain: "",
-                language: ""
+                domain: this.props.domain,
+                language: this.props.language
             },
             success: function() {
                 newState.status = 'success';
                 this.setState(newState);
             }.bind(this),
-            error: function() {
+            error: function(xhr, status, error) {
                 newState.status = 'error';
                 this.setState(newState);
             }.bind(this)
