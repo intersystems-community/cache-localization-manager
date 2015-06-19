@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2014.1.1 (Build 702U)" ts="2015-06-16 16:45:03">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2014.1.1 (Build 702U)" ts="2015-06-19 19:35:00">
 <Class name="CLM.Utils">
-<TimeChanged>63719,56677.018022</TimeChanged>
+<TimeChanged>63722,70453.603749</TimeChanged>
 <TimeCreated>63714,61614.83778</TimeCreated>
 
 <Method name="GetGlobalStructure">
@@ -14,7 +14,7 @@
 	
 	set domain = ""
 	while(1) {
-		set domain = $order(@global@(domain))
+		set domain = $ORDER(@global@(domain))
 		if (domain = "") {
 			quit
 		}
@@ -23,14 +23,14 @@
 		set languageList = ##class(%ListOfDataTypes).%New()
 		while (1)
 		{
-			set language = $order(@global@(domain, language))
+			set language = $ORDER(@global@(domain, language))
 			if (language = "") {
 				quit
 			}
 			do languageList.Insert(language)
 		}
 		
-		set $property(result, domain) = languageList 
+		set $PROPERTY(result, domain) = languageList 
 	}
 	
 	return $$$OK
@@ -46,7 +46,7 @@
 	
 	set id = ""
 	while (1) {
-		set id = $order(@global@(domain, language, id))
+		set id = $ORDER(@global@(domain, language, id))
 		if (id = "") {
 			quit
 		}
@@ -64,7 +64,7 @@
 <FormalSpec>domain:%String,language:%String,id:%String,text:%String,global:%String="^CacheMsg"</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	w domain _ ", " _ language _ ", " _ id
+	set @global@(domain, language, id) = text
 	return $$$OK
 ]]></Implementation>
 </Method>
