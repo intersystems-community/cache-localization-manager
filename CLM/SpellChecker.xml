@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2014.1.1 (Build 702U)" ts="2015-06-19 19:38:06">
+<Class name="CLM.SpellChecker">
+<StorageStrategy/>
+<Super>%RegisteredObject</Super>
+<TimeChanged>63722,70625.712047</TimeChanged>
+<TimeCreated>63414,42098.211762</TimeCreated>
+
+<Property name="CNA">
+<Type>CNA.CNA</Type>
+<Private>1</Private>
+</Property>
+
+<Property name="LibC">
+<Type>CNA.CNA</Type>
+<Private>1</Private>
+</Property>
+
+<Property name="Hunspell">
+<Type>%String</Type>
+<Private>1</Private>
+</Property>
+
+<Property name="Alphabet">
+<Type>%String</Type>
+<Private>1</Private>
+</Property>
+
+<Property name="Language">
+<Type>%String</Type>
+<Private>1</Private>
+</Property>
+
+<Method name="%OnNew">
+<Description><![CDATA[
+Creates the environment for spellchecker.<p>
+<var>CNAPath</var> - path to libcna.dll or libcna.so.<p>
+<var>hunspellPath</var> - path to hunspell shared library.<p>
+<var>language</var> - the language that you are going to check.<p>
+<var>affPath</var>, <var>dicPath</var> - optional arguments. Paths to your hunspell dictionary if you don't want to use default one.<p> ]]></Description>
+<FormalSpec>CNAPath:%String,hunspellPath:%String,libcPath:%String,language:%String,affPath:%String,dicPath:%String</FormalSpec>
+<Private>1</Private>
+<ReturnType>%Status</ReturnType>
+<ServerOnly>1</ServerOnly>
+<Implementation><![CDATA[
+	try {
+		set dics("de")    = "de_DE"
+		set dics("en")    = "en_GB"
+		set dics("en-us") = "en_US"
+		set dics("es")    = "es_ANY"
+		set dics("fr")    = "fr_FR"
+		set dics("it")    = "it_IT"
+		set dics("nl")    = "nl_NL"
+		set dics("pt-br") = "pt_BR"
+		set dics("ru")    = "ru_RU"
+		set dics("uk")    = "uk_UA"
+		
+		if (('$data(CNAPath)) || ('##class(%File).Exists(CNAPath))) {
+			return $$$ERROR("CNA file doesn't exists")	
+		}
+		if (('$data(hunspellPath)) || ('##class(%File).Exists(hunspellPath))) {
+			return $$$ERROR("hunspell file doesn't exists")	
+		}
+		if (('$data(libcPath)) || ('##class(%File).Exists(libcPath))) {
+			return $$$ERROR("libc file doesn't exists")	
+		}
+		if (('$data(affPath))  || ('$data(dicPath))) {
+			set path = "dics/" _ dics(language)
+			set affPath = path _ ".aff"
+			set dicPath = path _ ".dic"
+		}
+		if ('##class(%File).Exists(affPath)) {
+			return $$$ERROR(".aff file doesn't exists")	
+		}
+		if ('##class(%File).Exists(dicPath)) {
+			return $$$ERROR(".dic file doesn't exists")	
+		}
+		
+		set ..Alphabet = ..GetAlphabet(language)
+		set ..Language = language
+		
+		set ..CNA = ##class(CNA.CNA).%New(CNAPath)
+		set ..LibC = ##class(CNA.CNA).%New(CNAPath)
+		do ..CNA.LoadLibrary(hunspellPath)
+		do ..LibC.LoadLibrary(libcPath)
+		
+		set aff = ..CNA.ConvertStringToPointer(affPath)
+		set dic = ..CNA.ConvertStringToPointer(dicPath)
+		
+		set argTypes = $lb(..CNA.#POINTER, ..CNA.#POINTER)
+		set ..Hunspell =  ..CNA.CallFunction("Hunspell_create", ..CNA.#POINTER, argTypes, aff, dic)
+	} catch ex {
+		do ex.Log()
+		return ex.AsStatus()
+	}
+	
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="Spell">
+<Description><![CDATA[
+Spells the <var>word</var>. If return value is true if the word is correct, if false - incorrect.]]></Description>
+<FormalSpec>word:%String</FormalSpec>
+<ReturnType>%Boolean</ReturnType>
+<Implementation><![CDATA[
+	set pWord = ..CNA.ConvertStringToPointer(word)
+	set argTypes = $lb(..CNA.#POINTER, ..CNA.#POINTER)
+	set res = ..CNA.CallFunction("Hunspell_spell", ..CNA.#INT, argTypes, ..Hunspell, pWord)
+	return res
+]]></Implementation>
+</Method>
+
+<Method name="Suggest">
+<Description><![CDATA[
+Suggests possible variants of corrrect <var>word</var> writings ]]></Description>
+<FormalSpec>word:%String</FormalSpec>
+<ReturnType>%List</ReturnType>
+<Implementation><![CDATA[
+	set pWord = ..CNA.ConvertStringToPointer(word)
+	
+	set argTypes = $lb(..CNA.#SIZET)
+	set pArray = ..LibC.CallFunction("malloc", ..LibC.#POINTER, argTypes, 8)
+	
+	
+	set argTypes = $lb(..CNA.#POINTER, ..CNA.#POINTER, ..CNA.#POINTER)
+	set numberOfSuggestions = ..CNA.CallFunction("Hunspell_suggest", ..CNA.#INT, argTypes, ..Hunspell, pArray, pWord)
+
+	set suggestions = ""
+
+	set array = ..CNA.PointerGetAt(pArray, ..CNA.#POINTER, 0)
+	
+	for i=1:1:numberOfSuggestions {
+		set elem = ..CNA.PointerGetAt(array, ..CNA.#POINTER, i - 1)
+		set $li(suggestions, *+1) = ..CNA.ConvertPointerToString(elem)
+	}
+	
+	set argTypes = $lb(..CNA.#POINTER)
+	do ..LibC.CallFunction("free", ..LibC.#VOID, argTypes, pArray)
+	return suggestions
+]]></Implementation>
+</Method>
+
+<Method name="%OnClose">
+<Private>1</Private>
+<ReturnType>%Status</ReturnType>
+<ServerOnly>1</ServerOnly>
+<Implementation><![CDATA[
+	try {
+		set argTypes = $lb(..CNA.#POINTER)
+		do ..CNA.CallFunction("Hunspell_destroy", ..CNA.#VOID, argTypes, ..Hunspell)
+		do ..CNA.FreeLibrary()
+		do ..LibC.FreeLibrary()
+	} catch ex {
+		do ex.Log()
+		return ex.AsStatus()
+	}
+	Quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="GetAlphabet">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>lang:%String</FormalSpec>
+<Private>1</Private>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	if ((lang = "ru") || (lang = "uk")) {
+		set base = "йцукенгшщзхфвапролджячсмитьбю"
+		if (lang = "ru") {
+			set specific = "ёъыэ"
+			set symbols = "-" 
+		}else {
+			set specific = "ґєії"
+		}
+	} else {
+		set base = "qwertyuiopasdfghjklzxcvbnm"
+		if (lang = "de") {
+			set specific = "äößü"
+		} elseif (lang = "es") {
+			set specific = "ñ"
+		} elseif (lang = "fr") {
+			set specific = "àâæäçéèêëîïôœöùûüÿ"
+		} elseif (lang = "pt-br") {
+			set specific = "áâãàçéêíóôõú"
+		}
+	}
+	set symbols = $GET(symbols, "'-")
+	set alpha = base _ $GET(specific)
+	return symbols _ alpha _ $ZCVT(alpha, "U")
+]]></Implementation>
+</Method>
+
+<Method name="CheckString">
+<Description><![CDATA[
+Checks strings and writes info about all mistakes in <var>mistakes</var> list.
+String is splitted to words by following rules: all punctuation marks will be replaced by spaces, all symbols except your language alphabet, hyphen and apostrophe will be stripped, then string is splitted by the spaces.
+Return value is the number of mistakes in the string.
+]]></Description>
+<FormalSpec>str:%String,*mistakes:%ListOfDataTypes</FormalSpec>
+<ReturnType>%Integer</ReturnType>
+<Implementation><![CDATA[
+	set translated = $TRANSLATE(str, ".,\/=*:", "      ")
+	set stripped =  $ZSTRIP(translated, "*E", "", ..Alphabet)
+	set list = $LFS(stripped, " ")
+	set mistakes = ##class(%ListOfDataTypes).%New()
+						
+	set ptr = 0
+	set count = 0
+	while $LISTNEXT(list, ptr, value) {
+		set word = $ZSTRIP(value, "<>W", "-'")
+		if (word '= "") {
+			if (..Spell(word) = 0) {
+				set count = count + 1
+				do mistakes.Insert()
+			}
+		}			
+	}
+	return count
+]]></Implementation>
+</Method>
+</Class>
+</Export>
