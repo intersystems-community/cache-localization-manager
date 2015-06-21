@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2014.1.1 (Build 702U)" ts="2015-06-19 19:35:00">
+<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-21 11:07:42">
 <Class name="CLM.Utils">
-<TimeChanged>63722,70453.603749</TimeChanged>
+<TimeChanged>63724,39614.139462</TimeChanged>
 <TimeCreated>63714,61614.83778</TimeCreated>
 
 <Method name="GetGlobalStructure">
 <ClassMethod>1</ClassMethod>
-<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String="^CacheMsg"]]></FormalSpec>
+<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String="^%qCacheMsg"]]></FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ZEN.proxyObject).%New()
@@ -66,6 +66,33 @@
 <Implementation><![CDATA[
 	set @global@(domain, language, id) = text
 	return $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="CheckMessages">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>domain:%String,language:%String,global:%String="^CacheMsg"</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	set result = ##class(%ListOfObjects).%New()
+	set speller = ##class(CLM.SpellChecker).%New("libcna.so", "libhunspell.so", "/lib/x86_64-linux-gnu/libc.so.6", language)
+	
+	set id = ""
+	while (1) {
+		set id = $ORDER(@global@(domain, language, id))
+		if (id = "") {
+			quit
+		}
+		set text = @global@(domain, language, id)
+		if (speller.CheckString(text, .mistakes) > 0) {
+			set message = ##class(%ZEN.proxyObject).%New()
+			set message.id = id
+			set message.text = text
+			set message.mistakes = mistakes
+			do result.Insert(message)
+		}
+	}	
+	return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result)
 ]]></Implementation>
 </Method>
 </Class>

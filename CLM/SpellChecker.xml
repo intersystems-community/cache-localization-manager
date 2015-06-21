@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-32) 2014.1.1 (Build 702U)" ts="2015-06-19 19:38:06">
+<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-21 11:08:14">
 <Class name="CLM.SpellChecker">
 <StorageStrategy/>
 <Super>%RegisteredObject</Super>
-<TimeChanged>63722,70625.712047</TimeChanged>
+<TimeChanged>63724,38436.626545</TimeChanged>
 <TimeCreated>63414,42098.211762</TimeCreated>
 
 <Property name="CNA">
@@ -185,7 +185,7 @@ Suggests possible variants of corrrect <var>word</var> writings ]]></Description
 			set specific = "áâãàçéêíóôõú"
 		}
 	}
-	set symbols = $GET(symbols, "'-")
+	set symbols = $GET(symbols, "'-") _ " "
 	set alpha = base _ $GET(specific)
 	return symbols _ alpha _ $ZCVT(alpha, "U")
 ]]></Implementation>
@@ -212,7 +212,7 @@ Return value is the number of mistakes in the string.
 		if (word '= "") {
 			if (..Spell(word) = 0) {
 				set count = count + 1
-				do mistakes.Insert()
+				do mistakes.Insert(word)
 			}
 		}			
 	}
