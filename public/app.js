@@ -1,12 +1,12 @@
 var App = React.createClass({
     getInitialState: function() {
-        return {domain: "", language: "", data: []};
+        return {domain: "", language: "", data: [], spellcheck: false};
     },
     onDomainChanged: function(domain) {
-        this.loadMessageList({domain: domain, language: ""})
+        this.loadMessageList({domain: domain, language: "", spellcheck: false})
     },
     onLanguageChanged: function(language) {
-        this.loadMessageList({domain: this.state.domain, language: language})
+        this.loadMessageList({domain: this.state.domain, language: language, spellcheck: false})
     },
     loadMessageList: function(newState) {
         if (!newState.domain || !newState.language) {
