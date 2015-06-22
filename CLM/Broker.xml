@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-21 11:09:01">
+<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-22 12:36:13">
 <Class name="CLM.Broker">
 <Super>isc.AbstractREST</Super>
-<TimeChanged>63724,39465.305808</TimeChanged>
+<TimeChanged>63725,45267.910765</TimeChanged>
 <TimeCreated>63714,58855.014604</TimeCreated>
 
 <XData name="UrlMap">
@@ -32,7 +32,8 @@
 	
 	set domain = %request.Data("domain", 1)
 	set language = %request.Data("language", 1)
-	if ($DATA(%request.Data("spellcheck", 1))) {
+	set spellcheck = %request.Data("spellcheck", 1)
+	if (spellcheck = "true") {
 		quit ##class(CLM.Utils).CheckMessages(domain, language, "^%qCacheMsg")
 	} else {
 		quit ##class(CLM.Utils).GetMessageList(domain, language, "^%qCacheMsg")
