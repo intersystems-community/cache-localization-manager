@@ -28,6 +28,9 @@ var App = React.createClass({
             }
         });
     },
+    spellcheck: function() {
+        this.loadMessageList({domain: this.state.domain, language: this.state.language, spellcheck: true})
+    },
     render: function() {
         var languages = [];
         if (this.state.domain) {
@@ -36,11 +39,19 @@ var App = React.createClass({
         return (
             <div className="pure-g">
                 <div className="pure-u-1-3 pure-u-md-1-4">
+                    <button className="pure-button" onClick={this.spellcheck}>
+                        Spellcheck
+                    </button>
                     <Menu heading="Domain" items={Object.keys(this.props.domains)} onItemSelected={this.onDomainChanged}/>
                     <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
                 </div>
-                <div className="pure-u-2-3 pure-u-md-1-2">
-                    <MessageList data={this.state.data} domain={this.state.domain} language={this.state.language} key={this.state.domain + this.state.language} />
+                <div className="pure-u-2-3 pure-u-md-3-4">
+                    <MessageList
+                        data={this.state.data}
+                        domain={this.state.domain}
+                        language={this.state.language}
+                        spellcheck={this.state.spellcheck}
+                        key={this.state.domain + this.state.language + this.state.spellcheck} />
                 </div>
             </div>
         );
@@ -86,17 +97,26 @@ var MessageList = React.createClass({
     render: function() {
         var messageNodes = this.props.data.map(function(message, index) {
             return (
-                <Message id={message.id} key={index} domain={this.props.domain} language={this.props.language}>
+                <Message
+                    id={message.id}
+                    mistakes={message.mistakes}
+                    key={index}
+                    domain={this.props.domain}
+                    language={this.props.language}>
                     {message.text}
                 </Message>
             );
         }.bind(this));
+        if (this.props.spellcheck) {
+            var mistakes = (<th>Mistakes</th>);
+        }
         return (
             <table className="messageList pure-table pure-table-horizontal stretch-horizontal">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Text</th>
+                        {mistakes}
                     </tr>
                 </thead>
                 <tbody> 
@@ -161,10 +181,14 @@ var Message = React.createClass({
             var className = 'clickable-message ' + this.state.status;
             message = (<td onClick={this.messageClicked} className={className}>{this.state.text}</td>);
         }
+        if (this.props.mistakes) {
+            var mistakes = (<td>{this.props.mistakes}</td>)
+        }
         return (
             <tr className="Message">
                 <td>{this.props.id}</td>
                 {message}
+                {mistakes}
             </tr>
         );
     }
