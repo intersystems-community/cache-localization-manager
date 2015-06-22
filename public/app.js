@@ -182,7 +182,10 @@ var Message = React.createClass({
             message = (<td onClick={this.messageClicked} className={className}>{this.state.text}</td>);
         }
         if (this.props.mistakes) {
-            var mistakes = (<td>{this.props.mistakes}</td>)
+            var mistakes =
+                (<td>
+                    {this.props.mistakes.map(function(mistake) { return (<span className="mistake">{mistake}</span> );})}
+                </td>)
         }
         return (
             <tr className="Message">

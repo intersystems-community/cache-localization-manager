@@ -29,13 +29,18 @@
 }
 
 .clickable-message.error {
-    background: #F2DEDE  
+    background: #F2DEDE;
 }
 
 .clickable-message.success {
-    background: #DFF0D8   
+    background: #DFF0D8;  
 }
 
 .clickable-message.pending {
-    background: #FCF8E3   
+    background: #FCF8E3;  
+}
+
+.mistake {
+    background-color: #F2DEDE;
+    margin: 5px;
 }
