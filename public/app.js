@@ -37,22 +37,20 @@ var App = React.createClass({
             languages = this.props.domains[this.state.domain];
         }
         return (
-            <div className="pure-g">
-                <div className="pure-u-1-3 pure-u-md-1-4">
-                    <button className="pure-button" onClick={this.spellcheck}>
-                        Spellcheck
-                    </button>
+            <div>
                     <Menu heading="Domain" items={Object.keys(this.props.domains)} onItemSelected={this.onDomainChanged}/>
                     <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
-                </div>
-                <div className="pure-u-2-3 pure-u-md-3-4">
+                    <button className="pure-button spellcheck" onClick={this.spellcheck}>
+                        Spellcheck
+                    </button>
+                    <div className="message-list">
                     <MessageList
                         data={this.state.data}
                         domain={this.state.domain}
                         language={this.state.language}
                         spellcheck={this.state.spellcheck}
                         key={this.state.domain + this.state.language + this.state.spellcheck} />
-                </div>
+                    </div>
             </div>
         );
     }
@@ -111,7 +109,7 @@ var MessageList = React.createClass({
             var mistakes = (<th>Mistakes</th>);
         }
         return (
-            <table className="messageList pure-table pure-table-horizontal stretch-horizontal">
+            <table className="pure-table pure-table-horizontal">
                 <thead>
                     <tr>
                         <th>ID</th>

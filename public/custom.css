@@ -1,14 +1,12 @@
-.restricted-width {
-    display: inline-block;
-}
-
 .center {
     margin-left: auto;
     margin-right: auto;  
 }
 
-.stretch-horizontal {
-    width: 100%;
+.custom-menu {
+    width: 200px;
+    display: block;
+    float: left;
 }
 
 .custom-menu .pure-menu-selected {
@@ -22,6 +20,11 @@
 .custom-menu li.pure-menu-selected a:hover,
 .custom-menu li.pure-menu-selected a:focus {
     background: none;
+}
+
+
+.message-list {
+    margin-left: 400px;
 }
 
 .clickable-message {
