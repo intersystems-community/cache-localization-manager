@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-21 11:07:42">
+<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-23 15:11:46">
 <Class name="CLM.Utils">
-<TimeChanged>63724,39614.139462</TimeChanged>
+<IncludeCode>CLM.Utils</IncludeCode>
+<TimeChanged>63726,54565.339114</TimeChanged>
 <TimeCreated>63714,61614.83778</TimeCreated>
 
 <Method name="GetGlobalStructure">
 <ClassMethod>1</ClassMethod>
-<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String="^%qCacheMsg"]]></FormalSpec>
+<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String="^CacheMsg"]]></FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ZEN.proxyObject).%New()
@@ -93,6 +94,53 @@
 		}
 	}	
 	return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result)
+]]></Implementation>
+</Method>
+
+<Method name="AddNewLocalization">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>origin:%String,language:%String,domain:%String,global:%String="^CacheMsg"</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set request = ##class(%Net.HttpRequest).%New()
+	set request.SSLConfiguration = "SSL_CONFIG"
+	set request.Https = 1
+	set request.Server = "translate.yandex.net"
+	set request.Location = "api/v1.5/tr.json/translate"
+	
+	set keyFile = ##class(%File).%New("yandex-translate-api-key.txt")
+	set status = keyFile.Open("R")
+	if ($$$ISERR(status)) {
+		return status
+	}
+	set key = keyFile.Read()
+	
+	do request.InsertParam("key", key)
+	do request.InsertParam("lang", origin _ "-" _ language)
+	
+	set path = $NAME(@global@(domain, origin))
+	$$$FOREACH(key,value,path)
+		do request.InsertParam("text", @value)	
+	$$$ENDFOR
+	
+	set status = request.Get()
+	if ($$$ISERR(status)) {
+		return status
+	}
+	//do request.HttpResponse.OutputToDevice()
+	
+	set response =  $ZCVT(request.HttpResponse.Data.Read(), "I", "UTF8")
+	set object = ##class(%ZEN.proxyObject).%New()
+	do ##class(%ZEN.Auxiliary.jsonProvider).%ConvertJSONToObject(response, , .object)
+	
+	set list = object.text
+	
+	set index = 1
+	$$$FOREACH(key,value,path)
+		set @global@(domain, language, key) = list.GetAt(index)
+		set index = index + 1
+	$$$ENDFOR
+	return status
 ]]></Implementation>
 </Method>
 </Class>

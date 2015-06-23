@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-23 15:12:24">
+<Routine name="CLM.Utils" type="INC" timestamp="63726,49372.880166"><![CDATA[
+    #define FOREACH(%key,%value,%global) ##Continue
+    set %key="" ##Continue
+    for { ##Continue
+        set %key = $ORDER(@%global@(%key)) ##Continue
+        quit:(%key = "") ##Continue
+        set %value = $NAME(@%global@(%key))
+    
+    #define ENDFOR }
+]]></Routine>
+</Export>
