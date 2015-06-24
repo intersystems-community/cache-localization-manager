@@ -31,6 +31,9 @@ var App = React.createClass({
     spellcheck: function() {
         this.loadMessageList({domain: this.state.domain, language: this.state.language, spellcheck: true})
     },
+    addNewLocalization: function() {
+        alert("NOT IMPLEMENTED");
+    },
     render: function() {
         var languages = [];
         if (this.state.domain) {
@@ -40,9 +43,8 @@ var App = React.createClass({
             <div>
                     <Menu heading="Domain" items={Object.keys(this.props.domains)} onItemSelected={this.onDomainChanged}/>
                     <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
-                    <button className="pure-button spellcheck" onClick={this.spellcheck}>
-                        Spellcheck
-                    </button>
+                    <button className="pure-button menu-button" onClick={this.spellcheck}>Spellcheck</button>
+                    <button className="pure-button menu-button" onClick={this.addNewLocalization}>Add new localization</button>
                     <div className="message-list">
                     <MessageList
                         data={this.state.data}
