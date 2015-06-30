@@ -32,12 +32,27 @@ var App = React.createClass({
         this.loadMessageList({domain: this.state.domain, language: this.state.language, spellcheck: true})
     },
     addNewLocalization: function() {
-        alert("NOT IMPLEMENTED");
+        this.setState({domain: this.state.domain, language: this.state.language, spellcheck: false, addLocalization: true});
     },
     render: function() {
         var languages = [];
         if (this.state.domain) {
             languages = this.props.domains[this.state.domain];
+        }
+
+        if (this.state.addLocalization) {
+            var mainComponent = (
+                <AddLocalizationDialog></AddLocalizationDialog>
+            );
+        } else {
+            var mainComponent = (
+                <MessageList
+                    data={this.state.data}
+                    domain={this.state.domain}
+                    language={this.state.language}
+                    spellcheck={this.state.spellcheck}
+                    key={this.state.domain + this.state.language + this.state.spellcheck} />
+            );
         }
         return (
             <div>
@@ -46,14 +61,78 @@ var App = React.createClass({
                     <button className="pure-button menu-button" onClick={this.spellcheck}>Spellcheck</button>
                     <button className="pure-button menu-button" onClick={this.addNewLocalization}>Add new localization</button>
                     <div className="message-list">
-                    <MessageList
-                        data={this.state.data}
-                        domain={this.state.domain}
-                        language={this.state.language}
-                        spellcheck={this.state.spellcheck}
-                        key={this.state.domain + this.state.language + this.state.spellcheck} />
+                        {mainComponent}
                     </div>
             </div>
+        );
+    }  
+});
+
+var AddLocalizationDialog = React.createClass({
+    render: function() {
+        var languages = {
+            sq: "Albanian",
+            ar: "Arabian",
+            hy: "Armenian",
+            az: "Azeri",
+            be: "Belarusian",
+            bs: "Bosnian",
+            bg: "Bulgarian",
+            ca: "Catalan",
+            hr: "Croatian",
+            cs: "Czech",
+            zh: "Chinese",
+            da: "Danish",
+            nl: "Dutch",
+            en: "English",
+            et: "Estonian",
+            fi: "Finnish",
+            fr: "French",
+            ka: "Georgian",
+            de: "German",
+            el: "Greek",
+            he: "Hebrew",
+            hu: "Hungarian",
+            is: "Icelandic",
+            id: "Indonesian",
+            it: "Italian",
+            ja: "Japanese",
+            ko: "Korean",
+            lv: "Latvian",
+            lt: "Lithuanian",
+            mk: "Macedonian",
+            ms: "Malay",
+            mt: "Maltese",
+            no: "Norwegian",
+            pl: "Polish",
+            pt: "Portuguese",
+            ro: "Romanian",
+            ru: "Russian",
+            es: "Spanish",
+            sr: "Serbian",
+            sk: "Slovak",
+            sl: "Slovenian",
+            sv: "Swedish",
+            th: "Thai",
+            tr: "Turkish",
+            uk: "Ukrainian",
+            vi: "Vietnamese"
+        }
+        var languageOptions = Object.keys(languages).map(function(code) {
+            return (<option value={code}>{languages[code]}</option>);
+        })
+        return (
+            <form className="add-localization-form pure-form pure-form-stacked">
+                <fieldset>
+                    <legend>Add new localization</legend>
+                    <select id="translate-to">
+                        {languageOptions}
+                    </select>
+                    <button type="submit" className="pure-button pure-button-primary">
+                        Translate
+                    </button>
+                </fieldset>
+            </form>
         );
     }
 });
