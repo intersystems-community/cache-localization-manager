@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-23 15:11:21">
+<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-30 10:35:13">
 <Class name="CLM.Broker">
 <Super>isc.AbstractREST</Super>
-<TimeChanged>63726,53200.567139</TimeChanged>
+<TimeChanged>63733,34718.824486</TimeChanged>
 <TimeCreated>63714,58855.014604</TimeCreated>
 
 <XData name="UrlMap">
@@ -11,6 +11,7 @@
 	<Route Url="/messages" Method="GET" Call="GetMessages"/>
 	<Route Url="/messages" Method="PUT" Call="PutMessage"/>
 	<Route Url="/test" Method="GET" Call="Test"/>
+	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
 </Routes>
 ]]></Data>
 </XData>
@@ -50,6 +51,18 @@
 	set id = %request.Data("id", 1)
 	set text = %request.Data("text", 1)
 	quit ##class(CLM.Utils).PutMessage(domain, language, id, text, "^CacheMsg")
+]]></Implementation>
+</Method>
+
+<Method name="AddNewLocalization">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set domain = %request.Data("domain", 1)
+	set from = %request.Data("from", 1)
+	set to = %request.Data("to", 1)
+	
+	quit ##class(CLM.Utils).AddNewLocalization($EXTRACT(from, 1, 2), to, domain)
 ]]></Implementation>
 </Method>
 </Class>
