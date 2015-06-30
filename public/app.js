@@ -1,12 +1,12 @@
 var App = React.createClass({
     getInitialState: function() {
-        return {domain: "", language: "", data: [], spellcheck: false};
+        return {domain: '', language: '', data: [], statu: 'list'};
     },
     onDomainChanged: function(domain) {
-        this.loadMessageList({domain: domain, language: "", spellcheck: false})
+        this.loadMessageList({domain: domain, language: '', status: 'list'})
     },
     onLanguageChanged: function(language) {
-        this.loadMessageList({domain: this.state.domain, language: language, spellcheck: false})
+        this.loadMessageList({domain: this.state.domain, language: language, status: 'list'})
     },
     loadMessageList: function(newState) {
         if (!newState.domain || !newState.language) {
@@ -18,21 +18,42 @@ var App = React.createClass({
             url: '/clm/messages',
             dataType: 'json',
             cache: false,
-            data: newState,
+            data: {
+                domain: newState.domain,
+                language: newState.language,
+                spellcheck: this.state.status === 'spellcheck'
+            },
             success: function(data) {
                 newState.data = data;
                 this.setState(newState);
             }.bind(this),
             error: function(xhr, status, error) {
-                console.error("Loading failure");
+                console.error('Loading failure');
             }
         });
     },
     spellcheck: function() {
-        this.loadMessageList({domain: this.state.domain, language: this.state.language, spellcheck: true})
+        this.loadMessageList({domain: this.state.domain, language: this.state.language, status: 'spellcheck'})
     },
-    addNewLocalization: function() {
-        this.setState({domain: this.state.domain, language: this.state.language, spellcheck: false, addLocalization: true});
+    onAddingNewLocalization: function() {
+        this.setState({domain: this.state.domain, language: this.state.language, status: 'add-new'});
+    },
+    addNewLocalization: function(translateTo) {
+        $.ajax({
+            url: '/clm/add-new-localization',
+            type: 'POST',
+            data: {
+                domain: this.state.domain,
+                from: this.state.language,
+                to: this.state.translateTo
+            },
+            success: function(data) {
+                location.reload();
+            },
+            error: function() {
+                console.error('Error on adding new localization')
+            }
+        });
     },
     render: function() {
         var languages = [];
@@ -40,9 +61,9 @@ var App = React.createClass({
             languages = this.props.domains[this.state.domain];
         }
 
-        if (this.state.addLocalization) {
+        if (this.state.status === 'add-new') {
             var mainComponent = (
-                <AddLocalizationDialog></AddLocalizationDialog>
+                <AddLocalizationDialog onAdd={this.addNewLocalization}></AddLocalizationDialog>
             );
         } else {
             var mainComponent = (
@@ -50,25 +71,30 @@ var App = React.createClass({
                     data={this.state.data}
                     domain={this.state.domain}
                     language={this.state.language}
-                    spellcheck={this.state.spellcheck}
-                    key={this.state.domain + this.state.language + this.state.spellcheck} />
+                    spellcheck={this.state.status === 'spellcheck'}
+                    key={this.state.domain + this.state.language + this.state.status} />
             );
         }
         return (
             <div>
-                    <Menu heading="Domain" items={Object.keys(this.props.domains)} onItemSelected={this.onDomainChanged}/>
-                    <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
-                    <button className="pure-button menu-button" onClick={this.spellcheck}>Spellcheck</button>
-                    <button className="pure-button menu-button" onClick={this.addNewLocalization}>Add new localization</button>
-                    <div className="message-list">
-                        {mainComponent}
-                    </div>
+                <Menu heading="Domain" items={Object.keys(this.props.domains)} onItemSelected={this.onDomainChanged}/>
+                <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
+                <button className="pure-button menu-button" onClick={this.spellcheck}>Spellcheck</button>
+                <button className="pure-button menu-button" onClick={this.onAddingNewLocalization}>Add new localization</button>
+                <div className="message-list">
+                    {mainComponent}
+                </div>
             </div>
         );
     }  
 });
 
 var AddLocalizationDialog = React.createClass({
+    handleSubmit: function(e) {
+        e.preventDefault();
+        var translateTo = React.findDOMNode(this.refs.translateTo).value;
+        this.props.onAdd(translateTo);
+    },
     render: function() {
         var languages = {
             sq: "Albanian",
@@ -122,10 +148,10 @@ var AddLocalizationDialog = React.createClass({
             return (<option value={code}>{languages[code]}</option>);
         })
         return (
-            <form className="add-localization-form pure-form pure-form-stacked">
+            <form className="add-localization-form pure-form pure-form-stacked" onSubmit={this.handleSubmit}>
                 <fieldset>
                     <legend>Add new localization</legend>
-                    <select id="translate-to">
+                    <select ref="translateTo">
                         {languageOptions}
                     </select>
                     <button type="submit" className="pure-button pure-button-primary">
