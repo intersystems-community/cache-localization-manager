@@ -45,7 +45,7 @@ var App = React.createClass({
             data: {
                 domain: this.state.domain,
                 from: this.state.language,
-                to: this.state.translateTo
+                to: translateTo
             },
             success: function(data) {
                 location.reload();
