@@ -21,7 +21,7 @@ var App = React.createClass({
             data: {
                 domain: newState.domain,
                 language: newState.language,
-                spellcheck: this.state.status === 'spellcheck'
+                spellcheck: newState.status === 'spellcheck'
             },
             success: function(data) {
                 newState.data = data;
