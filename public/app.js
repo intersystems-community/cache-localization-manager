@@ -1,6 +1,6 @@
 var App = React.createClass({
     getInitialState: function() {
-        return {domain: '', language: '', data: [], statu: 'list'};
+        return {domain: '', language: '', data: [], status: 'list'};
     },
     onDomainChanged: function(domain) {
         this.loadMessageList({domain: domain, language: '', status: 'list'})
