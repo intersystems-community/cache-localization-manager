@@ -28,7 +28,7 @@ var App = React.createClass({
                 this.setState(newState);
             }.bind(this),
             error: function(xhr, status, error) {
-                console.error('Loading failure');
+                console.error('Loading failure: ' + error);
             }
         });
     },
@@ -42,6 +42,7 @@ var App = React.createClass({
         $.ajax({
             url: '/clm/add-new-localization',
             type: 'POST',
+            dataType: 'text',
             data: {
                 domain: this.state.domain,
                 from: this.state.language,
@@ -50,8 +51,8 @@ var App = React.createClass({
             success: function(data) {
                 location.reload();
             },
-            error: function() {
-                console.error('Error on adding new localization')
+            error: function(xhr, status, error) {
+                console.error('Error on adding new localization: ' + error)
             }
         });
     },
@@ -81,12 +82,29 @@ var App = React.createClass({
                 <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
                 <button className="pure-button menu-button" onClick={this.spellcheck}>Spellcheck</button>
                 <button className="pure-button menu-button" onClick={this.onAddingNewLocalization}>Add new localization</button>
+                <Notification text="1224" type="error"/>
                 <div className="message-list">
                     {mainComponent}
                 </div>
             </div>
         );
     }  
+});
+
+var Notification = React.createClass({
+    render: function() {
+        if (!this.props.text) {
+            return;
+        }
+        var type = this.props.type
+        var capitalized = type.charAt(0).toUpperCase() + type.slice(1);
+        return (
+            <span className={'notification ' + type}>
+                <strong>{capitalized + ": "}</strong>
+                {this.props.text}
+            </span>
+        );
+    }
 });
 
 var AddLocalizationDialog = React.createClass({
