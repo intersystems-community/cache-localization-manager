@@ -1,6 +1,22 @@
 var App = React.createClass({
     getInitialState: function() {
-        return {domain: '', language: '', data: [], status: 'list'};
+        return {domain: '', language: '', data: [], status: 'list', notification: ''};
+    },
+    updateState(object) {
+        var newState = {};
+        ['domain',
+         'langauge',
+         'data',
+         'status',
+         'notification',
+         'notificationType'].forEach(function(prop) {
+            if (prop in object) {
+                newState[prop] = object[prop];
+            } else {
+                newState[prop] = this.state[prop];
+            }
+        }.bind(this));
+        this.setState(newState);
     },
     onDomainChanged: function(domain) {
         this.loadMessageList({domain: domain, language: '', status: 'list'})
@@ -14,6 +30,7 @@ var App = React.createClass({
             this.setState(newState);
             return;
         }
+        newState.notification = '';
         $.ajax({
             url: '/clm/messages',
             dataType: 'json',
@@ -25,11 +42,15 @@ var App = React.createClass({
             },
             success: function(data) {
                 newState.data = data;
+                newState.notification = 'Successfullly loaded message list'
+                newState.notificationType = 'success';
                 this.setState(newState);
             }.bind(this),
             error: function(xhr, status, error) {
-                console.error('Loading failure: ' + error);
-            }
+                newState.notificationType = 'error';
+                newState.notification = error;
+                this.setState(newState);
+            }.bind(this)
         });
     },
     spellcheck: function() {
@@ -49,11 +70,12 @@ var App = React.createClass({
                 to: translateTo
             },
             success: function(data) {
-                location.reload();
-            },
+                this.updateState({notification: 'Succesfully added new notification', notificationType: 'success'})
+                setTimeout(function() { location.reload(); }, 2000);
+            }.bind(this),
             error: function(xhr, status, error) {
-                console.error('Error on adding new localization: ' + error)
-            }
+                this.updateState({notification: error, notificationType: 'error'});
+            }.bind(this)
         });
     },
     render: function() {
@@ -76,13 +98,21 @@ var App = React.createClass({
                     key={this.state.domain + this.state.language + this.state.status} />
             );
         }
+        if (this.state.notification) {
+            var notification =  (
+                <Notification
+                    text={this.state.notification}
+                    type={this.state.notificationType}
+                    key={this.state.notificationType + this.state.notification} />
+            );
+        }
         return (
             <div>
                 <Menu heading="Domain" items={Object.keys(this.props.domains)} onItemSelected={this.onDomainChanged}/>
                 <Menu heading="Language" items={languages} key={this.state.domain} onItemSelected={this.onLanguageChanged}/>
                 <button className="pure-button menu-button" onClick={this.spellcheck}>Spellcheck</button>
                 <button className="pure-button menu-button" onClick={this.onAddingNewLocalization}>Add new localization</button>
-                <Notification text="1224" type="error"/>
+                {notification}
                 <div className="message-list">
                     {mainComponent}
                 </div>
@@ -92,15 +122,22 @@ var App = React.createClass({
 });
 
 var Notification = React.createClass({
+    hide: function() {
+        React.findDOMNode(this.refs.notification).className = 'hidden';
+    },
     render: function() {
         if (!this.props.text) {
-            return;
+            return ;
         }
         var type = this.props.type
-        var capitalized = type.charAt(0).toUpperCase() + type.slice(1);
+        if (type === 'error') {
+            var prelude = (<strong>Error: </strong>);
+        } else {
+            setTimeout(this.hide, 5000)
+        }
         return (
-            <span className={'notification ' + type}>
-                <strong>{capitalized + ": "}</strong>
+            <span ref="notification" className={'notification ' + type}>
+                {prelude}
                 {this.props.text}
             </span>
         );
