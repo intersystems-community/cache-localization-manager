@@ -31,6 +31,7 @@ var App = React.createClass({
             return;
         }
         newState.notification = '';
+        this.updateState({ notification: 'Loading...', notificationType: 'pending' });
         $.ajax({
             url: '/clm/messages',
             dataType: 'json',
