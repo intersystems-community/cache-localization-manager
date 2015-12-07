@@ -55,7 +55,7 @@
 		set message.text = (@global@(domain, language, id))
 		do result.Insert(message)
 	}
-	return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result)
+	return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,,..#FormatJSON)
 ]]></Implementation>
 </Method>
 
@@ -92,7 +92,7 @@
 			do result.Insert(message)
 		}
 	}	
-	return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result)
+	return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,,..#FormatJSON)
 ]]></Implementation>
 </Method>
 

@@ -3,5 +3,28 @@
 <Class name="CLM.Common">
 <IncludeCode>CLM.Utils</IncludeCode>
 <TimeCreated>63893,60794.109572</TimeCreated>
+
+<Parameter name="FormatJSON">
+<Description><![CDATA[
+The following character option codes are supported:<br/>
+1-9 : indent with this number of spaces (4 is the default with the 'i' format specifier)<br/>
+a - output null arrays/objects<br/>
+b - line break before opening { of objects<br/>
+c - output the Cach&eacute;-specific "_class" and "_id" properties<br/>
+d - output Cach&eacute; numeric properties that have value "" as null<br/>
+e - output empty object properties<br/>
+i - indent with 4 spaces unless 't' or 1-9<br/>
+l - output empty lists<br/>
+n - newline (lf)<br/>
+o - output empty arrays/objects<br/>
+q - output numeric values unquoted even when they come from a non-numeric property<br/>
+s - use strict JSON output - <strong>NOTE:</strong> special care should be taken when sending data to a browser, as using this flag 
+may expose you to cross site scripting (XSS) vulnerabilities if the data is sent inside <code>&lt;script&gt;</code> tags. Zen uses
+this technique extensively, so this flag should <strong>NOT</strong> be specified for jsonProviders in Zen pages.<br/>
+t - indent with tab character<br/>
+u - output pre-converted to UTF-8 instead of in native internal format<br/>
+w - Windows-style cr/lf newline<br/>]]></Description>
+<Default>aeloqtwu</Default>
+</Parameter>
 </Class>
 </Export>
