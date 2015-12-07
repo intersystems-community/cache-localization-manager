@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-23 15:12:24">
-<Routine name="CLM.Utils" type="INC" timestamp="63726,49372.880166"><![CDATA[
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2015.1.1 (Build 505U)" ts="2015-12-07 17:15:21">
+<Routine name="CLM.Utils" type="INC" timestamp="63893,62090.272469"><![CDATA[
     #define FOREACH(%key,%value,%global) ##Continue
     set %key="" ##Continue
     for { ##Continue
@@ -9,5 +9,12 @@
         set %value = $NAME(@%global@(%key))
     
     #define ENDFOR }
+    
+#; User Application Message Dictionary
+#define MessageDictionaryGlobal "^CacheMsg"	
+
+#; System Application Message Dictionary
+#define SystemMessageDictionaryGlobal "^%qCacheMsg"
+
 ]]></Routine>
 </Export>

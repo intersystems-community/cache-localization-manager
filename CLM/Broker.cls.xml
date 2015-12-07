@@ -34,9 +34,9 @@
 	set language = %request.Data("language", 1)
 	set spellcheck = %request.Data("spellcheck", 1)
 	if (spellcheck = "true") {
-		quit ##class(CLM.Utils).CheckMessages(domain, language, "^CacheMsg")
+		quit ##class(CLM.Utils).CheckMessages(domain, language, $$$MessageDictionaryGlobal)
 	} else {
-		quit ##class(CLM.Utils).GetMessageList(domain, language, "^CacheMsg")
+		quit ##class(CLM.Utils).GetMessageList(domain, language, $$$MessageDictionaryGlobal)
 	}
 ]]></Implementation>
 </Method>
@@ -49,7 +49,7 @@
 	set language = %request.Data("language", 1)
 	set id = %request.Data("id", 1)
 	set text = %request.Data("text", 1)
-	quit ##class(CLM.Utils).PutMessage(domain, language, id, text, "^CacheMsg")
+	quit ##class(CLM.Utils).PutMessage(domain, language, id, text, $$$MessageDictionaryGlobal)
 ]]></Implementation>
 </Method>
 

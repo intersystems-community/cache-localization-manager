@@ -6,7 +6,7 @@
 
 <Method name="GetGlobalStructure">
 <ClassMethod>1</ClassMethod>
-<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String="^CacheMsg"]]></FormalSpec>
+<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String=$$$MessageDictionaryGlobal]]></FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ZEN.proxyObject).%New()
@@ -39,7 +39,7 @@
 
 <Method name="GetMessageList">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,global:%String="^CacheMsg"</FormalSpec>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ListOfObjects).%New()
@@ -61,7 +61,7 @@
 
 <Method name="PutMessage">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,id:%String,text:%String,global:%String="^CacheMsg"</FormalSpec>
+<FormalSpec>domain:%String,language:%String,id:%String,text:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set @global@(domain, language, id) = text
@@ -71,7 +71,7 @@
 
 <Method name="CheckMessages">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,global:%String="^CacheMsg"</FormalSpec>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ListOfObjects).%New()
@@ -98,7 +98,7 @@
 
 <Method name="AddNewLocalization">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>origin:%String,language:%String,domain:%String,global:%String="^CacheMsg"</FormalSpec>
+<FormalSpec>origin:%String,language:%String,domain:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set request = ##class(%Net.HttpRequest).%New()
