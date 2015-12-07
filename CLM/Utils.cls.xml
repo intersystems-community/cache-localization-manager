@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-23 15:11:46">
+<Export generator="Cache" version="25">
 <Class name="CLM.Utils">
-<IncludeCode>CLM.Utils</IncludeCode>
-<TimeChanged>63726,54565.339114</TimeChanged>
+<Super>CLM.Common</Super>
 <TimeCreated>63714,61614.83778</TimeCreated>
 
 <Method name="GetGlobalStructure">

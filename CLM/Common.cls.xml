@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="CLM.Common">
+<IncludeCode>CLM.Utils</IncludeCode>
+<TimeCreated>63893,60794.109572</TimeCreated>
+</Class>
+</Export>
