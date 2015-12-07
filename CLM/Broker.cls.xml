@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-30 10:35:13">
+<Export generator="Cache" version="25">
 <Class name="CLM.Broker">
-<Super>isc.AbstractREST</Super>
-<TimeChanged>63733,34718.824486</TimeChanged>
+<Super>%CSP.REST</Super>
 <TimeCreated>63714,58855.014604</TimeCreated>
 
 <XData name="UrlMap">

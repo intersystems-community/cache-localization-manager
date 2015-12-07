@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="custom.css" application="/csp/clm/" default="1"><![CDATA[
 .menu-button {
     margin-right: 5px;
     margin-top: 5px;
@@ -74,4 +77,5 @@
 
 .hidden {
     display: none;
-}
+}]]></CSP>
+</Export>

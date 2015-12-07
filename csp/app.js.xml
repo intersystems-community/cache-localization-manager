@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="app.js" application="/csp/clm/" default="1"><![CDATA[
 var App = React.createClass({
     getInitialState: function() {
         return {domain: '', language: '', data: [], status: 'list', notification: ''};
@@ -361,4 +364,5 @@ var Message = React.createClass({
 React.render(
     <App domains={domains}/>,
     document.getElementById('content')
-);
+);]]></CSP>
+</Export>
