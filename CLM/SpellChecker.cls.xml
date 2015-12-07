@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2013.2 (Build 416U)" ts="2015-06-21 11:08:14">
+<Export generator="Cache" version="25">
 <Class name="CLM.SpellChecker">
-<StorageStrategy/>
 <Super>%RegisteredObject</Super>
-<TimeChanged>63724,38436.626545</TimeChanged>
 <TimeCreated>63414,42098.211762</TimeCreated>
 
 <Property name="CNA">
