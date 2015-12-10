@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2015.1.1 (Build 505U)" ts="2015-12-10 15:10:32">
 <CSP name="app.js" application="/csp/clm/" default="1"><![CDATA[
 var App = React.createClass({
     getInitialState: function() {
@@ -8,7 +8,7 @@ var App = React.createClass({
     updateState(object) {
         var newState = {};
         ['domain',
-         'langauge',
+         'language',
          'data',
          'status',
          'notification',
@@ -46,7 +46,7 @@ var App = React.createClass({
             },
             success: function(data) {
                 newState.data = data;
-                newState.notification = 'Successfullly loaded message list'
+                newState.notification = 'Successfully loaded message list';
                 newState.notificationType = 'success';
                 this.setState(newState);
             }.bind(this),
@@ -74,7 +74,7 @@ var App = React.createClass({
                 to: translateTo
             },
             success: function(data) {
-                this.updateState({notification: 'Succesfully added new notification', notificationType: 'success'})
+                this.updateState({notification: 'Successfully added new notification', notificationType: 'success'});
                 setTimeout(function() { location.reload(); }, 2000);
             }.bind(this),
             error: function(xhr, status, error) {
@@ -133,7 +133,7 @@ var Notification = React.createClass({
         if (!this.props.text) {
             return ;
         }
-        var type = this.props.type
+        var type = this.props.type;
         if (type === 'error') {
             var prelude = (<strong>Error: </strong>);
         } else {
@@ -160,7 +160,7 @@ var AddLocalizationDialog = React.createClass({
             ar: "Arabian",
             hy: "Armenian",
             az: "Azeri",
-            be: "Belarusian",
+            be: "Belorussian",
             bs: "Bosnian",
             bg: "Bulgarian",
             ca: "Catalan",
@@ -202,10 +202,10 @@ var AddLocalizationDialog = React.createClass({
             tr: "Turkish",
             uk: "Ukrainian",
             vi: "Vietnamese"
-        }
+        };
         var languageOptions = Object.keys(languages).map(function(code) {
             return (<option value={code}>{languages[code]}</option>);
-        })
+        });
         return (
             <form className="add-localization-form pure-form pure-form-stacked" onSubmit={this.handleSubmit}>
                 <fieldset>
@@ -305,7 +305,7 @@ var Message = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
         var textareaValue = React.findDOMNode(this.refs.textarea).value;
-        var newState = {status: 'pending', text: textareaValue}; 
+        var newState = {status: 'pending', text: textareaValue};
         this.setState(newState);
         $.ajax({
             url: '/clm/messages',
@@ -335,7 +335,7 @@ var Message = React.createClass({
                     <form className="pure-form" onSubmit={this.handleSubmit}>
                         <fieldset>
                             <textarea ref="textarea" defaultValue={this.state.text}/>
-                            <button className="pure-button" type="buttton" onClick={this.cancelEditing}>Cancel</button>
+                            <button className="pure-button" type="button" onClick={this.cancelEditing}>Cancel</button>
                             <button className="pure-button pure-button-primary" type="submit">Submit</button>
                         </fieldset>
                     </form>
