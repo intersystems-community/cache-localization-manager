@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
 <Class name="CLM.AbstractBroker">
+<IncludeCode>%ZEN.Utils</IncludeCode>
 <Super>%CSP.REST</Super>
 <TimeCreated>63896,55631.84918</TimeCreated>
 
@@ -8,5 +9,24 @@
 <Type>Integer</Type>
 <Default>1</Default>
 </Parameter>
+
+<Method name="Http500">
+<Description><![CDATA[
+Issue an '500' error and give some indication as to what occurred.<br>
+<b>pStatus</b> - %status, not %Exception.AbstractException.]]></Description>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pStatus:%Exception.AbstractException</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+    // we are expecting status
+    #; Set the response Http status
+    Set %response.Status="500 Internal Server Error"
+    
+    #; Return a helpful error string
+    Write "{""Error"":"_$$$ZENJSSTR($System.Status.GetErrorText(pStatus.AsStatus(),%session.Language))_"}"
+    
+    Quit $$$OK
+]]></Implementation>
+</Method>
 </Class>
 </Export>

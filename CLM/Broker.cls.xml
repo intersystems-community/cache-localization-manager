@@ -33,7 +33,6 @@
 	set domain = %request.Data("domain", 1)
 	set language = %request.Data("language", 1)
 	set spellcheck = %request.Data("spellcheck", 1)
-			w 1/0
 	if (spellcheck = "true") {
 		quit ##class(CLM.Utils).CheckMessages(domain, language, $$$MessageDictionaryGlobal)
 	} else {
