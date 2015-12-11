@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="CLM.AbstractBroker">
+<Super>%CSP.REST</Super>
+<TimeCreated>63896,55631.84918</TimeCreated>
+
+<Parameter name="UseSession">
+<Type>Integer</Type>
+<Default>1</Default>
+</Parameter>
+</Class>
+</Export>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
 <Class name="CLM.Broker">
-<Super>%CSP.REST,CLM.Common</Super>
+<Super>CLM.AbstractBroker,CLM.Common</Super>
 <TimeCreated>63714,58855.014604</TimeCreated>
 
 <XData name="UrlMap">
@@ -33,6 +33,7 @@
 	set domain = %request.Data("domain", 1)
 	set language = %request.Data("language", 1)
 	set spellcheck = %request.Data("spellcheck", 1)
+			w 1/0
 	if (spellcheck = "true") {
 		quit ##class(CLM.Utils).CheckMessages(domain, language, $$$MessageDictionaryGlobal)
 	} else {
