@@ -28,5 +28,42 @@ Issue an '500' error and give some indication as to what occurred.<br>
     return $$$OK
 ]]></Implementation>
 </Method>
+
+<Method name="DispatchRequest">
+<Description><![CDATA[
+Event handler for <b>PAGE</b> event: this is invoked in order to  
+generate the content of a csp page.]]></Description>
+<ClassMethod>1</ClassMethod>
+<FormalSpec>pUrl:%String,pMethod:%String</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set st = ..ConvertRequestBody()
+	return:$$$ISERR(st) st
+	return ##super(pUrl, pMethod)
+]]></Implementation>
+</Method>
+
+<Method name="ConvertRequestBody">
+<Description>
+Converts request into UTF8. Converts request into proxyObject. </Description>
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim %request As %CSP.Request
+	#dim obj As %ZEN.proxyObject
+
+	return:'$isobject(%request.Content) $$$OK //empty request body - nothing to do
+	
+	// Convert request body into UTF8 proxyObject
+	set content = %request.Content.Read($$$MaxStringLength)
+	set content = $ZCVT(content,"I","UTF8") 
+	set st = ##class(%ZEN.Auxiliary.jsonProvider).%ConvertJSONToObject(content,,.obj,1)
+	return:$$$ISERR(st) st
+	return:'$IsObject(obj) $$$ERROR($$$ArgumentIsNotAnObject,"Body")
+	
+	set %request.Content = obj // obj here is a valid UTF8 proxyObject with required property
+	return $$$OK
+]]></Implementation>
+</Method>
 </Class>
 </Export>
