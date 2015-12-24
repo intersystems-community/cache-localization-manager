@@ -12,6 +12,7 @@
 	<Route Url="/messages" Method="POST" Call="PostMessage"/>
 	<Route Url="/test" Method="GET" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
+	<Route Url="/export/:domain" Method="GET" Call="DownloadDomain"/>
 </Routes>
 ]]></Data>
 </XData>
@@ -73,6 +74,22 @@
 	set to = %request.Data("to", 1)
 	
 	return ##class(CLM.Utils).AddNewLocalization($EXTRACT(from, 1, 2), to, domain)
+]]></Implementation>
+</Method>
+
+<Method name="DownloadDomain">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>domain:%String</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim %request As %CSP.Request
+	set oid = ##class(%CSP.StreamServer).GetOidForFile("")
+	set encoid = ..Encrypt(oid)
+	do %request.Set("STREAMOID",encoid)
+    if ##class(%CSP.StreamServer).OnPreHTTP() {
+        set %response.Headers("Content-Disposition")="attachment; filename*=UTF-8''"_..EscapeURL("COSQuickRef.md","UTF8")
+    }
+	return ##class(%CSP.StreamServer).OnPage()
 ]]></Implementation>
 </Method>
 </Class>
