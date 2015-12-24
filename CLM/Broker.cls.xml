@@ -13,6 +13,7 @@
 	<Route Url="/test" Method="GET" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
 	<Route Url="/export/:domain/:language" Method="GET" Call="DownloadDomain"/>
+	<Route Url="/import" Method="POST" Call="UploadDomain"/>
 </Routes>
 ]]></Data>
 </XData>
@@ -79,22 +80,44 @@
 
 <Method name="DownloadDomain">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String</FormalSpec>
+<FormalSpec>domain:%String,language:%String="en"</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	return:'##class(CLM.Utils).DomainExists(domain) $$$ERROR($$$GeneralError,"Domain " _ domain _ "does not exist")
 	#dim %request As %CSP.Request
-	set file = ##class(%File).TempFilename("xml")
-	do ##class(%MessageDictionary).ExportDomainList(file, domain, language)
-	set oid = ##class(%CSP.StreamServer).GetOidForFile(file)
+	set filename = ##class(%File).TempFilename("xml")
+	do ##class(%MessageDictionary).ExportDomainList(filename, domain, language)
+	set oid = ##class(%CSP.StreamServer).GetOidForFile(filename)
 	set encoid = ..Encrypt(oid)
 	do %request.Set("STREAMOID",encoid)
-    if ##class(%CSP.StreamServer).OnPreHTTP() {
-        set %response.Headers("Content-Disposition")="attachment; filename*=UTF-8''"_..EscapeURL(domain_language_".xml","UTF8")
-    }
+	if ##class(%CSP.StreamServer).OnPreHTTP() {
+		set %response.Headers("Content-Disposition")="attachment; filename*=UTF-8''"_..EscapeURL(domain_language_".xml","UTF8")
+	}
 	set st = ##class(%CSP.StreamServer).OnPage()
-	do ##class(%File).Delete(file)
+	do ##class(%File).Delete(filename)
 	return st
+]]></Implementation>
+</Method>
+
+<Method name="UploadDomain">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	#dim %request As %CSP.Request
+	set filename = ##class(%File).TempFilename("xml")
+	set stream=%request.GetMimeData("file")
+	if $IsObject(Stream) {
+		set file=##class(%Stream.FileBinary).%New()
+		set file.Filename=filename
+		set st = file.CopyFromAndSave(stream)
+		return:$$$ISERR(st) st
+		do file.%Close()
+		set st = ##class(%MessageDictionary).Import(filename)
+		do ##class(%File).Delete(filename)
+	} else {
+		set st = $$$ERROR($$$GeneralError, "MimeData 'file' is not a file")
+	}
+	quit st
 ]]></Implementation>
 </Method>
 </Class>
