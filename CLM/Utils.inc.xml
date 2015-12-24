@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2015.1.1 (Build 505U)" ts="2015-12-07 17:15:21">
-<Routine name="CLM.Utils" type="INC" timestamp="63893,62090.272469"><![CDATA[
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2015.1.1 (Build 505U)" ts="2015-12-24 18:23:45">
+<Routine name="CLM.Utils" type="INC" timestamp="63910,66209.754378"><![CDATA[
     #define FOREACH(%key,%value,%global) ##Continue
     set %key="" ##Continue
     for { ##Continue
@@ -16,5 +16,7 @@
 #; System Application Message Dictionary
 #define SystemMessageDictionaryGlobal "^%qCacheMsg"
 
+#; Get %request.Content property (app converts %request.Content into %ZEN.proxyObject in AbstractBroker)
+#define R(%property) %request.Content.##Expression(%property)
 ]]></Routine>
 </Export>
