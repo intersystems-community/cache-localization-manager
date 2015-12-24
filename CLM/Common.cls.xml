@@ -26,5 +26,35 @@ u - output pre-converted to UTF-8 instead of in native internal format<br/>
 w - Windows-style cr/lf newline<br/>]]></Description>
 <Default>aeloqtwu</Default>
 </Parameter>
+
+<Parameter name="SettingsGlobal">
+<Description>
+Global with user settings</Description>
+<Default>^CLM</Default>
+</Parameter>
+
+<Method name="GetSetting">
+<Description><![CDATA[
+Get actual <var>setting</var> value.<br>
+Currently supported settings<br>
+<var>CNAPath</var> - path to libcna.dll or libcna.so<br>
+<var>libcPath</var> - path to C standart library<br>
+<var>hunspellPath</var> - path to hunspell shared library<br>
+<var>affPath</var>, <var>dicPath</var> - paths to your hunspell dictionary if you don't want to use default one<br>
+<var>yandexkey</var> - your yandex translate api key<br>]]></Description>
+<ClassMethod>1</ClassMethod>
+<CodeMode>expression</CodeMode>
+<FormalSpec>setting:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[$g(@..#SettingsGlobal@(setting))
+]]></Implementation>
+</Method>
+
+<Method name="SetSetting">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>setting:%String,value:%String</FormalSpec>
+<Implementation><![CDATA[	s @..#SettingsGlobal@(setting) = value
+]]></Implementation>
+</Method>
 </Class>
 </Export>
