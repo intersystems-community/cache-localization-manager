@@ -104,7 +104,7 @@
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ListOfObjects).%New()
-	set speller = ##class(CLM.SpellChecker).%New("libcna.so", "libhunspell.so", "/lib/x86_64-linux-gnu/libc.so.6", language)
+	set speller = ##class(CLM.SpellChecker).%New(..GetSetting("CNAPath"), ..GetSetting("hunspellPath"),..GetSetting("libcPath"), language)
 	
 	set id = ""
 	while (1) {
@@ -131,17 +131,11 @@
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set request = ##class(%Net.HttpRequest).%New()
-	set request.SSLConfiguration = "SSL_CONFIG"
+	set request.SSLConfiguration = ..GetSetting("SSLConfig")
 	set request.Https = 1
 	set request.Server = "translate.yandex.net"
 	set request.Location = "api/v1.5/tr.json/translate"
-	
-	set keyFile = ##class(%File).%New("yandex-translate-api-key.txt")
-	set status = keyFile.Open("R")
-	if ($$$ISERR(status)) {
-		return status
-	}
-	set key = keyFile.Read()
+	set key = ..GetSetting("yandexkey")
 	
 	do request.InsertParam("key", key)
 	do request.InsertParam("lang", origin _ "-" _ language)
