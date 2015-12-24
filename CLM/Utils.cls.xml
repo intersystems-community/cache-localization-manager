@@ -171,5 +171,14 @@
 	return status
 ]]></Implementation>
 </Method>
+
+<Method name="DomainExists">
+<ClassMethod>1</ClassMethod>
+<CodeMode>expression</CodeMode>
+<FormalSpec>domain:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<ReturnType>%Boolean</ReturnType>
+<Implementation><![CDATA[''$DATA(@global@(domain))
+]]></Implementation>
+</Method>
 </Class>
 </Export>

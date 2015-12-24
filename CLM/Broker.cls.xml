@@ -12,7 +12,7 @@
 	<Route Url="/messages" Method="POST" Call="PostMessage"/>
 	<Route Url="/test" Method="GET" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
-	<Route Url="/export/:domain" Method="GET" Call="DownloadDomain"/>
+	<Route Url="/export/:domain/:language" Method="GET" Call="DownloadDomain"/>
 </Routes>
 ]]></Data>
 </XData>
@@ -79,17 +79,22 @@
 
 <Method name="DownloadDomain">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String</FormalSpec>
+<FormalSpec>domain:%String,language:%String</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
+	return:'##class(CLM.Utils).DomainExists(domain) $$$ERROR($$$GeneralError,"Domain " _ domain _ "does not exist")
 	#dim %request As %CSP.Request
-	set oid = ##class(%CSP.StreamServer).GetOidForFile("")
+	set file = ##class(%File).TempFilename("xml")
+	do ##class(%MessageDictionary).ExportDomainList(file, domain, language)
+	set oid = ##class(%CSP.StreamServer).GetOidForFile(file)
 	set encoid = ..Encrypt(oid)
 	do %request.Set("STREAMOID",encoid)
     if ##class(%CSP.StreamServer).OnPreHTTP() {
-        set %response.Headers("Content-Disposition")="attachment; filename*=UTF-8''"_..EscapeURL("COSQuickRef.md","UTF8")
+        set %response.Headers("Content-Disposition")="attachment; filename*=UTF-8''"_..EscapeURL(domain_language_".xml","UTF8")
     }
-	return ##class(%CSP.StreamServer).OnPage()
+	set st = ##class(%CSP.StreamServer).OnPage()
+	do ##class(%File).Delete(file)
+	return st
 ]]></Implementation>
 </Method>
 </Class>
