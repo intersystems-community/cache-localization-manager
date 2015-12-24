@@ -69,6 +69,35 @@
 ]]></Implementation>
 </Method>
 
+<Method name="PostMessages">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>domain:%String,messages:%ListOfDataTypes,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set st = $$$OK
+	set language =  @global@(domain)
+	
+	for i=1:1:messages.Count() {
+		set stmsg = ..PostMessage(domain, language, messages.GetAt(i),global)
+		set st = $$$ADDSC(st,stmsg)		
+	}
+	//zw st,list
+	//return 1
+	return st
+]]></Implementation>
+</Method>
+
+<Method name="PostMessage">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>domain:%String,language:%String,text:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set id = $ZCRC(text,7)
+	return:$DATA(@global@(domain, language, id))=1 $$$OK
+	return ..PutMessage(domain, language, id, text, global)
+]]></Implementation>
+</Method>
+
 <Method name="CheckMessages">
 <ClassMethod>1</ClassMethod>
 <FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
