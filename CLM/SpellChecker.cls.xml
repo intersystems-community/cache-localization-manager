@@ -94,7 +94,7 @@ Creates the environment for spellchecker.<p>
 		return ex.AsStatus()
 	}
 	
-	Quit $$$OK
+	return $$$OK
 ]]></Implementation>
 </Method>
 
@@ -155,7 +155,7 @@ Suggests possible variants of corrrect <var>word</var> writings ]]></Description
 		do ex.Log()
 		return ex.AsStatus()
 	}
-	Quit $$$OK
+	return $$$OK
 ]]></Implementation>
 </Method>
 

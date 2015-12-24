@@ -20,12 +20,12 @@ Issue an '500' error and give some indication as to what occurred.<br>
 <Implementation><![CDATA[
     // we are expecting status
     #; Set the response Http status
-    Set %response.Status="500 Internal Server Error"
+    set %response.Status="500 Internal Server Error"
     
     #; Return a helpful error string
-    Write "{""Error"":"_$$$ZENJSSTR($System.Status.GetErrorText(pStatus.AsStatus(),%session.Language))_"}"
+    write "{""Error"":"_$$$ZENJSSTR($System.Status.GetErrorText(pStatus.AsStatus(),%session.Language))_"}"
     
-    Quit $$$OK
+    return $$$OK
 ]]></Implementation>
 </Method>
 </Class>
