@@ -48,4 +48,4 @@ You can set the following settings:
 | affPath      | C:\ru.aff                       | Path to your hunspell dictionary if you don't want to use default one |
 | dicPath      | C:\dic.aff                      | Path to your hunspell dictionary if you don't want to use default one |
 | yandexkey    | trnsl.1.1.2015062...            | Your yandex translate api key                                         |
-| SSLConfig    | CLM                             | Valid SSL config. Would be ysed to connect to yandex server           |
+| SSLConfig    | CLM                             | Valid SSL config. Would be used to connect to yandex server           |
