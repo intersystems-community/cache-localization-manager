@@ -12,7 +12,7 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
   - Application Roles: %All
   - Session Cookie Path: /
   - Group By ID: clm
-4. Import the project into clm namespace and compile. You may encounter compilation errors on CLM.SpellChecker. It's okay
+4. Import the project into `clm` namespace and compile. You may encounter compilation errors on CLM.SpellChecker. It's okay
 5. Create web app ```/clm```
   - Name: /clm
   - Namespace: clm
