@@ -12,8 +12,9 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
   - Application Roles: %All
   - Session Cookie Path: /
   - Group By ID: clm
-4. Import the project into `clm` namespace and compile. You may encounter compilation errors on CLM.SpellChecker. It's okay
-5. Create web app ```/clm```
+4. In terminal, `clm` namespace execute: `set ^Git("settings","groupByFolder") = 1`
+5. Import the project into `clm` namespace and compile. You may encounter compilation errors on CLM.SpellChecker. It's okay
+6. Create web app ```/clm```
   - Name: /clm
   - Namespace: clm
   - Allowed Authentication Methods: Unauthenticated OR Password
@@ -21,7 +22,7 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
   - Application Roles: %All
   - Session Cookie Path: /
   - Group By ID: clm
-6. Open `http://localhost:57772/csp/clm/index.csp`
+7. Open `http://localhost:57772/csp/clm/index.csp`
 
 ## Spellcheck installation
 
