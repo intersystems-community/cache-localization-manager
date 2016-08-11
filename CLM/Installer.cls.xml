@@ -235,6 +235,8 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 		set CSPApplication.IsNameSpaceDefault = $$$YES
 		set CSPApplication.GroupById = $ZCONVERT(Namespace, "l")
 		set CSPApplication.CookiePath = "/"
+		set CSPApplication.Path = $system.Util.InstallDirectory()_"/csp/"_$ZCONVERT(Namespace, "l")
+		set CSPApplication.AutheEnabled = $$$AutheUnauthenticated
 		do CSPApplication.%Save()
 	}
 	Else
@@ -249,6 +251,7 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 		Set cspProperties("IsNameSpaceDefault") = $$$YES
 		Set cspProperties("GroupById") = "clm"
 		Set cspProperties("CookiePath") = "/"
+		Set cspProperties("Path") = $system.Util.InstallDirectory()_"/csp/"_$ZCONVERT(Namespace, "l")
 		Write "Creating web application /csp/"_$ZCONVERT(Namespace, "l"), !
 		Set tSC = ##class(Security.Applications).Create("/csp/"_$ZCONVERT(Namespace, "l"), .cspProperties)
 		If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
