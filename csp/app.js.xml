@@ -5,7 +5,7 @@ var App = React.createClass({
     getInitialState: function() {
         return {domain: '', language: '', data: [], status: 'list', notification: ''};
     },
-    updateState(object) {
+    updateState: function (object) {
         var newState = {};
         ['domain',
          'language',
@@ -160,8 +160,9 @@ var AddLocalizationDialog = React.createClass({
             ar: "Arabian",
             hy: "Armenian",
             az: "Azeri",
-            be: "Belarusian",
+            be: "Belarusian", 
             bs: "Bosnian",
+            eu: "Basque",
             bg: "Bulgarian",
             ca: "Catalan",
             hr: "Croatian",
@@ -171,6 +172,7 @@ var AddLocalizationDialog = React.createClass({
             nl: "Dutch",
             en: "English",
             et: "Estonian",
+            eo: "Esperanto",
             fi: "Finnish",
             fr: "French",
             ka: "Georgian",
@@ -183,6 +185,7 @@ var AddLocalizationDialog = React.createClass({
             it: "Italian",
             ja: "Japanese",
             ko: "Korean",
+            la: "Latin",
             lv: "Latvian",
             lt: "Lithuanian",
             mk: "Macedonian",
@@ -190,7 +193,7 @@ var AddLocalizationDialog = React.createClass({
             mt: "Maltese",
             no: "Norwegian",
             pl: "Polish",
-            pt: "Portuguese",
+            pt: "Portuguese Brazil",
             ro: "Romanian",
             ru: "Russian",
             es: "Spanish",

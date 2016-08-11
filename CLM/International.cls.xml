@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<Class name="CLM.International">
+<Super>%RegisteredObject</Super>
+<TimeCreated>64139,49269.889997</TimeCreated>
+
+<Method name="Run">
+<ClassMethod>1</ClassMethod>
+<CodeMode>objectgenerator</CodeMode>
+<Implementation><![CDATA[	do ##class(%MessageDictionary).SetSessionLanguage("en")
+]]></Implementation>
+</Method>
+
+<Method name="Inter">
+<ClassMethod>1</ClassMethod>
+<Implementation><![CDATA[
+	set x = $$$Text("DOMAIN","clm")
+	set x = $$$Text("LANGUAGE","clm")
+	set x = $$$Text("Spellcheck","clm")
+	set x = $$$Text("Add new localization","clm")
+]]></Implementation>
+</Method>
+</Class>
+</Export>

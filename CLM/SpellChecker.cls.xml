@@ -44,16 +44,49 @@ Creates the environment for spellchecker.<p>
 <ServerOnly>1</ServerOnly>
 <Implementation><![CDATA[
 	try {
-		set dics("de")    = "de_DE"
-		set dics("en")    = "en_GB"
-		set dics("en-us") = "en_US"
-		set dics("es")    = "es_ANY"
-		set dics("fr")    = "fr_FR"
-		set dics("it")    = "it_IT"
-		set dics("nl")    = "nl_NL"
-		set dics("pt-br") = "pt_BR"
-		set dics("ru")    = "ru_RU"
-		set dics("uk")    = "uk_UA"
+		set dics("de")    = "de_DE" //+
+		set dics("en")    = "en_EN" //-
+		set dics("es")    = "es_ES" //+
+		set dics("fr")    = "fr_FR" //+
+		set dics("it")    = "it_IT" //+
+		set dics("is")    = "is_IS" //+
+		set dics("id")    = "id_ID" //+
+		set dics("nl")    = "nl_NL" //+
+		set dics("pt")    = "pt_EU"	//+ 
+		set dics("ru")    = "ru_RU" //+
+		set dics("uk")    = "uk_UA" //+
+		set dics("ar")    = "ar_AR"	//-
+		set dics("fr")    = "fr_FR"	//+
+		set dics("be")    = "be_BY" //-
+		set dics("bg")    = "bg_BG" //-
+		set dics("ca")    = "ca_CA" //+
+		set dics("cs")    = "cs_CS" //+
+		set dics("da")    = "da_DK" //+
+		set dics("hy")    = "hy_AM" //-+
+		set dics("el")    = "el_GR" //-
+		set dics("eo")    = "eo_EO" //+
+		set dics("et")    = "et_ET" //+
+		set dics("he")    = "he_IL" //-
+		set dics("hr")    = "hr_HR" //+
+		set dics("hu")    = "hu_HU" //+-
+		set dics("la")    = "la_LA" //+
+		set dics("lt")    = "lt_LT" //+
+		set dics("no")    = "no_NO" //+
+		set dics("mk")    = "mk_MK" //+
+		set dics("ms")    = "ms_MY" //+
+		set dics("ko")    = "ko_KR" //+
+		set dics("eu")    = "eu_EU" //+
+		set dics("pl")    = "pl_PL" //+
+		set dics("ro")    = "ro_RO" //+
+		set dics("sk")    = "sk_SK" //+
+		set dics("sl")    = "sl_SL" //+
+		set dics("sv")    = "sv_SV" //+
+		set dics("sr")    = "sr_CY" //+
+		set dics("vi")    = "vi_VN" //+
+		set dics("tr")    = "tr_TR" //+
+		set dics("sq")    = "sq_AL" //+
+		
+		
 		
 		if (('$data(CNAPath)) || ('##class(%File).Exists(CNAPath))) {
 			return $$$ERROR("CNA file doesn't exists")	
@@ -69,6 +102,12 @@ Creates the environment for spellchecker.<p>
 			set affPath = path _ ".aff"
 			set dicPath = path _ ".dic"
 		}
+		else {
+			set affPath =affPath _ dics(language) _ ".aff"
+			set dicPath =dicPath _ dics(language) _ ".dic"
+		}
+		
+		
 		if ('##class(%File).Exists(affPath)) {
 			return $$$ERROR(".aff file doesn't exists")	
 		}
@@ -81,12 +120,13 @@ Creates the environment for spellchecker.<p>
 		
 		set ..CNA = ##class(CNA.CNA).%New(CNAPath)
 		set ..LibC = ##class(CNA.CNA).%New(CNAPath)
+		
 		do ..CNA.LoadLibrary(hunspellPath)
 		do ..LibC.LoadLibrary(libcPath)
 		
 		set aff = ..CNA.ConvertStringToPointer(affPath)
 		set dic = ..CNA.ConvertStringToPointer(dicPath)
-		
+		//w CNAPath, !,hunspellPath, !,libcPath, !,dics(language), !,affPath, !,dicPath,!
 		set argTypes = $lb(..CNA.#POINTER, ..CNA.#POINTER)
 		set ..Hunspell =  ..CNA.CallFunction("Hunspell_create", ..CNA.#POINTER, argTypes, aff, dic)
 	} catch ex {

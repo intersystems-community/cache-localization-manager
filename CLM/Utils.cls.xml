@@ -10,15 +10,12 @@
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ZEN.proxyObject).%New()
-	
-	
 	set domain = ""
 	while(1) {
 		set domain = $ORDER(@global@(domain))
 		if (domain = "") {
 			quit
 		}
-		
 		set language = ""
 		set languageList = ##class(%ListOfDataTypes).%New()
 		while (1)
@@ -29,10 +26,8 @@
 			}
 			do languageList.Insert(language)
 		}
-		
 		set $PROPERTY(result, domain) = languageList 
 	}
-	
 	return $$$OK
 ]]></Implementation>
 </Method>
@@ -81,8 +76,6 @@
 		set stmsg = ..PostMessage(domain, language, messages.GetAt(i),global)
 		set st = $$$ADDSC(st,stmsg)		
 	}
-	//zw st,list
-	//return 1
 	return st
 ]]></Implementation>
 </Method>
@@ -104,11 +97,12 @@
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ListOfObjects).%New()
-	set speller = ##class(CLM.SpellChecker).%New(..GetSetting("CNAPath"), ..GetSetting("hunspellPath"),..GetSetting("libcPath"), language)
+	set speller = ##class(CLM.SpellChecker).%New(..GetSetting("CNAPath"), ..GetSetting("hunspellPath"),..GetSetting("libcPath"), language,..GetSetting("affPath"),..GetSetting("dicPath"))
 	
 	set id = ""
 	while (1) {
 		set id = $ORDER(@global@(domain, language, id))
+		//w id,!
 		if (id = "") {
 			quit
 		}
@@ -117,6 +111,13 @@
 			set message = ##class(%ZEN.proxyObject).%New()
 			set message.id = id
 			set message.text = text
+			for i=0:1:mistakes.Count()
+			{
+				set word = mistakes.GetAt(i)
+				set suglist = speller.Suggest(word)
+				do mistakes.SetAt(##class(%List).LogicalToXSD(suglist),i)
+			    //zw suglist
+			}
 			set message.mistakes = mistakes
 			do result.Insert(message)
 		}
@@ -149,9 +150,9 @@
 	if ($$$ISERR(status)) {
 		return status
 	}
-	//do request.HttpResponse.OutputToDevice()
+	do request.HttpResponse.OutputToDevice()
 	
-	set response =  $ZCVT(request.HttpResponse.Data.Read(), "I", "UTF8")
+	set response =  request.HttpResponse.Data.Read()
 	set object = ##class(%ZEN.proxyObject).%New()
 	do ##class(%ZEN.Auxiliary.jsonProvider).%ConvertJSONToObject(response, , .object)
 	
@@ -172,6 +173,15 @@
 <FormalSpec>domain:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%Boolean</ReturnType>
 <Implementation><![CDATA[''$DATA(@global@(domain))
+]]></Implementation>
+</Method>
+
+<Method name="LanguageExists">
+<ClassMethod>1</ClassMethod>
+<CodeMode>expression</CodeMode>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<ReturnType>%Boolean</ReturnType>
+<Implementation><![CDATA[''$DATA(@global@(domain,language))
 ]]></Implementation>
 </Method>
 </Class>
