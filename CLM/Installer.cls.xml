@@ -28,25 +28,11 @@
  <Log Text="End creating namespace ${Namespace}" Level="0"/>
 </If>
 
-<If Condition='(##class(Security.Applications).Exists($ZCONVERT("/csp/${Namespace}", "L"))=0)'>
 <Namespace Name="${Namespace}" Create="no">
-<Log Text="Creating web application /csp/${Namespace}" Level="0"/>
-
-<CSPApplication Url='#{$ZCONVERT("/csp/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="true"/>
-
-<Log Text="End creating web application /csp/${Namespace}" Level="0"/>
+<Log Text="CLM configuration is running" Level="0"/>
+<RunInstall Class="CLM.Installer" Method="CLMConfiguration"/>
+<Log Text="CLM configuration has been finished" Level="0"/>
 </Namespace>
-</If>
-
-<If Condition='(##class(Security.Applications).Exists($ZCONVERT("/${Namespace}", "L"))=0)'>
-<Namespace Name="${Namespace}" Create="no">
-<Log Text="Creating web application /${Namespace}" Level="0"/>
-
-<CSPApplication Url='#{$ZCONVERT("/${Namespace}", "L")}' Directory='#{##class(%DeepSee.Report.UI.reportModelServer).GetCSPDirectory()_$ZCONVERT("${Namespace}", "L")}' AuthenticationMethods="64" IsNamespaceDefault="false"/>
-
-<Log Text="End creating web application /${Namespace}" Level="0"/>
-</Namespace>
-</If>
 
 <Namespace Name="${Namespace}" Create="no">
 <IfDef Var="SourceDir">
@@ -85,7 +71,7 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
     Set Namespace = tInstaller.Evaluate("${Namespace}")
     Do tInstaller.PushNS("%SYS")
-    Set tSC = ..Update(Namespace, "intersystems-ru", "cache-localization-manager", "master")
+    Set tSC = ..Update(Namespace, "intersystems-ru", "cache-localization-manager", "CLM")
     Do tInstaller.PopNS()
     If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
     quit $$$OK
@@ -165,7 +151,6 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
  	Return:(Request.HttpResponse.StatusCode '= 200) $$$ERROR($$$GeneralError,"Received " _ Request.HttpResponse.StatusCode _ " status, expected 200")
  	
  	#dim objects As List of %ZEN.proxyObject
- 	do Request.HttpResponse.Data.OutputToDevice()
  	#dim obj As %ZEN.proxyObject
 	Set st = ##class(%ZEN.Auxiliary.jsonProvider).%ConvertJSONToObject(Request.HttpResponse.Data,,.objects,1)
 	Return:$$$ISERR(st) st
@@ -211,6 +196,73 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 	
 	zn ns
 	quit $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="CLMConfiguration">
+<ClassMethod>1</ClassMethod>
+<FormalSpec><![CDATA[&pVars,pLogLevel:%String,tInstaller:%Installer.Installer]]></FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	Set Namespace = tInstaller.Evaluate("${Namespace}")
+	
+	Do tInstaller.PushNS("%SYS")
+	
+	Do:'##class(Security.SSLConfigs).Exists(Namespace) ##class(Security.SSLConfigs).Create(Namespace)
+	
+	Do ##class(Security.System).GetInstallationSecuritySetting(.security)
+	If (security="None") {
+		Set cspProperties("AutheEnabled") = $$$AutheUnauthenticated
+	} Else {
+		Set cspProperties("AutheEnabled") = $$$AutheCache // Password
+	}
+	Set cspProperties("NameSpace") = Namespace
+	Set cspProperties("IsNameSpaceDefault") = $$$NO
+	Set cspProperties("DispatchClass") = "CLM.Broker"
+	Set cspProperties("GroupById") = "clm"
+	Set cspProperties("CookiePath") = "/"
+	Write "Creating web application /"_$ZCONVERT(Namespace, "l"), !
+	Set tSC = ##class(Security.Applications).Create("/"_$ZCONVERT(Namespace, "l"), .cspProperties)
+	If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
+	kill cspProperties, security 
+	W "Web application /"_$ZCONVERT(Namespace, "l")_" created",!
+		
+	//--------------------------------------------------------------------------------------------//
+	if (##class(Security.Applications).%ExistsId("/csp/"_$ZCONVERT(Namespace, "l")))
+	{
+		set CSPApplication = ##class(Security.Applications).%OpenId("/csp/"_$ZCONVERT(Namespace, "l"))
+		set CSPApplication.NameSpace = Namespace
+		set CSPApplication.IsNameSpaceDefault = $$$YES
+		set CSPApplication.GroupById = $ZCONVERT(Namespace, "l")
+		set CSPApplication.CookiePath = "/"
+		do CSPApplication.%Save()
+	}
+	Else
+	{
+		Do ##class(Security.System).GetInstallationSecuritySetting(.security)
+		If (security="None") {
+			Set cspProperties("AutheEnabled") = $$$AutheUnauthenticated
+		} Else {
+			Set cspProperties("AutheEnabled") = $$$AutheCache // Password
+		}
+		Set cspProperties("NameSpace") = Namespace
+		Set cspProperties("IsNameSpaceDefault") = $$$YES
+		Set cspProperties("GroupById") = "clm"
+		Set cspProperties("CookiePath") = "/"
+		Write "Creating web application /csp/"_$ZCONVERT(Namespace, "l"), !
+		Set tSC = ##class(Security.Applications).Create("/csp/"_$ZCONVERT(Namespace, "l"), .cspProperties)
+		If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
+		W "Web application /csp/"_$ZCONVERT(Namespace, "l")_" created",!
+	}
+	Do tInstaller.PopNS()
+	
+	Do tInstaller.PushNS(Namespace)
+	set ^Git("settings","groupByFolder") = 1
+	Set ^CLM("yandexkey") = "trnsl.1.1.20160718T150901Z.31e0f759867d618c.2825e755db8a013f327016f007db3c619bc09e5e"
+	Set ^CLM("SSLConfig") = Namespace
+	Do tInstaller.PopNS()
+	
+	Quit $$$OK
 ]]></Implementation>
 </Method>
 </Class>

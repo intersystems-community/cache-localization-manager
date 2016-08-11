@@ -126,7 +126,6 @@ Creates the environment for spellchecker.<p>
 		
 		set aff = ..CNA.ConvertStringToPointer(affPath)
 		set dic = ..CNA.ConvertStringToPointer(dicPath)
-		//w CNAPath, !,hunspellPath, !,libcPath, !,dics(language), !,affPath, !,dicPath,!
 		set argTypes = $lb(..CNA.#POINTER, ..CNA.#POINTER)
 		set ..Hunspell =  ..CNA.CallFunction("Hunspell_create", ..CNA.#POINTER, argTypes, aff, dic)
 	} catch ex {
