@@ -45,6 +45,15 @@
 <RunInstall Class="CLM.Installer" Method="DownloadFromGitHub"/>
 </IfNotDef>
 </Namespace>
+
+<Log Text="Mapping CLM package to %SYS namespace" Level="0"/>
+<Namespace Name="%SYS" Create="no" Code="%SYS" Data="%SYS" Ensemble="0">
+<Configuration>
+<ClassMapping From="${Namespace}" Package="CLM"/>
+<GlobalMapping From="${Namespace}" Global="CLM"/>
+<RoutineMapping From="${Namespace}" Type="INC"/>
+</Configuration>
+</Namespace>
 </Manifest>
 ]]></Data>
 </XData>
@@ -221,6 +230,7 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 	Set cspProperties("DispatchClass") = "CLM.Broker"
 	Set cspProperties("GroupById") = "clm"
 	Set cspProperties("CookiePath") = "/"
+	Set cspProperties("MatchRoles") = ":%All"
 	Write "Creating web application /"_$ZCONVERT(Namespace, "l"), !
 	Set tSC = ##class(Security.Applications).Create("/"_$ZCONVERT(Namespace, "l"), .cspProperties)
 	If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
@@ -235,6 +245,7 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 		set CSPApplication.IsNameSpaceDefault = $$$YES
 		set CSPApplication.GroupById = $ZCONVERT(Namespace, "l")
 		set CSPApplication.CookiePath = "/"
+		set CSPApplication.MatchRoles = ":%All"
 		set CSPApplication.Path = $system.Util.InstallDirectory()_"/csp/"_$ZCONVERT(Namespace, "l")
 		set CSPApplication.AutheEnabled = $$$AutheUnauthenticated
 		do CSPApplication.%Save()
@@ -251,6 +262,7 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 		Set cspProperties("IsNameSpaceDefault") = $$$YES
 		Set cspProperties("GroupById") = "clm"
 		Set cspProperties("CookiePath") = "/"
+		Set cspProperties("MatchRoles") = ":%All"
 		Set cspProperties("Path") = $system.Util.InstallDirectory()_"/csp/"_$ZCONVERT(Namespace, "l")
 		Write "Creating web application /csp/"_$ZCONVERT(Namespace, "l"), !
 		Set tSC = ##class(Security.Applications).Create("/csp/"_$ZCONVERT(Namespace, "l"), .cspProperties)
