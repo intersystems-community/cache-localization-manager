@@ -1,27 +1,15 @@
 # Cache Localization Manager (CLM)
 Tool for translating Caché [message dictionaries](http://docs.intersystems.com/cache20152/csp/docbook/DocBook.UI.Page.cls?KEY=GZAP_localization#GZAP_C196068).
 
-## Base installation
+# Installation
 
-1. Download [CLM.Installer.xml](https://github.com/intersystems-ru/cache-localization-manager/releases/download/v2016.1/CLM.Installer.xml)
-2. Create ```clm``` namespace, with new DB and a standart web app (or use an existing one if you want to translate messages from that namespace)
-3. Check ```/csp/clm``` web app settings
-  - Name: /csp/clm
-  - Namespace: clm
-  - Allowed Authentication Methods: Unauthenticated OR Password
-  - Application Roles: %All
-  - Session Cookie Path: /
-  - Group By ID: clm
-4. Import the project into `clm` namespace and compile. You may encounter compilation errors on CLM.SpellChecker. It's okay
-5. Create web app ```/clm```
-  - Name: /clm
-  - Namespace: clm
-  - Allowed Authentication Methods: Unauthenticated OR Password
-  - Dispatch Class: CLM.Broker
-  - Application Roles: %All
-  - Session Cookie Path: /
-  - Group By ID: clm
-6. Open `http://localhost:57772/csp/clm/index.csp`
+1. Download the latest release xml file: [CLM.Installer.xml](https://github.com/intersystems-ru/cache-localization-manager/releases/)
+2. Import it to any Caché namespace, f.e. to USER.
+3. Run in terminal:
+```
+  USER> do ##class(CLM.Installer).Setup()
+```
+
 
 ## Spellcheck installation
 
