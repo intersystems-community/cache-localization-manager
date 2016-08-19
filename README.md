@@ -1,10 +1,10 @@
 # Cache Localization Manager (CLM)
 Tool for translating Caché [message dictionaries](http://docs.intersystems.com/cache20152/csp/docbook/DocBook.UI.Page.cls?KEY=GZAP_localization#GZAP_C196068).
 
-# Installation
+## Installation
 
 1. Download the latest release xml file: [CLM.Installer.xml](https://github.com/intersystems-ru/cache-localization-manager/releases/)
-2. Import it to any Caché namespace, f.e. to USER.
+2. Import it to any Caché namespace, e.g. to USER.
 3. Run in terminal:
 ```
   USER> do ##class(CLM.Installer).Setup()
