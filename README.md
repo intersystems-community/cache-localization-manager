@@ -3,7 +3,7 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 
 ## Base installation
 
-1. Download the project
+1. Download [CLM.Installer.xml](https://github.com/intersystems-ru/cache-localization-manager/releases/download/v2016.1/CLM.Installer.xml)
 2. Create ```clm``` namespace, with new DB and a standart web app (or use an existing one if you want to translate messages from that namespace)
 3. Check ```/csp/clm``` web app settings
   - Name: /csp/clm
