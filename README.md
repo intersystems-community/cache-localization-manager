@@ -7,6 +7,7 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 2. Import it to any Caché namespace, e.g. to USER.
 3. Run in terminal:
 ```
+  Set pVars("NameSpace") = "<The namespace where you want CLM to be installed>" 
   USER> do ##class(CLM.Installer).Setup()
 ```
 
