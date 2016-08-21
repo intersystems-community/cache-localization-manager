@@ -17,7 +17,8 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 
 1. Install [CNA](https://github.com/intersystems-ru/cna)
 2. Install [hunspell](http://hunspell.sourceforge.net/)
-3. Set `CNAPath`, `hunspellPath`, `libcPath` settings
+3. You can download dictionaries for spell check [here](https://drive.google.com/open?id=0B67IDZK3qoXJNDkySUxWNXY4dWM)
+4. Set `CNAPath`, `hunspellPath`, `libcPath`, `dicPath`, `affPath` settings
 
 ## Auto-translate installation
 
@@ -35,7 +36,6 @@ You can set the following settings:
 | CNAPath      | libcna.so                       | Path to libcna.dll or libcna.so                                                   |
 | libcPath     | /lib/x86_64-linux-gnu/libc.so.6 | Path to C standart library for Linux (C:\Windows\System32\msvcrt.dll for windows) |
 | hunspellPath | libhunspell.dll                 | Path to hunspell shared library                                                   |
-| affPath      | C:\ru.aff                       | Path to your hunspell dictionary if you don't want to use default one             |
-| dicPath      | C:\dic.aff                      | Path to your hunspell dictionary if you don't want to use default one             |
+| affPath      | C:/affs/                        | Path to your hunspell dictionary                                                  |
+| dicPath      | C:/dics/                        | Path to your hunspell dictionary                                                  |
 | yandexkey    | trnsl.1.1.2015062...            | Your yandex translate api key                                                     |
-| SSLConfig    | CLM                             | Valid SSL config. Would be used to connect to yandex server                       |
