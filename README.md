@@ -34,8 +34,8 @@ You can set the following settings:
 | Setting      | Sample value                    | Description                                                                       |
 |--------------|---------------------------------|---------------------------------------------------------------------------------- |
 | CNAPath      | libcna.so                       | Path to libcna.dll or libcna.so                                                   |
-| libcPath     | /lib/x86_64-linux-gnu/libc.so.6 | Path to C standart library for Linux (C:\Windows\System32\msvcrt.dll for windows) |
+| libcPath     | C:/Windows/System32/msvcrt.dll  | Path to C standart library for windows (/lib/x86_64-linux-gnu/libc.so.6 for linux)|
 | hunspellPath | libhunspell.dll                 | Path to hunspell shared library                                                   |
-| affPath      | C:/affs/                        | Path to your hunspell dictionary                                                  |
-| dicPath      | C:/dics/                        | Path to your hunspell dictionary                                                  |
+| affPath      | e.g. "C:/language/affs/"        | Path to your hunspell dictionary                                                  |
+| dicPath      | e.g. "C:/language/dics/"        | Path to your hunspell dictionary                                                  |
 | yandexkey    | trnsl.1.1.2015062...            | Your yandex translate api key                                                     |
