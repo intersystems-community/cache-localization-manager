@@ -7,8 +7,9 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 2. Import it to any Caché namespace, e.g. to USER.
 3. Run in terminal:
 ```
-  Set pVars("NameSpace") = "<The namespace where you want CLM to be installed>" 
-  USER> do ##class(CLM.Installer).Setup()
+  Set pVars("Namespace") = "<The namespace where you want CLM to be installed>" //e.g. SIMPLE
+  Set pVars("SourceDir") = "<The folder for the offline installation>"          //e.g. C:\temp\CLM\
+  USER> do ##class(CLM.Installer).Setup(pVars) //If you do not specify the default pVars then CLM namespace will be chosen by default
 ```
 
 
@@ -21,7 +22,7 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 ## Auto-translate installation
 
 1. Get yandex translate API [key](https://tech.yandex.com/translate/)
-2. Set `SSLConfig`, `yandexkey` settings
+2. Set `yandexkey` settings
 
 
 ## Settings
@@ -29,12 +30,12 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 You can set CLM settings in terminal with `do ##class(CLM.Utils).SetSetting(SettingName, Value)` comand.
 You can set the following settings:
 
-| Setting      | Sample value                    | Description                                                           |
-|--------------|---------------------------------|-----------------------------------------------------------------------|
-| CNAPath      | libcna.so                       | Path to libcna.dll or libcna.so                                       |
-| libcPath     | /lib/x86_64-linux-gnu/libc.so.6 | Path to C standart library                                            |
-| hunspellPath | libhunspell.dll                 | Path to hunspell shared library                                       |
-| affPath      | C:\ru.aff                       | Path to your hunspell dictionary if you don't want to use default one |
-| dicPath      | C:\dic.aff                      | Path to your hunspell dictionary if you don't want to use default one |
-| yandexkey    | trnsl.1.1.2015062...            | Your yandex translate api key                                         |
-| SSLConfig    | CLM                             | Valid SSL config. Would be used to connect to yandex server           |
+| Setting      | Sample value                    | Description                                                                       |
+|--------------|---------------------------------|---------------------------------------------------------------------------------- |
+| CNAPath      | libcna.so                       | Path to libcna.dll or libcna.so                                                   |
+| libcPath     | /lib/x86_64-linux-gnu/libc.so.6 | Path to C standart library for Linux (C:\Windows\System32\msvcrt.dll for windows) |
+| hunspellPath | libhunspell.dll                 | Path to hunspell shared library                                                   |
+| affPath      | C:\ru.aff                       | Path to your hunspell dictionary if you don't want to use default one             |
+| dicPath      | C:\dic.aff                      | Path to your hunspell dictionary if you don't want to use default one             |
+| yandexkey    | trnsl.1.1.2015062...            | Your yandex translate api key                                                     |
+| SSLConfig    | CLM                             | Valid SSL config. Would be used to connect to yandex server                       |
