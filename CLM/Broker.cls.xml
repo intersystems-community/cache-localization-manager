@@ -4,6 +4,10 @@
 <Super>%CSP.REST,CLM.Common</Super>
 <TimeCreated>63714,58855.014604</TimeCreated>
 
+<Property name="MessageDictionaryGlobal">
+<Type>%String</Type>
+</Property>
+
 <XData name="UrlMap">
 <Data><![CDATA[
 <Routes>
@@ -65,19 +69,21 @@
 ]]></Implementation>
 </Method>
 
-<Method name="SetNamespace">
+<Method name="GetNamespace">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	do ##class(%SYS.Namespace).ListAll(.r)
+  do ##class(%SYS.Namespace).ListAll(.r)
+ set result = ##class(%ListOfObjects).%New()
  s nsNext=""
- s end = []
  for  {
 	 set nsNext=$Order(r(nsNext))
 	 quit:nsNext=""
-	 do end.$push(nsNext)
+	 set message = ##class(%ZEN.proxyObject).%New()
+	 set message.namespace = nsNext
+	 do result.Insert(message)
  }
- s nsJSON = "{""namespace"": "_end.$toJSON()_"}"
+ return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,,..#FormatJSON)
 ]]></Implementation>
 </Method>
 
