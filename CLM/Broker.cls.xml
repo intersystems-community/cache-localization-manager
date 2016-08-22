@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
 <Class name="CLM.Broker">
-<Super>CLM.AbstractBroker,CLM.Common</Super>
+<Super>%CSP.REST,CLM.Common</Super>
 <TimeCreated>63714,58855.014604</TimeCreated>
 
 <XData name="UrlMap">
@@ -10,8 +10,9 @@
 	<Route Url="/messages" Method="GET" Call="GetMessages"/>
 	<Route Url="/messages" Method="PUT" Call="PutMessage"/>
 	<Route Url="/messages" Method="POST" Call="PostMessage"/>
-	<Route Url="/test" Method="GET" Call="Test"/>
+	<Route Url="/test" Method="POST" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
+	<Route Url="/delete-language/:domain/:language" Method="GET" Call="DeleteLanguage"/>
 	<Route Url="/export/:domain/:language" Method="GET" Call="DownloadDomain"/>
 	<Route Url="/import" Method="POST" Call="UploadDomain"/>
 </Routes>
@@ -21,9 +22,7 @@
 <Method name="Test">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
-	w "test"
-	q $$$OK
+<Implementation><![CDATA[	q $$$OK
 ]]></Implementation>
 </Method>
 
@@ -66,6 +65,22 @@
 ]]></Implementation>
 </Method>
 
+<Method name="SetNamespace">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	do ##class(%SYS.Namespace).ListAll(.r)
+ s nsNext=""
+ s end = []
+ for  {
+	 set nsNext=$Order(r(nsNext))
+	 quit:nsNext=""
+	 do end.$push(nsNext)
+ }
+ s nsJSON = "{""namespace"": "_end.$toJSON()_"}"
+]]></Implementation>
+</Method>
+
 <Method name="AddNewLocalization">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
@@ -80,7 +95,7 @@
 
 <Method name="DownloadDomain">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String="en"</FormalSpec>
+<FormalSpec>domain:%String,language:%String</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	return:'##class(CLM.Utils).DomainExists(domain) $$$ERROR($$$GeneralError,"Domain " _ domain _ "does not exist")
@@ -105,8 +120,8 @@
 <Implementation><![CDATA[
 	#dim %request As %CSP.Request
 	set filename = ##class(%File).TempFilename("xml")
-	set stream=%request.GetMimeData("file")
-	if $IsObject(Stream) {
+	set stream = %request.Content
+	if $IsObject(stream) {
 		set file=##class(%Stream.FileBinary).%New()
 		set file.Filename=filename
 		set st = file.CopyFromAndSave(stream)
@@ -118,6 +133,20 @@
 		set st = $$$ERROR($$$GeneralError, "MimeData 'file' is not a file")
 	}
 	quit st
+]]></Implementation>
+</Method>
+
+<Method name="DeleteLanguage">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	return:'##class(CLM.Utils).DomainExists(domain) $$$ERROR($$$GeneralError,"Domain " _ domain _ " does not exist")
+	return:'##class(CLM.Utils).LanguageExists(domain,language) $$$ERROR($$$GeneralError,"Language " _ language _ " does not exist")
+	
+	kill @global@(domain,language)
+	
+	return $$$OK
 ]]></Implementation>
 </Method>
 </Class>

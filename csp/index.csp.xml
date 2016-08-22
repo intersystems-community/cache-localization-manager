@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2015.1.1 (Build 505U)" ts="2015-12-10 14:55:19">
+<Export generator="Cache" version="25">
 <CSP name="index.csp" application="/csp/clm/" default="1"><![CDATA[
 <!DOCTYPE html>
 <html>
+<csp:method name="OnPreHTTP" ReturnType="%Boolean">
+ set %session.Language = "de"
+ quit 1
+</csp:method>
   <head>
     <title>Caché Localization Manager</title>
     <link rel="stylesheet" href="libs/pure-min.css">
@@ -14,6 +18,7 @@
     <script src="libs/jquery-2.1.3.min.js"></script>
     <script type="text/javascript">
     	#(##class(%ZEN.Auxiliary.jsonProvider).%WriteJSONFromObject("domains", "CLM.Utils", "GetGlobalStructure"))#
+   
     </script>
   </head>
   <body>
