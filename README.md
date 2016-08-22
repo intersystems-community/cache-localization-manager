@@ -15,8 +15,8 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 
 ## Spellcheck installation
 
-1. Install [CNA](https://github.com/intersystems-ru/cna)
-2. Install [hunspell](http://hunspell.sourceforge.net/)
+1. You can build [CNA](https://github.com/intersystems-ru/cna) by yourself or take already built [release](https://github.com/intersystems-ru/cna/releases) version
+2. You can build [hunspell](http://hunspell.sourceforge.net/) by yourself or take already built [release](https://github.com/intersystems-ru/cache-localization-manager/releases/) version 
 3. You can download dictionaries for spell check [here](https://drive.google.com/open?id=0B67IDZK3qoXJNDkySUxWNXY4dWM)
 4. Set `CNAPath`, `hunspellPath`, `libcPath`, `dicPath`, `affPath` settings
 
