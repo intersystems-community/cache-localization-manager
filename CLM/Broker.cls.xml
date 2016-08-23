@@ -47,6 +47,13 @@
 ]]></Implementation>
 </Method>
 
+<Method name="GetNamespace">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[ do ##class(CLM.Utils).GetNamespaceList()
+]]></Implementation>
+</Method>
+
 <Method name="PutMessage">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
@@ -66,24 +73,6 @@
 	set domain = $$$R("Domain") 
 	set messages = $$$R("Messages")
 	return ##class(CLM.Utils).PostMessages(domain, messages, $$$MessageDictionaryGlobal)
-]]></Implementation>
-</Method>
-
-<Method name="GetNamespace">
-<ClassMethod>1</ClassMethod>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
-  do ##class(%SYS.Namespace).ListAll(.r)
- set result = ##class(%ListOfObjects).%New()
- s nsNext=""
- for  {
-	 set nsNext=$Order(r(nsNext))
-	 quit:nsNext=""
-	 set message = ##class(%ZEN.proxyObject).%New()
-	 set message.namespace = nsNext
-	 do result.Insert(message)
- }
- return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,,..#FormatJSON)
 ]]></Implementation>
 </Method>
 
@@ -146,13 +135,7 @@
 <ClassMethod>1</ClassMethod>
 <FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
-	return:'##class(CLM.Utils).DomainExists(domain) $$$ERROR($$$GeneralError,"Domain " _ domain _ " does not exist")
-	return:'##class(CLM.Utils).LanguageExists(domain,language) $$$ERROR($$$GeneralError,"Language " _ language _ " does not exist")
-	
-	kill @global@(domain,language)
-	
-	return $$$OK
+<Implementation><![CDATA[  do ##class(CLM.Utils).DeleteLanguage(domain, language, global)
 ]]></Implementation>
 </Method>
 </Class>
