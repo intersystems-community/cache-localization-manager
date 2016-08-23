@@ -150,7 +150,7 @@
 <ClassMethod>1</ClassMethod>
 <FormalSpec>namespace:%String</FormalSpec>
 <ReturnType>%String</ReturnType>
-<Implementation><![CDATA[ Set ^["CLM"]NameSpace = "^["""_namespace_"""]CacheMsg"
+<Implementation><![CDATA[ Set ^["USER"]NameSpace = "^["""_namespace_"""]CacheMsg"
 ]]></Implementation>
 </Method>
 
