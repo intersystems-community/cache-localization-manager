@@ -146,6 +146,14 @@
 ]]></Implementation>
 </Method>
 
+<Method name="ChangeNamespace">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>namespace:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[ Set ^["CLM"]NameSpace = "^["""_namespace_"""]CacheMsg"
+]]></Implementation>
+</Method>
+
 <Method name="AddNewLocalization">
 <ClassMethod>1</ClassMethod>
 <FormalSpec>origin:%String,language:%String,domain:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
@@ -216,14 +224,6 @@
 <FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%Boolean</ReturnType>
 <Implementation><![CDATA[''$DATA(@global@(domain,language))
-]]></Implementation>
-</Method>
-
-<Method name="ChangeNamespace">
-<ClassMethod>1</ClassMethod>
-<FormalSpec>namespace:%String</FormalSpec>
-<ReturnType>%String</ReturnType>
-<Implementation><![CDATA[ Set ^["CLM"]NameSpace = "^["""_namespace_"""]CacheMsg"
 ]]></Implementation>
 </Method>
 </Class>

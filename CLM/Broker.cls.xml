@@ -14,7 +14,8 @@
 	<Route Url="/messages" Method="GET" Call="GetMessages"/>
 	<Route Url="/messages" Method="PUT" Call="PutMessage"/>
 	<Route Url="/messages" Method="POST" Call="PostMessage"/>
-	<Route Url="/namespaces" Method="POST" Call="GetNamespaces"/>
+	<Route Url="/namespaces" Method="GET" Call="GetNamespaces"/>
+	<Route Url="/namespace/:namespace" Method="GET" Call="ChangeNamespace"/>
 	<Route Url="/test" Method="POST" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
 	<Route Url="/delete-language/:domain/:language" Method="GET" Call="DeleteLanguage"/>
@@ -53,8 +54,12 @@
 <FormalSpec>namespace:%String</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	do ##class(CLM.Utils).ChangeNamespace(namespace)
-	return $$$OK
+	if (##class(%SYS.Namespace).Exists(namespace))
+	{
+	 	do ##class(CLM.Utils).ChangeNamespace(namespace)
+	 	return $$$OK
+	}
+	return $$$ERROR($$$GeneralError,"Namespace " _ namespace _ " does not exist")
 ]]></Implementation>
 </Method>
 
