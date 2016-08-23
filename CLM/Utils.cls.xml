@@ -63,16 +63,17 @@
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
  do ##class(%SYS.Namespace).ListAll(.r)
- set result = ##class(%ListOfObjects).%New()
+ set result = ##class(%ListOfDataTypes).%New()
  set nsNext=""
- for  {
-	 set nsNext=$Order(r(nsNext))
-	 quit:nsNext=""
-	 set message = ##class(%ZEN.proxyObject).%New()
-	 set message.namespace = nsNext
-	 do result.Insert(message)
+ set message = ##class(%ZEN.proxyObject).%New() 
+ for
+ {
+  	set nsNext=$Order(r(nsNext))
+  	quit:nsNext=""
+  	do result.Insert(nsNext)
  }
- return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,,..#FormatJSON)
+ set message.namespace = result
+ return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(message,,,..#FormatJSON)
 ]]></Implementation>
 </Method>
 
