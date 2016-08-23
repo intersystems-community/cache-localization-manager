@@ -4,6 +4,10 @@
 <Super>CLM.Common</Super>
 <TimeCreated>63714,61614.83778</TimeCreated>
 
+<Property name="Namespace">
+<Type>%String</Type>
+</Property>
+
 <Method name="GetGlobalStructure">
 <ClassMethod>1</ClassMethod>
 <FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String=$$$MessageDictionaryGlobal]]></FormalSpec>
@@ -60,7 +64,7 @@
 <Implementation><![CDATA[
  do ##class(%SYS.Namespace).ListAll(.r)
  set result = ##class(%ListOfObjects).%New()
- s nsNext=""
+ set nsNext=""
  for  {
 	 set nsNext=$Order(r(nsNext))
 	 quit:nsNext=""
@@ -212,6 +216,14 @@
 <FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%Boolean</ReturnType>
 <Implementation><![CDATA[''$DATA(@global@(domain,language))
+]]></Implementation>
+</Method>
+
+<Method name="ChangeNamespace">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>namespace:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[ Set ^["CLM"]NameSpace = "^["""_namespace_"""]CacheMsg"
 ]]></Implementation>
 </Method>
 </Class>

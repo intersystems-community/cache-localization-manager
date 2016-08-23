@@ -14,6 +14,7 @@
 	<Route Url="/messages" Method="GET" Call="GetMessages"/>
 	<Route Url="/messages" Method="PUT" Call="PutMessage"/>
 	<Route Url="/messages" Method="POST" Call="PostMessage"/>
+	<Route Url="/namespaces" Method="POST" Call="GetNamespaces"/>
 	<Route Url="/test" Method="POST" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
 	<Route Url="/delete-language/:domain/:language" Method="GET" Call="DeleteLanguage"/>
@@ -47,7 +48,17 @@
 ]]></Implementation>
 </Method>
 
-<Method name="GetNamespace">
+<Method name="ChangeNamespace">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>namespace:%String</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	do ##class(CLM.Utils).ChangeNamespace(namespace)
+	return $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="GetNamespaces">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[ do ##class(CLM.Utils).GetNamespaceList()
