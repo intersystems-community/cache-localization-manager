@@ -71,7 +71,7 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 <Implementation><![CDATA[
     Set Namespace = tInstaller.Evaluate("${Namespace}")
     Do tInstaller.PushNS("%SYS")
-    Set tSC = ..Update(Namespace, "intersystems-ru", "cache-localization-manager", "CLM")
+    Set tSC = ..Update(Namespace, "intersystems-ru", "cache-localization-manager", "master")
     Do tInstaller.PopNS()
     If $$$ISERR(tSC) Throw ##class(%Installer.Exception).CreateFromStatus(tSC)
     quit $$$OK

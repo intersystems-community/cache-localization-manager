@@ -174,7 +174,7 @@
 		do request.InsertParam("text", @value)	
 	$$$ENDFOR
 	
-	set status = request.Get()
+	set status = request.Get(,1)
 	if ($$$ISERR(status)) {
 		return status
 	}

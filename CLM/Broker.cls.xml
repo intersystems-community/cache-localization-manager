@@ -100,7 +100,7 @@
 	set from = %request.Data("from", 1)
 	set to = %request.Data("to", 1)
 	
-	return ##class(CLM.Utils).AddNewLocalization($EXTRACT(from, 1, 2), to, domain)
+	return ##class(CLM.Utils).AddNewLocalization($EXTRACT(from, 1, 2), to, domain, $$$MessageDictionaryGlobal)
 ]]></Implementation>
 </Method>
 

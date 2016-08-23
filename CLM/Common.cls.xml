@@ -30,7 +30,7 @@ w - Windows-style cr/lf newline<br/>]]></Description>
 <Parameter name="SettingsGlobal">
 <Description>
 Global with user settings</Description>
-<Default>^CLM</Default>
+<Default>^["CLM"]CLM</Default>
 </Parameter>
 
 <Method name="GetSetting">
