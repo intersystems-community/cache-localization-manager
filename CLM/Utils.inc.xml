@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.1 (Build 656U)" ts="2016-08-23 15:35:18">
-<Routine name="CLM.Utils" type="INC" timestamp="64153,56061.35822"><![CDATA[
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.1 (Build 656U)" ts="2016-08-23 16:05:54">
+<Routine name="CLM.Utils" type="INC" timestamp="64153,57295.767225"><![CDATA[
 	#define FOREACH(%key,%value,%global) ##Continue
 	set %key="" ##Continue
 	for { ##Continue
@@ -11,7 +11,7 @@
 	#define ENDFOR }
 
 #; User Application Message Dictionary
-#define MessageDictionaryGlobal ^["CLM"]NameSpace
+#define MessageDictionaryGlobal ^["USER"]NameSpace
 
 #; System Application Message Dictionary
 #define SystemMessageDictionaryGlobal "^%qCacheMsg"
