@@ -21,6 +21,7 @@
 	<Route Url="/delete-language/:domain/:language" Method="GET" Call="DeleteLanguage"/>
 	<Route Url="/export/:domain/:language" Method="GET" Call="DownloadDomain"/>
 	<Route Url="/import" Method="POST" Call="UploadDomain"/>
+	<Route Url="/domains" Method="GET" Call="GetDomains" Cors="true" />
 </Routes>
 ]]></Data>
 </XData>
@@ -122,6 +123,19 @@
 	set st = ##class(%CSP.StreamServer).OnPage()
 	do ##class(%File).Delete(filename)
 	return st
+]]></Implementation>
+</Method>
+
+<Method name="GetDomains">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	
+	set %response.ContentType = "application/json"
+	do ##class(CLM.Utils).GetGlobalStructure(,.result,)
+	
+	do ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,"aeltow")
+	return %response
 ]]></Implementation>
 </Method>
 
