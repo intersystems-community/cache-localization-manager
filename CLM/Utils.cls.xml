@@ -77,6 +77,20 @@
 ]]></Implementation>
 </Method>
 
+<Method name="SetPaths">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>CNAPath:%String,hunspellPath:%String,libcPath:%String,affPath:%String,dicPath:%String,global:%String=$$$LibsAndDicsPathGlobal</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+		set @global@("CNAPath") = CNAPath		
+		set @global@("hunspellPath") = hunspellPath
+		set @global@("libcPath") = libcPath	
+		set @global@("affPath") = affPath	
+		set @global@("dicPath") = dicPath	 
+		return $$$OK
+]]></Implementation>
+</Method>
+
 <Method name="PutMessage">
 <ClassMethod>1</ClassMethod>
 <FormalSpec>domain:%String,language:%String,id:%String,text:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>

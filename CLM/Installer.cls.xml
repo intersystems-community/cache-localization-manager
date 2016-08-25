@@ -208,7 +208,7 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 	
 	Do tInstaller.PushNS("%SYS")
 	
-	Do:'##class(Security.SSLConfigs).Exists(Namespace) ##class(Security.SSLConfigs).Create(Namespace)
+	Do:'##class(Security.SSLConfigs).Exists("CLM") ##class(Security.SSLConfigs).Create("CLM")
 	
 	Do ##class(Security.System).GetInstallationSecuritySetting(.security)
 	If (security="None") {
@@ -268,11 +268,6 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 	Set ^Git("settings", "groupByFolder") = 1
 	Set ^CLM("yandexkey") 		= "trnsl.1.1.20160718T150901Z.31e0f759867d618c.2825e755db8a013f327016f007db3c619bc09e5e"
 	Set ^CLM("SSLConfig") 		= Namespace
-	Set ^CLM("CNAPath")   		= "C:\forCLM\libcna.dll"
-	Set ^CLM("affPath") 		= "C:\forCLM\language\affs\"
-	Set ^CLM("dicPath")	     	= "C:\forCLM\language\dics\"
- 	Set ^CLM("hunspellPath")	= "C:\forCLM\libhunspell.dll"
- 	Set ^CLM("libcPath") 		= "C:\Windows\System32\msvcrt.dll"
 	Do tInstaller.PopNS()
 	
 	Quit $$$OK
