@@ -12,12 +12,14 @@
 	<Route Url="/messages" Method="PUT" Call="PutMessage"/>
 	<Route Url="/messages" Method="POST" Call="PostMessage"/>
 	<Route Url="/namespaces" Method="GET" Call="GetNamespaces"/>
-	<Route Url="/namespace/:namespace" Method="GET" Call="ChangeNamespace"/>
+	<Route Url="/namespace/:namespace" Method="POST" Call="ChangeNamespace"/>
+	<Route Url="/test" Method="POST" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
 	<Route Url="/delete-language/:domain/:language" Method="GET" Call="DeleteLanguage"/>
 	<Route Url="/export/:domain/:language" Method="GET" Call="DownloadDomain"/>
 	<Route Url="/import" Method="POST" Call="UploadDomain"/>
 	<Route Url="/paths" Method="GET" Call="SetPaths"/>
+ 	<Route Url="/domains" Method="GET" Call="GetDomains"/>
 </Routes>
 ]]></Data>
 </XData>
@@ -26,6 +28,18 @@
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[	q $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="GetDomains">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	set %response.ContentType = "application/json"
+	do ##class(CLM.Utils).GetGlobalStructure(,.result,)
+	do ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,"aeltow")
+	return %response
+	return $$$OK
 ]]></Implementation>
 </Method>
 
@@ -79,7 +93,7 @@
 <Method name="GetNamespaces">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[ do ##class(CLM.Utils).GetNamespaceList()
+<Implementation><![CDATA[ return ##class(CLM.Utils).GetNamespaceList()
 ]]></Implementation>
 </Method>
 

@@ -77,29 +77,138 @@
 ]]></Implementation>
 </Method>
 
-<Method name="SetPaths">
-<ClassMethod>1</ClassMethod>
-<FormalSpec>CNAPath:%String,hunspellPath:%String,libcPath:%String,affPath:%String,dicPath:%String,global:%String=$$$LibsAndDicsPathGlobal</FormalSpec>
-<ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[
-	if $data(CNAPath){
-		set @global@("CNAPath") = CNAPath
-	}
-	if $data(CNAPath){
-		set @global@("hunspellPath") = hunspellPath
-	}
-	if $data(CNAPath){
-		set @global@("libcPath") = libcPath	
-	}		
-	if $data(CNAPath){
-		set @global@("affPath") = affPath	
-	}		
-	if $data(CNAPath){
-		set @global@("dicPath") = dicPath	 
-	}				
-	return $$$OK
-]]></Implementation>
-</Method>
+<UDLText name="T">
+<Content><![CDATA[
+// ClassMethod SetPaths(CNAPath As %String, hunspellPath As %String, libcPath As %String, affPath As %String, dicPath As %String, global As %String = {$$$LibsAndDicsPathGlobal}) As %Status
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// {
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	if $data(CNAPath){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		set @global@("CNAPath") = CNAPath
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	}
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	if $data(CNAPath){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		set @global@("hunspellPath") = hunspellPath
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	}
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	if $data(CNAPath){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		set @global@("libcPath") = libcPath	
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	}		
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	if $data(CNAPath){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		set @global@("affPath") = affPath	
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	}		
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	if $data(CNAPath){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		set @global@("dicPath") = dicPath	 
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	}				
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	return $$$OK
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// }
+
+]]></Content>
+</UDLText>
 
 <Method name="PutMessage">
 <ClassMethod>1</ClassMethod>

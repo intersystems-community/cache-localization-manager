@@ -2,28 +2,159 @@
 <Export generator="Cache" version="25">
 <CSP name="index.csp" application="/csp/clm/" default="1"><![CDATA[
 <!DOCTYPE html>
-<html>
-<csp:method name="OnPreHTTP" ReturnType="%Boolean">
- set %session.Language = "de"
- quit 1
-</csp:method>
-  <head>
-    <title>Caché Localization Manager</title>
-    <link rel="stylesheet" href="libs/pure-min.css">
-    <link rel="stylesheet" href="libs/grids-responsive-min.css">
-    <link rel="stylesheet" href="custom.css">
+<!-- saved from url=(0040)http://localhost:57772/csp/clm/index.csp -->
+<html lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script src="./libs/js/angular.min.js"></script>	
+	<script src="./myApp.js"></script>
+	<script src="./myCtrl.js"></script>
 
-    <script src="libs/react-0.13.3.js"></script>
-    <script src="libs/JSXTransformer-0.13.3.js"></script>
-    <script src="libs/jquery-2.1.3.min.js"></script>
-    <script type="text/javascript">
-    	#(##class(%ZEN.Auxiliary.jsonProvider).%WriteJSONFromObject("domains", "CLM.Utils", "GetGlobalStructure"))#
-   
-    </script>
-  </head>
-  <body>
-    <div id="content"></div>
-    <script type="text/jsx" src="app.js"></script>
-  </body>
-</html>]]></CSP>
+	<script src="./libs/js/jquery.min.js"></script>
+	<script src="./libs/js/smart-table.min.js"></script>
+	<script src="./libs/js/semantic.min.js"></script>
+	<script src="./libs/js/angular-sanitize.min.js"></script>
+	<script src="./libs/js/ngNotificationsBar.min.js"></script>
+
+	<link rel="stylesheet" href="./libs/css/ngNotificationsBar.min.css">
+	<link rel="stylesheet" type="text/css" href="./libs/css/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="./libs/css/myStyles.css">
+</head>
+
+<body ng-controller="myCtrl" ng-app="myApp" class="ng-scope">
+	<notifications-bar class="notifications"></notifications-bar>
+
+	<div class="ui internally grid">
+		<div class="row">
+			<div class="three wide column">
+				<div class="ui vertical buttons two wide column">
+					<button class="ui large yellow button">CLM</button>
+					<button class="ui large purple button" 
+							ng-repeat="(domain, languages) in domains"
+							ng-click="domainClicked(domain, 'en')">{{domain}}</button>
+				</div>
+			</div>
+			<div class="ten wide column">
+				<table st-table="messages" class="ui celled table table-striped">
+					<thead>
+						<tr>
+							<th st-sort="id" class="two wide">id</th>
+							<th class="eight wide purple">message  
+								<div class="ui simple dropdown">
+									{{yandexLanguagesList[selectedLanguage]}}
+									<i class="dropdown icon"></i>
+									<div class="menu">
+										<div class="item ng-binding ng-scope" 
+											ng-repeat="language in domains[domain]" 
+											ng-click="setLanguage(language)">{{yandexLanguagesList[language]}}</div>
+									</div>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="ui fluid input">
+									<input type="text" placeholder="Search..." ng-model="searchingFilter" class="ng-pristine ng-untouched ng-valid">
+								</div>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="message in messages | filter : searchingFilter">
+							<td>
+								{{message.id}}
+							</td>
+							<td contenteditable="true" 
+							ng-blur="updateMessage($event, message.text, message.id)" 
+							ng-keypress="keyPressed($event, message.text, message.id)">
+							{{message.text}}
+						</td>
+					</tr>
+
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2" class="text-center">
+							<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>		
+		</div>
+		<div class="three wide column">
+			<div class="ui vertical buttons two wide column">
+				<button class="ui large purple button" ng-click="getMistakes()">Spellcheck</button>
+				<button class="ui large green button" ng-click="addNewLocalizationClicked()">Add New Localization</button>
+				<button class="ui large pink button" ng-click="exportMessages()">Export Current Messages</button>
+				<button class="ui large pink button" ng-click="importMessagesClicked()">Import Current Messages</button>
+				<button class="ui large violet button" ng-click="changeNamespaceClicked()">Change Namespace</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add New Localization Modal  -->
+<div class="ui modal addNewLocalization">
+	<div class="header">
+		Adding a new localization
+	</div>
+	<div class="content">
+		<div class="ui header ng-binding">Please choose the language to add to PMML domain.</div>
+
+		<select class="ui dropdown ng-pristine ng-untouched ng-valid" ng-model="selectedLanguage">
+			<option ng-repeat="(locale, language) in yandexLanguagesList" ng-value="locale">{{yandexLanguagesList[locale]}}</option>
+		</select>
+	</div>
+	<div class="actions">
+		<div class="ui black deny button">Cancel.</div>
+		<div class="ui positive right icon button" ng-click="postAddNewLocalization(domain, 'en', selectedLanguage);">Add.</div>
+	</div>
+</div>
+<!-- Add New Localization Modal  -->
+
+
+<!-- ChangeNamespace Modal  -->
+<div class="ui modal changeNamespace">
+	<div class="header">
+		Changing Namespace
+	</div>
+	<div class="content">
+		<div class="ui header">Please chose the namespace that you want to work on.</div>
+
+		<select class="ui dropdown ng-pristine ng-untouched ng-valid" ng-model="selectedNamespace">
+			<option value="">Choose The Namespace</option>
+			<option ng-repeat="namespace in namespaces">{{namespace}}</option>
+		</select>
+	</div>
+	<div class="actions">
+		<div class="ui black deny button">Cancel.</div>
+		<div class="ui positive right icon button" ng-click="changeNamespace(selectedNamespace);">Change.</div>
+	</div>
+</div>
+<!-- ChangeNamespace Modal  -->
+
+<!-- import Domain Modal  -->
+<div class="ui modal importMessages">
+
+	<div class="header">
+		Importing Messages
+	</div>
+
+	<div class="content">
+		<div class="ui header">Please select file that you want to import(Should be XML file.)</div>
+		<div class="ui fluid icon input">
+			<input type="file" file-model="myFile">
+		</div>
+	</div>
+
+	<div class="actions">
+		<div class="ui black deny button">Cancel.</div>
+		<div class="ui positive right icon button" ng-click="uploadFile();">Import.</div>
+	</div>
+
+</div>
+<!-- import Domain Modal  -->
+
+
+</body></html>]]></CSP>
 </Export>
