@@ -6,18 +6,18 @@
 <html lang="en-US">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<script src="./libs/js/angular.min.js"></script>	
+	<script src="./libs/js/angular.js"></script>	
 	<script src="./myApp.js"></script>
 	<script src="./myCtrl.js"></script>
 
-	<script src="./libs/js/jquery.min.js"></script>
-	<script src="./libs/js/smart-table.min.js"></script>
-	<script src="./libs/js/semantic.min.js"></script>
-	<script src="./libs/js/angular-sanitize.min.js"></script>
-	<script src="./libs/js/ngNotificationsBar.min.js"></script>
+	<script src="./libs/js/jquery.js"></script>
+	<script src="./libs/js/smart-table.js"></script>
+	<script src="./libs/js/semantic.js"></script>
+	<script src="./libs/js/angular-sanitize.js"></script>
+	<script src="./libs/js/ngNotificationsBar.js"></script>
 
-	<link rel="stylesheet" href="./libs/css/ngNotificationsBar.min.css">
-	<link rel="stylesheet" type="text/css" href="./libs/css/semantic.min.css">
+	<link rel="stylesheet" href="./libs/css/ngNotificationsBar.css">
+	<link rel="stylesheet" type="text/css" href="./libs/css/semantic.css">
 	<link rel="stylesheet" type="text/css" href="./libs/css/myStyles.css">
 </head>
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="libs/css/myStyles.css" application="/csp/clm/" default="1"><![CDATA[
+body {
+	background-color: #E1BEE7;
+}
+
+]]></CSP>
+</Export>
