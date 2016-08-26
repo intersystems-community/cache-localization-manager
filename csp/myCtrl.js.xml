@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="myCtrl.js" application="/csp/clm/" default="1"><![CDATA[
 
 app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpload) {
 
@@ -62,7 +65,8 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	$scope.getMessages = function (domain, language) {
 		$http.get($scope.url + '/messages?domain=' + domain + '&language=' + language + '&spellcheck=false').
 		then(function (response) {
-			$scope.messages = response.data
+			$scope.messages = response.data;
+
 		}, function myError(response){
 			notifications.showError({
 				message: 'messages weren\'t downloaded',
@@ -74,6 +78,11 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	$scope.getMistakes = function () {
 		$http.get(encodeURI($scope.url + '/messages?domain=' + $scope.domain + '&language=' + $scope.selectedLanguage + '&spellcheck=true')).
 		then(function (response) {
+			$scope.messages = response.data;
+			notifications.showSuccess({
+				message: 'mistakes are listed below',
+				hideDelay: 1500,
+				hide: true});
 		}, function myError(response){
 			notifications.showError({
 				message: 'mistakes weren\'t downloaded',
@@ -220,4 +229,5 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	init();
 
 
-});
+});]]></CSP>
+</Export>

@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+<CSP name="myApp.js" application="/csp/clm/" default="1"><![CDATA[
 var app = angular.module('myApp', ['ngNotificationsBar', 'ngSanitize']);
 
 app.directive('fileModel', ['$parse', function ($parse) {
@@ -32,4 +35,5 @@ app.service('fileUpload', ['$http', function ($http) {
 		.error(function(){
 		});
 	}
-}]);
+}]);]]></CSP>
+</Export>
