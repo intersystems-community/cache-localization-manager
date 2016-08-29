@@ -20,6 +20,10 @@
 	<link rel="stylesheet" type="text/css" href="./libs/css/myStyles.css">
 
 
+	<script src="./libs/js/loading-bar.js"></script>
+	<link rel="stylesheet" type="text/css" href="./libs/css/loading-bar.css">
+
+
 	<script src="./myApp.js"></script>
 	<script src="./myCtrl.js"></script>
 </head>
