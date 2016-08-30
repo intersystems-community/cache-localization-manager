@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Export generator="Cache" version="25">
 <CSP name="myApp.js" application="/csp/clm/" default="1"><![CDATA[
-var app = angular.module('myApp', ['ngNotificationsBar', 'ngSanitize', 'angular-loading-bar']);
+var app = angular.module('myApp', ['ui-notification', 'ngSanitize', 'angular-loading-bar']);
 
 app.directive('fileModel', ['$parse', function ($parse) {
 	return {

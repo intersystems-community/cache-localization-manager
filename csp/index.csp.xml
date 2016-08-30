@@ -13,9 +13,9 @@
 	<script src="./libs/js/smart-table.min.js"></script>
 	<script src="./libs/js/semantic.min.js"></script>
 	<script src="./libs/js/angular-sanitize.min.js"></script>
-	<script src="./libs/js/ngNotificationsBar.min.js"></script>
+	<script src="./libs/js/angular-ui-notification.min.js"></script>
 
-	<link rel="stylesheet" href="./libs/css/ngNotificationsBar.min.css">
+	<link rel="stylesheet" href="./libs/css/angular-ui-notification.min.css">
 	<link rel="stylesheet" type="text/css" href="./libs/css/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="./libs/css/myStyles.css">
 
@@ -27,7 +27,7 @@
 </head>
 
 <body ng-controller="myCtrl" ng-app="myApp" class="ng-scope">
-	<notifications-bar class="notifications"></notifications-bar>
+	<div notifications-bar class="notifications" style="width: 50%;"></div notifications-bar>
 
 	<div class="ui internally grid">
 		<div class="row">
@@ -106,13 +106,13 @@
 	<div class="content">
 		<div class="ui header ng-binding">Please choose the language to add to PMML domain.</div>
 
-		<select class="ui dropdown ng-pristine ng-untouched ng-valid" ng-model="selectedLanguage">
+		<select class="ui dropdown ng-pristine ng-untouched ng-valid" ng-model="newLanguage">
 			<option ng-repeat="(locale, language) in yandexLanguagesList" ng-value="locale">{{yandexLanguagesList[locale]}}</option>
 		</select>
 	</div>
 	<div class="actions">
 		<div class="ui black deny button">Cancel.</div>
-		<div class="ui positive right icon button" ng-click="postAddNewLocalization(domain, 'en', selectedLanguage);">Add.</div>
+		<div class="ui positive right icon button" ng-click="postAddNewLocalization(domain, selectedLanguage, newLanguage);">Add.</div>
 	</div>
 </div>
 <!-- Add New Localization Modal  -->

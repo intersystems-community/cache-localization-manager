@@ -2,7 +2,7 @@
 <Export generator="Cache" version="25">
 <CSP name="myCtrl.js" application="/csp/clm/" default="1"><![CDATA[
 
-app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpload) {
+app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUpload) {
 
 	var init = function () {
 
@@ -100,6 +100,7 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 		then(function (response) {
 			$scope.isSpellCheck = true;
 			$scope.messages = response.data;
+			Notification.success('mistakes are listed below');
 			notifications.showSuccess({
 				message: 'mistakes are listed below',
 				hideDelay: 1500,
@@ -157,33 +158,21 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 
 		$http.post($scope.url +  '/add-new-localization?domain=' + domain + "&from=" + languageFrom + '&to=' + languageTo).
 		then(function (response) {
-			notifications.showSuccess({
-				message: $scope.yandexLanguagesList[languageTo] + ' was successfully added to ' + domain + ' domain!',
-				hideDelay: 1500,
-				hide: true});
+			Notification.success($scope.yandexLanguagesList[languageTo] + ' was successfully added to ' + domain + ' domain!');
 			$scope.getDomains();
 			$scope.domainClicked(domain, languageTo);
 			$scope.language = languageTo;
 		}, function myError(response){
-			notifications.showError({
-				message: 'New Localization Was Not Added.',
-				hideDelay: 1500,
-				hide: true});
+			Notification.error('New Localization Was Not Added.');
 		});
 	};
 
 	$scope.putUpdateMessage = function (domain, language, id, text) {
 		$http.put(encodeURI($scope.url + '/messages?domain=' + domain + '&language=' + language + '&id=' + id + '&text=' + text)).
 		then(function (response) {
-			notifications.showSuccess({
-				message: text + ' was successfully replaced into ' + domain + ' domain!',
-				hideDelay: 1500,
-				hide: true});
+			Notification.success(text + ' was successfully replaced into ' + domain + ' domain!');
 		}, function myError(response){
-			notifications.showError({
-				message: 'message was not updated.',
-				hideDelay: 1500,
-				hide: true});
+			Notification.error('message was not updated.');
 		});
 	};
 
@@ -208,7 +197,6 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	};
 
 	$scope.addNewLocalizationClicked = function () {
-		$scope.selectedLanguage = $scope.defaultLanguage;
 		$('.ui.modal.addNewLocalization').modal('show');
 	};
 
@@ -240,17 +228,11 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	$scope.changeNamespace = function (selectedNamespace) {
 		$http.post($scope.url +  '/namespace/' + selectedNamespace).
 		then(function (response) {
-			notifications.showSuccess({
-				message: 'namespaces has been changed to ' + selectedNamespace,
-				hideDelay: 1500,
-				hide: true});
+			Notification.success('namespaces has been changed to ' + selectedNamespace);
 			init();
 			$scope.currentNamespace = selectedNamespace;
 		}, function myError(response){
-			notifications.showError({
-				message: 'Namespace was not changed.',
-				hideDelay: 1500,
-				hide: true});
+			Notification.error('Namespace was not changed.');
 		});
 	};
 
@@ -266,15 +248,9 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 		$http.get(encodeURI($scope.url + '/delete-language/' + $scope.domain + '/' + $scope.selectedLanguage)).
 		then(function (response) {
 			$scope.getDomains();
-			notifications.showSuccess({
-				message: $scope.yandexLanguagesList[$scope.selectedLanguage] + ' was deleted from ' + $scope.domain,
-				hideDelay: 1500,
-				hide: true});
+			Notification.success($scope.yandexLanguagesList[$scope.selectedLanguage] + ' was deleted from ' + $scope.domain);
 		}, function myError(response){
-			notifications.showError({
-				message: 'current language wasn\'t deleted',
-				hideDelay: 1500,
-				hide: true});
+			Notification.error('current language wasn\'t deleted');
 		});
 	};
 
