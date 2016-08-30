@@ -305,6 +305,8 @@
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
+	set CurrentNs = $namespace
+	zn $p(##class(CLM.Utils).GetCurrentNamespace(),"""",4)
 	#dim %request As %CSP.Request
 	set filename = ##class(%File).TempFilename("xml")
 	set stream = %request.Content
@@ -319,6 +321,7 @@
 	} else {
 		set st = $$$ERROR($$$GeneralError, "MimeData 'file' is not a file")
 	}
+	zn CurrentNs
 	quit st
 ]]></Implementation>
 </Method>
