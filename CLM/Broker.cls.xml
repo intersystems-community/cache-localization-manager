@@ -186,7 +186,9 @@
 <Method name="CurrentNamespace">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[	return "{ ""СurrentNS"":["""_$namespace_"""] }"
+<Implementation><![CDATA[
+	w "{ ""СurrentNS"":"""_$namespace_""" }"
+	return $$$OK
 ]]></Implementation>
 </Method>
 </Class>
