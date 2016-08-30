@@ -265,8 +265,9 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	$scope.deleteThisLanguage = function () {
 		$http.get(encodeURI($scope.url + '/delete-language/' + $scope.domain + '/' + $scope.selectedLanguage)).
 		then(function (response) {
+			$scope.getDomains();
 			notifications.showSuccess({
-				message: $scope.selectedLanguage + ' was deleted from ' + $scope.domain,
+				message: $scope.yandexLanguagesList[$scope.selectedLanguage] + ' was deleted from ' + $scope.domain,
 				hideDelay: 1500,
 				hide: true});
 		}, function myError(response){

@@ -335,7 +335,7 @@
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	w "{ ""СurrentNS"":"""_$namespace_""" }"
+	w ##class(CLM.Utils).GetCurrentNamespace()
 	return $$$OK
 ]]></Implementation>
 </Method>

@@ -175,6 +175,17 @@
 ]]></Implementation>
 </Method>
 
+<Method name="GetCurrentNamespace">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+	
+	set NS= $p($$$MessageDictionaryGlobal,"[",2)
+	set NS= $p(NS,"]",1)
+	return "{ ""СurrentNS"":"_NS_" }"
+]]></Implementation>
+</Method>
+
 <Method name="AddNewLocalization">
 <ClassMethod>1</ClassMethod>
 <FormalSpec>origin:%String,language:%String,domain:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>

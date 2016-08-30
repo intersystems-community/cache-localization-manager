@@ -27,7 +27,7 @@
 </head>
 
 <body ng-controller="myCtrl" ng-app="myApp" class="ng-scope">
-	<notifications-bar class="notifications" style="right: 18px; top: 18px;"></notifications-bar>
+	<notifications-bar class="notifications"></notifications-bar>
 
 	<div class="ui internally grid">
 		<div class="row">
