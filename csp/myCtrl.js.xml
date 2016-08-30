@@ -4,12 +4,13 @@
 
 app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpload) {
 
-
-
 	var init = function () {
 
 		$scope.url = "http://localhost:57772/clm";
 		$scope.selectedLanguage = "en";
+		$scope.defaultLanguage = "en";
+		$scope.isSpellCheck = false;
+		$scope.isTwoTables = false;
 		$scope.yandexLanguagesList = {
             sq: "Albanian",
             ar: "Arabian",
@@ -72,6 +73,8 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 		$http.get($scope.url + '/domains').
 		then(function (response) {
 			$scope.domains = response.data;
+			$scope.domain = Object.keys($scope.domains)[0];
+			$scope.domainClicked($scope.domain, $scope.defaultLanguage);
 		}, function myError(response){
 			notifications.showError({
 				message: 'domains weren\'t downloaded',
@@ -83,8 +86,8 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	$scope.getMessages = function (domain, language) {
 		$http.get($scope.url + '/messages?domain=' + domain + '&language=' + language + '&spellcheck=false').
 		then(function (response) {
+			$scope.isSpellCheck = false;
 			$scope.messages = response.data;
-
 		}, function myError(response){
 			notifications.showError({
 				message: 'messages weren\'t downloaded',
@@ -96,6 +99,7 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	$scope.getMistakes = function () {
 		$http.get(encodeURI($scope.url + '/messages?domain=' + $scope.domain + '&language=' + $scope.selectedLanguage + '&spellcheck=true')).
 		then(function (response) {
+			$scope.isSpellCheck = true;
 			$scope.messages = response.data;
 			notifications.showSuccess({
 				message: 'mistakes are listed below',
@@ -192,7 +196,7 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	};
 
 	$scope.addNewLocalizationClicked = function () {
-		$scope.selectedLanguage = 'en';
+		$scope.selectedLanguage = $scope.defaultLanguage;
 		$('.ui.modal.addNewLocalization').modal('show');
 	};
 
@@ -217,7 +221,7 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 
 	$scope.updateMessage = function (event, text, id) {
 		if (text !== event.target.textContent){
-			$scope.putUpdateMessage($scope.domain, 'en', id, event.target.textContent);
+			$scope.putUpdateMessage($scope.domain, $scope.defaultLanguage, id, event.target.textContent);
 		}
 	};
 
@@ -234,8 +238,6 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 				hideDelay: 1500,
 				hide: true});
 			$scope.getDomains();
-			$scope.domainClicked(domain, selectedLanguage);
-			$scope.language = selectedLanguage;
 		}, function myError(response){
 			notifications.showError({
 				message: 'Namespace was not changed.',
@@ -243,6 +245,14 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 				hide: true});
 		});
 	};
+
+	$scope.oneTableClicked = function () {
+		$scope.isTwoTables = false;
+	};
+
+	$scope.twoTablesClicked = function () {
+		$scope.isTwoTables = true;
+	};	
 
 	init();
 

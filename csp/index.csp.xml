@@ -19,10 +19,8 @@
 	<link rel="stylesheet" type="text/css" href="./libs/css/semantic.min.css">
 	<link rel="stylesheet" type="text/css" href="./libs/css/myStyles.css">
 
-
 	<script src="./libs/js/loading-bar.js"></script>
 	<link rel="stylesheet" type="text/css" href="./libs/css/loading-bar.css">
-
 
 	<script src="./myApp.js"></script>
 	<script src="./myCtrl.js"></script>
@@ -34,71 +32,54 @@
 	<div class="ui internally grid">
 		<div class="row">
 			<div class="three wide column">
-				<div class="ui vertical buttons two wide column">
-					<button class="ui large yellow button">CLM</button>
-					<button class="ui large purple button" 
+				<div class="ui vertical fluid buttons"
+					style="margin-left: 2%">
+					<button class="ui large purple button">Domains:</button>
+					<button class="ui large yellow button" 
 							ng-repeat="(domain, languages) in domains"
 							ng-click="domainClicked(domain, 'en')">{{domain}}</button>
 				</div>
 			</div>
 			<div class="ten wide column">
-				<table st-table="messages" class="ui celled table table-striped">
-					<thead>
-						<tr>
-							<th st-sort="id" class="two wide">id</th>
-							<th class="eight wide purple">message  
-								<div class="ui simple dropdown">
-									{{yandexLanguagesList[selectedLanguage]}}
-									<i class="dropdown icon"></i>
-									<div class="menu">
-										<div class="item ng-binding ng-scope" 
-											ng-repeat="language in domains[domain]" 
-											ng-click="setLanguage(language)">{{yandexLanguagesList[language]}}</div>
-									</div>
-								</div>
-							</th>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<div class="ui fluid input">
-									<input type="text" placeholder="Search..." ng-model="searchingFilter" class="ng-pristine ng-untouched ng-valid">
-								</div>
-							</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="message in messages | filter : searchingFilter">
-							<td>
-								{{message.id}}
-							</td>
-							<td contenteditable="true" 
-							ng-blur="updateMessage($event, message.text, message.id)" 
-							ng-keypress="keyPressed($event, message.text, message.id)">
-							{{message.text}}
-						</td>
-					</tr>
+				<div class="ui purple massive label">
+					C L M
+				</div>
+				<div class="ui buttons right floated">
+					<button ng-class="isTwoTables ? 'ui yellow button' :'ui purple button'"
+						ng-click="oneTableClicked()">One Table</button>
+					<div class="or"></div>
+					<button ng-class="isTwoTables ? 'ui purple button' :'ui yellow button'"
+						ng-click="twoTablesClicked()">Two Tables</button>
+				</div>
 
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="2" class="text-center">
-							<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
-						</td>
-					</tr>
-				</tfoot>
-			</table>		
-		</div>
-		<div class="three wide column">
-			<div class="ui vertical buttons two wide column">
-				<button class="ui large purple button" ng-click="getMistakes()">Spellcheck</button>
-				<button class="ui large green button" ng-click="addNewLocalizationClicked()">Add New Localization</button>
-				<button class="ui large pink button" ng-click="exportMessages()">Export Current Messages</button>
-				<button class="ui large pink button" ng-click="importMessagesClicked()">Import Current Messages</button>
-				<button class="ui large violet button" ng-click="changeNamespaceClicked()">Change Namespace</button>
+				<div class="ui equal width grid">
+
+					<div class="column">
+						<main-table></main-table>
+
+					</div>
+					<div ng-if="isTwoTables" class="column">
+						<main-table></main-table>
+
+					</div>
+				</div>
+					
+
 			</div>
+
+
+			<div class="three wide column">
+				<div class="ui vertical buttons">
+					<button class="ui large yellow button" ng-click="changeNamespaceClicked()">Change Namespace</button>
+					<button class="ui large purple button" ng-click="getMistakes()" ng-disabled="isTwoTables"><p>Spellcheck</p><span ng-if="isTwoTables" style="color: red; font-size: 14px;">(Please use only with one table)</span></button>
+					<button class="ui large yellow button" ng-click="addNewLocalizationClicked()">Add New Localization</button>
+					<button class="ui large purple button" ng-click="exportMessages()">Export Current Messages</button>
+					<button class="ui large yellow button" ng-click="importMessagesClicked()">Import Current Messages</button>
+				</div>
+			</div>
+
 		</div>
 	</div>
-</div>
 
 <!-- Add New Localization Modal  -->
 <div class="ui modal addNewLocalization">
@@ -163,5 +144,53 @@
 <!-- import Domain Modal  -->
 
 
-</body></html>]]></CSP>
+</body></html>
+
+<!-- 
+<table st-table="messages" class="ui celled inverted purple table table-striped">
+					
+					<thead>
+						<tr>
+							<th st-sort="id" class="two wide">id</th>
+							<th class="eight wide">message  
+								<div class="ui simple dropdown">
+									{{yandexLanguagesList[selectedLanguage]}}
+									<i class="dropdown icon"></i>
+									<div class="menu">
+										<div class="item ng-binding ng-scope" 
+										ng-repeat="language in domains[domain]" 
+										ng-click="setLanguage(language)">{{yandexLanguagesList[language]}}
+										</div>
+									</div>
+								</div>
+							</th>
+							<th ng-if="isSpellCheck">mistakes</th>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="ui fluid transparent input">
+									<input type="text" placeholder="Search..." ng-model="searchingFilter" class="ng-pristine ng-untouched ng-valid">
+								</div>
+							</td>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-repeat="message in messages | filter : searchingFilter">
+							<td>{{message.id}}</td>
+							<td contenteditable="true" 
+							ng-blur="updateMessage($event, message.text, message.id)" 
+							ng-keypress="keyPressed($event, message.text, message.id)">{{message.text}}</td>
+							<td ng-if="isSpellCheck">{{message.mistakes}}</td>
+						</tr>
+					</tbody>
+
+					<tfoot>
+						<tr>
+							<td colspan="2" class="text-center">
+								<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+							</td>
+						</tr>
+					</tfoot>
+				</table> -->]]></CSP>
 </Export>
