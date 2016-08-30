@@ -175,7 +175,7 @@
 ]]></Implementation>
 </Method>
 
-<Method name="CurrentNamespace">
+<Method name="GetCurrentNamespace">
 <ClassMethod>1</ClassMethod>
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[

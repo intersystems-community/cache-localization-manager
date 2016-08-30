@@ -187,7 +187,7 @@
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	do ##class(CLM.Utils).CurrentNamespace()
+	do ##class(CLM.Utils).GetCurrentNamespace()
 	return $$$OK
 ]]></Implementation>
 </Method>
