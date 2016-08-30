@@ -27,7 +27,7 @@
 </head>
 
 <body ng-controller="myCtrl" ng-app="myApp" class="ng-scope">
-	<notifications-bar class="notifications"></notifications-bar>
+	<notifications-bar class="notifications" style="right: 18px; top: 18px;"></notifications-bar>
 
 	<div class="ui internally grid">
 		<div class="row">
@@ -90,6 +90,8 @@
 					<button class="ui large yellow button" ng-click="addNewLocalizationClicked()">Add New Localization</button>
 					<button class="ui large purple button" ng-click="exportMessages()">Export Current Messages</button>
 					<button class="ui large yellow button" ng-click="importMessagesClicked()">Import Current Messages</button>
+					<div class="ui divider"></div>
+					<button class="ui large red button" ng-click="deleteThisLanguage()">Delete {{yandexLanguagesList[selectedLanguage]}} from {{domain}} domain</button>
 				</div>
 			</div>
 

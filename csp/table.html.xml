@@ -19,7 +19,7 @@
 							<th ng-if="isSpellCheck">mistakes</th>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td colspan="3">
 								<div class="ui fluid input">
 									<input type="text" placeholder="Search..." ng-model="searchingFilter" class="ng-pristine ng-untouched ng-valid">
 								</div>

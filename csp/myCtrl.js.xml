@@ -262,6 +262,21 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 		$scope.isTwoTables = true;
 	};	
 
+	$scope.deleteThisLanguage = function () {
+		$http.get(encodeURI($scope.url + '/delete-language/' + $scope.domain + '/' + $scope.selectedLanguage)).
+		then(function (response) {
+			notifications.showSuccess({
+				message: $scope.selectedLanguage + ' was deleted from ' + $scope.domain,
+				hideDelay: 1500,
+				hide: true});
+		}, function myError(response){
+			notifications.showError({
+				message: 'current language wasn\'t deleted',
+				hideDelay: 1500,
+				hide: true});
+		});
+	};
+
 	init();
 
 

@@ -16,14 +16,162 @@
 	<Route Url="/namespace/:namespace" Method="POST" Call="ChangeNamespace"/>
 	<Route Url="/test" Method="POST" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
-	<Route Url="/delete-language/:domain/:language" Method="GET" Call="DeleteLanguage"/>
 	<Route Url="/export/:domain/:language" Method="GET" Call="DownloadDomain"/>
+	<Route Url="/delete-language/:domain/:language" Method="GET" Call="DeleteLanguage"/>
 	<Route Url="/import" Method="POST" Call="UploadDomain"/>
 	<Route Url="/paths" Method="GET" Call="SetPaths"/>
  	<Route Url="/domains" Method="GET" Call="GetDomains"/>
+ 	<Route Url="/is-path-set-up" Method="GET" Call="isPathSetup"/>
 </Routes>
 ]]></Data>
 </XData>
+
+<UDLText name="T">
+<Content><![CDATA[
+// ClassMethod isPathSetup() As %Status
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// {
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	IF '$Data(^CLM("CNAPath")){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		return $$$ERROR($$$GeneralError, "CNAPath is not set")
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		}
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	IF '$Data(^CLM("hunspellPath")){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		return $$$ERROR($$$GeneralError, "hunspellPath is not set")
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		}
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	IF '$Data(^CLM("libcPath")){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		return $$$ERROR
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		}
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	IF '$Data(^CLM("affPath")){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		return '$$$OK
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		}
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	IF '$Data(^CLM("dicPath")){
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		return 
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		}
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 		
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 	return $$$OK
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// }
+
+]]></Content>
+</UDLText>
 
 <Method name="Test">
 <ClassMethod>1</ClassMethod>
@@ -179,7 +327,7 @@
 <ClassMethod>1</ClassMethod>
 <FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%Status</ReturnType>
-<Implementation><![CDATA[  do ##class(CLM.Utils).DeleteLanguage(domain, language, global)
+<Implementation><![CDATA[ return ##class(CLM.Utils).DeleteLanguage(domain, language, global)
 ]]></Implementation>
 </Method>
 
