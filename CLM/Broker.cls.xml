@@ -187,7 +187,7 @@
 <ClassMethod>1</ClassMethod>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
-	w "{ ""СurrentNS"":"""_$namespace_""" }"
+	do ##class(CLM.Utils).CurrentNamespace()
 	return $$$OK
 ]]></Implementation>
 </Method>
