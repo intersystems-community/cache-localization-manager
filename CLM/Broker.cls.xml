@@ -28,7 +28,7 @@
 
 <UDLText name="T">
 <Content><![CDATA[
-// ClassMethod isPathSetup() As %Status
+// ClassMethod isPathSetup(global As %String = {$$$LibsAndDicsPathGlobal}) As %Status
 
 ]]></Content>
 </UDLText>
@@ -42,7 +42,7 @@
 
 <UDLText name="T">
 <Content><![CDATA[
-// 	IF '$Data(^CLM("CNAPath")){
+// 	IF '$Data(@global@("CNAPath")){
 
 ]]></Content>
 </UDLText>
@@ -63,7 +63,7 @@
 
 <UDLText name="T">
 <Content><![CDATA[
-// 	IF '$Data(^CLM("hunspellPath")){
+// 	IF '$Data(@global@("hunspellPath")){
 
 ]]></Content>
 </UDLText>
@@ -84,7 +84,7 @@
 
 <UDLText name="T">
 <Content><![CDATA[
-// 	IF '$Data(^CLM("libcPath")){
+// 	IF '$Data(@global@("libcPath")){
 
 ]]></Content>
 </UDLText>
@@ -105,7 +105,7 @@
 
 <UDLText name="T">
 <Content><![CDATA[
-// 	IF '$Data(^CLM("affPath")){
+// 	IF '$Data(@global@("affPath")){
 
 ]]></Content>
 </UDLText>
@@ -126,7 +126,7 @@
 
 <UDLText name="T">
 <Content><![CDATA[
-// 	IF '$Data(^CLM("dicPath")){
+// 	IF '$Data(@global@("dicPath")){
 
 ]]></Content>
 </UDLText>
