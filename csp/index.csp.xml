@@ -24,9 +24,13 @@
 
 	<script src="./myApp.js"></script>
 	<script src="./myCtrl.js"></script>
+
+
 </head>
 
 <body ng-controller="myCtrl" ng-app="myApp" class="ng-scope">
+
+<!-- <csp:text textid="277711497" domain="clm" language="ru">Spellcheck</csp:text> -->
 	<div notifications-bar class="notifications" style="width: 50%;"></div notifications-bar>
 
 	<div class="ui internally grid">
@@ -137,7 +141,6 @@
 
 </div>
 <!-- import Domain Modal  -->
-
 
 </body></html>
 ]]></CSP>

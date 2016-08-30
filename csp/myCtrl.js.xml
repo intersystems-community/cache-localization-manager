@@ -6,7 +6,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 
 	var init = function () {
 
-		$scope.url = "http://localhost:57772/clm";
+		$scope.url = "http://" + window.location.host + "/clm";
 		$scope.selectedLanguage = "en";
 		$scope.isSpellCheck = false;
 		$scope.isTwoTables = false;
