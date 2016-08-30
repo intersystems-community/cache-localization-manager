@@ -12,6 +12,7 @@
 	<Route Url="/messages" Method="PUT" Call="PutMessage"/>
 	<Route Url="/messages" Method="POST" Call="PostMessage"/>
 	<Route Url="/namespaces" Method="GET" Call="GetNamespaces"/>
+	<Route Url="/current-namespace" Method="GET" Call="CurrentNamespace"/>
 	<Route Url="/namespace/:namespace" Method="POST" Call="ChangeNamespace"/>
 	<Route Url="/test" Method="POST" Call="Test"/>
 	<Route Url="/add-new-localization" Method="POST" Call="AddNewLocalization"/>
@@ -179,6 +180,13 @@
 <FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[  do ##class(CLM.Utils).DeleteLanguage(domain, language, global)
+]]></Implementation>
+</Method>
+
+<Method name="CurrentNamespace">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[	return "{ ""СurrentNS"":["""_$namespace_"""] }"
 ]]></Implementation>
 </Method>
 </Class>

@@ -4,10 +4,6 @@
 <Super>CLM.Common</Super>
 <TimeCreated>63714,61614.83778</TimeCreated>
 
-<Property name="Namespace">
-<Type>%String</Type>
-</Property>
-
 <Method name="GetGlobalStructure">
 <ClassMethod>1</ClassMethod>
 <FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String=$$$MessageDictionaryGlobal]]></FormalSpec>
