@@ -8,7 +8,6 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 
 		$scope.url = "http://localhost:57772/clm";
 		$scope.selectedLanguage = "en";
-		$scope.defaultLanguage = "en";
 		$scope.isSpellCheck = false;
 		$scope.isTwoTables = false;
 		$scope.yandexLanguagesList = {
@@ -73,7 +72,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 		then(function (response) {
 			$scope.domains = response.data;
 			$scope.domain = Object.keys($scope.domains)[0];
-			$scope.domainClicked($scope.domain, $scope.defaultLanguage);
+			$scope.domainClicked($scope.domain);
 		}, function myError(response){
 			notifications.showError({
 				message: 'domains weren\'t downloaded',
@@ -160,7 +159,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 		then(function (response) {
 			Notification.success($scope.yandexLanguagesList[languageTo] + ' was successfully added to ' + domain + ' domain!');
 			$scope.getDomains();
-			$scope.domainClicked(domain, languageTo);
+			$scope.domainClicked(domain);
 			$scope.language = languageTo;
 		}, function myError(response){
 			Notification.error('New Localization Was Not Added.');
@@ -190,10 +189,10 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 
 // start of clicks listeners
 
-	$scope.domainClicked = function (domain, language) {
+	$scope.domainClicked = function (domain) {
+		$scope.selectedLanguage = $scope.domains[domain][0];
 		$scope.domain = domain;
-		$scope.selectedLanguage = language;
-		$scope.getMessages(domain, language);
+		$scope.getMessages(domain, $scope.selectedLanguage);
 	};
 
 	$scope.addNewLocalizationClicked = function () {
@@ -216,7 +215,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 
 	$scope.updateMessage = function (event, text, id) {
 		if (text !== event.target.textContent){
-			$scope.putUpdateMessage($scope.domain, $scope.defaultLanguage, id, event.target.textContent);
+			$scope.putUpdateMessage($scope.domain, $scope.selectedLanguage, id, event.target.textContent);
 		}
 	};
 

@@ -2,7 +2,7 @@
 <Export generator="Cache" version="25">
 <CSP name="index.csp" application="/csp/clm/" default="1"><![CDATA[
 <!DOCTYPE html>
-<!-- saved from url=(0040)http://localhost:57772/csp/clm/index.csp -->
+
 <html lang="en-US">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -37,12 +37,13 @@
 					<button class="ui large purple button">Domains:</button>
 					<button class="ui large yellow button" 
 							ng-repeat="(domain, languages) in domains"
-							ng-click="domainClicked(domain, 'en')">{{domain}}</button>
+							ng-click="domainClicked(domain)">{{domain}}</button>
 				</div>
 			</div>
 			<div class="ten wide column">
 			<div class="row">
-			<div class="ui simple dropdown purple button left floated">
+
+				<div class="ui simple dropdown purple button left floated">
 					Current Namespace : {{currentNamespace}}
 					<i class="dropdown icon"></i>
 					<div class="menu">
@@ -53,9 +54,6 @@
 				</div>
 			</div>
 
-			<!-- 	<div class="ui purple massive label">
-					Current Namespace : {{currentNamespace}}
-				</div> -->
 			<div class="row">
 				<div class="ui buttons right floated">
 					<button ng-class="isTwoTables ? 'ui yellow button' :'ui purple button'"
@@ -85,7 +83,8 @@
 
 
 			<div class="three wide column">
-				<div class="ui vertical buttons">
+				<div class="ui vertical buttons"
+					style="margin-right: 2%">
 					<button class="ui large purple button" ng-click="getMistakes()" ng-disabled="isTwoTables"><p>Spellcheck</p><span ng-if="isTwoTables" style="color: red; font-size: 14px;">(Please use only with one table)</span></button>
 					<button class="ui large yellow button" ng-click="addNewLocalizationClicked()">Add New Localization</button>
 					<button class="ui large purple button" ng-click="exportMessages()">Export Current Messages</button>
@@ -117,27 +116,6 @@
 </div>
 <!-- Add New Localization Modal  -->
 
-
-<!-- ChangeNamespace Modal  -->
-<!-- <div class="ui modal changeNamespace">
-	<div class="header">
-		Changing Namespace
-	</div>
-	<div class="content">
-		<div class="ui header">Please chose the namespace that you want to work on.</div>
-
-		<select class="ui dropdown ng-pristine ng-untouched ng-valid" ng-model="selectedNamespace">
-			<option value="">Choose The Namespace</option>
-			<option ng-repeat="namespace in namespaces">{{namespace}}</option>
-		</select>
-	</div>
-	<div class="actions">
-		<div class="ui black deny button">Cancel.</div>
-		<div class="ui positive right icon button" ng-click="changeNamespace(selectedNamespace);">Change.</div>
-	</div>
-</div>
- --><!-- ChangeNamespace Modal  -->
-
 <!-- import Domain Modal  -->
 <div class="ui modal importMessages">
 
@@ -162,52 +140,5 @@
 
 
 </body></html>
-
-<!-- 
-<table st-table="messages" class="ui celled inverted purple table table-striped">
-					
-					<thead>
-						<tr>
-							<th st-sort="id" class="two wide">id</th>
-							<th class="eight wide">message  
-								<div class="ui simple dropdown">
-									{{yandexLanguagesList[selectedLanguage]}}
-									<i class="dropdown icon"></i>
-									<div class="menu">
-										<div class="item ng-binding ng-scope" 
-										ng-repeat="language in domains[domain]" 
-										ng-click="setLanguage(language)">{{yandexLanguagesList[language]}}
-										</div>
-									</div>
-								</div>
-							</th>
-							<th ng-if="isSpellCheck">mistakes</th>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<div class="ui fluid transparent input">
-									<input type="text" placeholder="Search..." ng-model="searchingFilter" class="ng-pristine ng-untouched ng-valid">
-								</div>
-							</td>
-						</tr>
-					</thead>
-
-					<tbody>
-						<tr ng-repeat="message in messages | filter : searchingFilter">
-							<td>{{message.id}}</td>
-							<td contenteditable="true" 
-							ng-blur="updateMessage($event, message.text, message.id)" 
-							ng-keypress="keyPressed($event, message.text, message.id)">{{message.text}}</td>
-							<td ng-if="isSpellCheck">{{message.mistakes}}</td>
-						</tr>
-					</tbody>
-
-					<tfoot>
-						<tr>
-							<td colspan="2" class="text-center">
-								<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
-							</td>
-						</tr>
-					</tfoot>
-				</table> -->]]></CSP>
+]]></CSP>
 </Export>
