@@ -41,9 +41,22 @@
 				</div>
 			</div>
 			<div class="ten wide column">
-				<div class="ui purple massive label">
-					C L M
+			<div class="row">
+			<div class="ui simple dropdown purple button left floated">
+					Current Namespace : {{currentNamespace}}
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<div class="item ng-binding ng-scope" 
+						ng-repeat="namespace in namespaces" 
+						ng-click="changeNamespace(namespace)">{{namespace}}</div>
+					</div>
 				</div>
+			</div>
+
+			<!-- 	<div class="ui purple massive label">
+					Current Namespace : {{currentNamespace}}
+				</div> -->
+			<div class="row">
 				<div class="ui buttons right floated">
 					<button ng-class="isTwoTables ? 'ui yellow button' :'ui purple button'"
 						ng-click="oneTableClicked()">One Table</button>
@@ -51,6 +64,9 @@
 					<button ng-class="isTwoTables ? 'ui purple button' :'ui yellow button'"
 						ng-click="twoTablesClicked()">Two Tables</button>
 				</div>
+			</div>
+
+				
 
 				<div class="ui equal width grid">
 
@@ -70,7 +86,6 @@
 
 			<div class="three wide column">
 				<div class="ui vertical buttons">
-					<button class="ui large yellow button" ng-click="changeNamespaceClicked()">Change Namespace</button>
 					<button class="ui large purple button" ng-click="getMistakes()" ng-disabled="isTwoTables"><p>Spellcheck</p><span ng-if="isTwoTables" style="color: red; font-size: 14px;">(Please use only with one table)</span></button>
 					<button class="ui large yellow button" ng-click="addNewLocalizationClicked()">Add New Localization</button>
 					<button class="ui large purple button" ng-click="exportMessages()">Export Current Messages</button>
@@ -102,7 +117,7 @@
 
 
 <!-- ChangeNamespace Modal  -->
-<div class="ui modal changeNamespace">
+<!-- <div class="ui modal changeNamespace">
 	<div class="header">
 		Changing Namespace
 	</div>
@@ -119,7 +134,7 @@
 		<div class="ui positive right icon button" ng-click="changeNamespace(selectedNamespace);">Change.</div>
 	</div>
 </div>
-<!-- ChangeNamespace Modal  -->
+ --><!-- ChangeNamespace Modal  -->
 
 <!-- import Domain Modal  -->
 <div class="ui modal importMessages">

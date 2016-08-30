@@ -63,9 +63,8 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
             vi: "Vietnamese"
 		};
 		$scope.getDomains();
-		if ($scope.domains){
-			$scope.domain = $scope.domains[0];
-		}
+		$scope.getCurrentNamespace();
+		$scope.getNamespaces();
 	};
 
 // start of getters - http get functions
@@ -117,6 +116,7 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 		$http.get(encodeURI($scope.url + '/namespaces')).
 		then(function (response) {
 			$scope.namespaces = response.data.namespace;
+			$scope.getCurrentNamespace();
 		}, function myError(response){
 			notifications.showError({
 				message: 'namespaces weren\'t downloaded',
@@ -132,6 +132,18 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 		}, function myError(response){
 			notifications.showError({
 				message: 'Wasn\'t possible to export messages.',
+				hideDelay: 1500,
+				hide: true});
+		});
+	};
+
+	$scope.getCurrentNamespace = function () {
+		$http.get(encodeURI($scope.url + '/current-namespace')).
+		then(function (response) {
+			$scope.currentNamespace = response.data.СurrentNS;
+		}, function myError(response){
+			notifications.showError({
+				message: 'current namespace wasn\'t downloaded',
 				hideDelay: 1500,
 				hide: true});
 		});
@@ -200,11 +212,6 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 		$('.ui.modal.addNewLocalization').modal('show');
 	};
 
-	$scope.changeNamespaceClicked = function () {
-		$scope.getNamespaces();
-		$('.ui.modal.changeNamespace').modal('show');
-	};
-
 	$scope.keyPressed = function (event, text, id) {
 		if (event.keyCode == '13') {
 			event.preventDefault();
@@ -237,7 +244,8 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 				message: 'namespaces has been changed to ' + selectedNamespace,
 				hideDelay: 1500,
 				hide: true});
-			$scope.getDomains();
+			init();
+			$scope.currentNamespace = selectedNamespace;
 		}, function myError(response){
 			notifications.showError({
 				message: 'Namespace was not changed.',
@@ -257,5 +265,12 @@ app.controller("myCtrl", function($scope, $http, notifications, $filter, fileUpl
 	init();
 
 
-});]]></CSP>
+});
+
+
+
+	// $scope.changeNamespaceClicked = function () {
+	// 	$scope.getNamespaces();
+	// 	$('.ui.modal.changeNamespace').modal('show');
+	// };]]></CSP>
 </Export>
