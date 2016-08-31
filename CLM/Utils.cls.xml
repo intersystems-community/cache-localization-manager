@@ -258,5 +258,29 @@
 <Implementation><![CDATA[''$DATA(@global@(domain,language))
 ]]></Implementation>
 </Method>
+
+<Method name="International">
+<ClassMethod>1</ClassMethod>
+<CodeMode>objectgenerator</CodeMode>
+<Private>1</Private>
+<Implementation><![CDATA[
+	s ^CacheMsg("clm","en","twoTablesLabel") = "Two Tables"
+	s ^CacheMsg("clm","en","spellcheckLabel") = "Spellcheck"
+	s ^CacheMsg("clm","en","spellcheckWarning") = "(Please use only with one table)"
+	s ^CacheMsg("clm","en","addNewLocalizationLabel") = "Add New Localization"
+	s ^CacheMsg("clm","en","exportLabel") = "Export Current Messages"
+	s ^CacheMsg("clm","en","importLabel") = "Import Current Messages"
+	s ^CacheMsg("clm","en","deleteLabel") = "Delete"
+	s ^CacheMsg("clm","en","fromLabel") = "from"
+	s ^CacheMsg("clm","en","addNewLocalizationHeader") = "Adding a New Localization"
+	s ^CacheMsg("clm","en","chooseLanguageLabel") = "Please choose the language to add to "
+	s ^CacheMsg("clm","en","addButton") = "Add"
+	s ^CacheMsg("clm","en","cancelButton") = "Cancel"
+	s ^CacheMsg("clm","en","importLabel") = "Importing Messages"
+	s ^CacheMsg("clm","en","choosleFileLabel") = "Please select file that you want to import(Should be XML file.)"
+	s ^CacheMsg("clm","en","importButton") = "Import"
+	s ^CacheMsg("clm","en","oneTableLabel") = "One Table"
+]]></Implementation>
+</Method>
 </Class>
 </Export>
