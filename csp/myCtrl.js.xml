@@ -9,6 +9,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 		$scope.url = "http://" + window.location.host + "/clm";
 		$scope.selectedLanguage = "en";
 		$scope.isSpellCheck = false;
+		$scope.lastDomain = "";
 		$scope.isTwoTables = false;
 		$scope.yandexLanguagesList = {
             sq: "Albanian",
@@ -71,7 +72,11 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 		$http.get($scope.url + '/domains').
 		then(function (response) {
 			$scope.domains = response.data;
-			$scope.domain = Object.keys($scope.domains)[0];
+			if ($scope.lastDomain === "") {				
+				$scope.domain = Object.keys($scope.domains)[0];
+			} else {
+				$scope.domain = $scope.lastDomain;
+			}
 			$scope.domainClicked($scope.domain);
 		}, function myError(response){
 			notifications.showError({
@@ -246,6 +251,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 	$scope.deleteThisLanguage = function () {
 		$http.get(encodeURI($scope.url + '/delete-language/' + $scope.domain + '/' + $scope.selectedLanguage)).
 		then(function (response) {
+			$scope.lastDomain = $scope.domain;
 			$scope.getDomains();
 			Notification.success($scope.yandexLanguagesList[$scope.selectedLanguage] + ' was deleted from ' + $scope.domain);
 		}, function myError(response){
