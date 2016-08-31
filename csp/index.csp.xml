@@ -30,15 +30,16 @@
 
 <body ng-controller="myCtrl" ng-app="myApp" class="ng-scope">
 
-<!-- <csp:text textid="277711497" domain="clm" language="ru">Spellcheck</csp:text> -->
-	<div notifications-bar class="notifications" style="width: 50%;"></div notifications-bar>
+  
 
 	<div class="ui internally grid">
 		<div class="row">
 			<div class="three wide column">
 				<div class="ui vertical fluid buttons"
 					style="margin-left: 2%">
-					<button class="ui large purple button">Domains:</button>
+					<button class="ui large purple button">
+						<csp:text textid="domainsLabel" domain="clm">Domains :</csp:text>
+					</button>
 					<button class="ui large yellow button" 
 							ng-repeat="(domain, languages) in domains"
 							ng-click="domainClicked(domain)">{{domain}}</button>
@@ -48,7 +49,8 @@
 			<div class="row">
 
 				<div class="ui simple dropdown purple button left floated">
-					Current Namespace : {{currentNamespace}}
+					<csp:text textid="currentNamespaceLabel" domain="clm">Current Namespace : </csp:text>
+					{{currentNamespace}}
 					<i class="dropdown icon"></i>
 					<div class="menu">
 						<div class="item ng-binding ng-scope" 
@@ -61,10 +63,14 @@
 			<div class="row">
 				<div class="ui buttons right floated">
 					<button ng-class="isTwoTables ? 'ui yellow button' :'ui purple button'"
-						ng-click="oneTableClicked()">One Table</button>
+							ng-click="oneTableClicked()">
+					<csp:text textid="oneTableLabel" domain="clm">One Table</csp:text>
+					</button>
 					<div class="or"></div>
 					<button ng-class="isTwoTables ? 'ui purple button' :'ui yellow button'"
-						ng-click="twoTablesClicked()">Two Tables</button>
+							ng-click="twoTablesClicked()">
+					<csp:text textid="twoTablesLabel" domain="clm">Two Tables</csp:text>
+					</button>
 				</div>
 			</div>
 
@@ -89,12 +95,28 @@
 			<div class="three wide column">
 				<div class="ui vertical buttons"
 					style="margin-right: 2%">
-					<button class="ui large purple button" ng-click="getMistakes()" ng-disabled="isTwoTables"><p>Spellcheck</p><span ng-if="isTwoTables" style="color: red; font-size: 14px;">(Please use only with one table)</span></button>
-					<button class="ui large yellow button" ng-click="addNewLocalizationClicked()">Add New Localization</button>
-					<button class="ui large purple button" ng-click="exportMessages()">Export Current Messages</button>
-					<button class="ui large yellow button" ng-click="importMessagesClicked()">Import Current Messages</button>
+					<button class="ui large purple button" ng-click="getMistakes()" ng-disabled="isTwoTables">
+						<p><csp:text textid="spellcheckLabel" domain="clm">Spellcheck</csp:text></p>
+						<span ng-if="isTwoTables" style="color: red; font-size: 14px;">	
+							<csp:text textid="spellcheckWarning" domain="clm">(Please use only with one table)</csp:text>
+						</span>
+					</button>
+					<button class="ui large yellow button" ng-click="addNewLocalizationClicked()">
+						<csp:text textid="addNewLocalizationLabel" domain="clm">Add New Localization</csp:text>
+					</button>
+					<button class="ui large purple button" ng-click="exportMessages()">
+						<csp:text textid="exportLabel" domain="clm">Export Current Messages</csp:text>
+					</button>
+					<button class="ui large yellow button" ng-click="importMessagesClicked()">
+						<csp:text textid="importLabel" domain="clm">Import Current Messages</csp:text>
+					</button>
 					<div class="ui divider"></div>
-					<button class="ui large red button" ng-click="deleteThisLanguage()">Delete {{yandexLanguagesList[selectedLanguage]}} from {{domain}} domain</button>
+					<button class="ui large red small button" ng-click="deleteThisLanguage()">
+						<csp:text textid="deleteLabel" domain="clm">Delete</csp:text>
+						<br>{{yandexLanguagesList[selectedLanguage]}}
+						<br><csp:text textid="fromLabel" domain="clm">from</csp:text>
+						<br>{{domain}}, {{currentNamespace}}
+					</button>
 				</div>
 			</div>
 
@@ -104,18 +126,25 @@
 <!-- Add New Localization Modal  -->
 <div class="ui modal addNewLocalization">
 	<div class="header">
-		Adding a new localization
+		<csp:text textid="addNewLocalizationHeader" domain="clm">Adding a New Localization</csp:text>
 	</div>
 	<div class="content">
-		<div class="ui header ng-binding">Please choose the language to add to PMML domain.</div>
+		<div class="ui header ng-binding">
+			<csp:text textid="chooseLanguageLabel" domain="clm">Please choose the language to add to</csp:text>
+			{{domain}}, {{currentNamespace}}
+		</div>
 
 		<select class="ui dropdown ng-pristine ng-untouched ng-valid" ng-model="newLanguage">
 			<option ng-repeat="(locale, language) in yandexLanguagesList" ng-value="locale">{{yandexLanguagesList[locale]}}</option>
 		</select>
 	</div>
 	<div class="actions">
-		<div class="ui black deny button">Cancel.</div>
-		<div class="ui positive right icon button" ng-click="postAddNewLocalization(domain, selectedLanguage, newLanguage);">Add.</div>
+		<div class="ui black deny button">
+			<csp:text textid="cancelButton" domain="clm">Cancel</csp:text>
+		</div>
+		<div class="ui positive right icon button" ng-click="postAddNewLocalization(domain, selectedLanguage, newLanguage);">
+			<csp:text textid="addButton" domain="clm">Add</csp:text>
+		</div>
 	</div>
 </div>
 <!-- Add New Localization Modal  -->
@@ -124,19 +153,25 @@
 <div class="ui modal importMessages">
 
 	<div class="header">
-		Importing Messages
+		<csp:text textid="importLabel" domain="clm">Importing Messages</csp:text>
 	</div>
 
 	<div class="content">
-		<div class="ui header">Please select file that you want to import(Should be XML file.)</div>
+		<div class="ui header">
+			<csp:text textid="choosleFileLabel" domain="clm">Please select file that you want to import(Should be XML file.)</csp:text>
+		</div>
 		<div class="ui fluid icon input">
 			<input type="file" file-model="myFile">
 		</div>
 	</div>
 
 	<div class="actions">
-		<div class="ui black deny button">Cancel.</div>
-		<div class="ui positive right icon button" ng-click="uploadFile();">Import.</div>
+		<div class="ui black deny button">
+			<csp:text textid="cancelButton" domain="clm">Cancel</csp:text>
+		</div>
+		<div class="ui positive right icon button" ng-click="uploadFile();">
+			<csp:text textid="importButton" domain="clm">Import</csp:text>
+		</div>
 	</div>
 
 </div>
