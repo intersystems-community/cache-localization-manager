@@ -2,7 +2,7 @@
 <Export generator="Cache" version="25">
 <CSP name="myCtrl.js" application="/csp/clm/" default="1"><![CDATA[
 
-app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUpload) {
+app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 
 	var init = function () {
 
@@ -183,10 +183,14 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter, fileUplo
 	$scope.uploadFile = function(){
 		var file = $scope.myFile;
 
-		console.dir(file);
-
 		var uploadUrl = $scope.url + "/import";
-		fileUpload.uploadFileToUrl(file, uploadUrl);
+		$http.post(uploadUrl, file)
+		.success(function(){
+			Notification.success('was imported!');
+		})
+		.error(function(){
+			Notification.error('was not imported.');
+		});
 	};
 
 // end of http post/put functions
