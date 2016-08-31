@@ -187,6 +187,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$http.post(uploadUrl, file)
 		.success(function(){
 			Notification.success('was imported!');
+			init();
 		})
 		.error(function(){
 			Notification.error('was not imported.');
