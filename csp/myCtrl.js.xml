@@ -4,9 +4,11 @@
 
 app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 
+	window.s = $scope
 	var init = function () {
-
-		$scope.url = "http://" + window.location.host + "/clm";
+		var w = window.location;
+		var wNamespace = w.pathname.slice(4, -10);
+		$scope.url = w.protocol + "//" + w.host + wNamespace;
 		$scope.selectedLanguage = "en";
 		$scope.isSpellCheck = false;
 		$scope.lastDomain = "";
