@@ -78,8 +78,9 @@
 <FormalSpec>CNAPath:%String,hunspellPath:%String,libcPath:%String,affPath:%String,dicPath:%String,global:%String=$$$LibsAndDicsPathGlobal</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
+ 
  if $data(CNAPath){
- 	set @global@("CNAPath") = CNAPath
+ 	set @global@("CNAPath") = CNAPath 
  }
  if $data(CNAPath){
 	set @global@("hunspellPath") = hunspellPath
