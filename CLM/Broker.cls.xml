@@ -202,9 +202,9 @@
 	set language = %request.Data("language", 1)
 	set spellcheck = %request.Data("spellcheck", 1)
 	if (spellcheck = "true") {
-		return ##class(CLM.Utils).CheckMessages(domain, language, $$$MessageDictionaryGlobal)
+		return ##class(CLM.Utils).CheckMessages(domain, language, $$$MessageDictionaryGlobal(%session.SessionId))
 	} else {
-		return ##class(CLM.Utils).GetMessageList(domain, language, $$$MessageDictionaryGlobal)
+		return ##class(CLM.Utils).GetMessageList(domain, language, $$$MessageDictionaryGlobal(%session.SessionId))
 	}
 ]]></Implementation>
 </Method>
@@ -254,7 +254,7 @@
 	set language = %request.Data("language", 1)
 	set id = %request.Data("id", 1)
 	set text = %request.Data("text", 1)
-	return ##class(CLM.Utils).PutMessage(domain, language, id, text, $$$MessageDictionaryGlobal)
+	return ##class(CLM.Utils).PutMessage(domain, language, id, text, $$$MessageDictionaryGlobal(%session.SessionId))
 ]]></Implementation>
 </Method>
 
@@ -264,7 +264,7 @@
 <Implementation><![CDATA[
 	set domain = $$$R("Domain") 
 	set messages = $$$R("Messages")
-	return ##class(CLM.Utils).PostMessages(domain, messages, $$$MessageDictionaryGlobal)
+	return ##class(CLM.Utils).PostMessages(domain, messages, $$$MessageDictionaryGlobal(%session.SessionId))
 ]]></Implementation>
 </Method>
 
@@ -328,7 +328,7 @@
 
 <Method name="DeleteLanguage">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[ return ##class(CLM.Utils).DeleteLanguage(domain, language, global)
 ]]></Implementation>

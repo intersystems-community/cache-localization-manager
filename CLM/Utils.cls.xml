@@ -6,7 +6,7 @@
 
 <Method name="GetGlobalStructure">
 <ClassMethod>1</ClassMethod>
-<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String=$$$MessageDictionaryGlobal]]></FormalSpec>
+<FormalSpec><![CDATA[&parameters:%String,*result:%RegisteredObject,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)]]></FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ZEN.proxyObject).%New()
@@ -34,7 +34,7 @@
 
 <Method name="GetMessageList">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ListOfObjects).%New()
@@ -99,7 +99,7 @@
 
 <Method name="PutMessage">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,id:%String,text:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,language:%String,id:%String,text:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set @global@(domain, language, id) = text
@@ -109,7 +109,7 @@
 
 <Method name="PostMessages">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,messages:%ListOfDataTypes,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,messages:%ListOfDataTypes,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set st = $$$OK
@@ -125,7 +125,7 @@
 
 <Method name="PostMessage">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,text:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,language:%String,text:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set id = $ZCRC(text,7)
@@ -136,7 +136,7 @@
 
 <Method name="CheckMessages">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
 	set result = ##class(%ListOfObjects).%New()
@@ -169,9 +169,9 @@
 
 <Method name="ChangeNamespace">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>namespace:%String</FormalSpec>
+<FormalSpec>namespace:%String,SessionId=%session.SessionId</FormalSpec>
 <ReturnType>%String</ReturnType>
-<Implementation><![CDATA[ Set ^["USER"]NameSpace = "^["""_namespace_"""]CacheMsg"
+<Implementation><![CDATA[ Set ^["USER"]NameSpace(SessionId) = "^["""_namespace_"""]CacheMsg"
 ]]></Implementation>
 </Method>
 
@@ -180,7 +180,7 @@
 <ReturnType>%String</ReturnType>
 <Implementation><![CDATA[
 	
-	set NS= $p($$$MessageDictionaryGlobal,"[",2)
+	set NS= $p($$$MessageDictionaryGlobal(%session.SessionId),"[",2)
 	set NS= $p(NS,"]",1)
 	return "{ ""СurrentNS"":"_NS_" }"
 ]]></Implementation>
@@ -188,7 +188,7 @@
 
 <Method name="AddNewLocalization">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>origin:%String,language:%String,domain:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>origin:%String,language:%String,domain:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	set request = ##class(%Net.HttpRequest).%New()
@@ -229,7 +229,7 @@
 
 <Method name="DeleteLanguage">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	return:'##class(CLM.Utils).DomainExists(domain) $$$ERROR($$$GeneralError,"Domain " _ domain _ " does not exist")
@@ -244,7 +244,7 @@
 <Method name="DomainExists">
 <ClassMethod>1</ClassMethod>
 <CodeMode>expression</CodeMode>
-<FormalSpec>domain:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%Boolean</ReturnType>
 <Implementation><![CDATA[''$DATA(@global@(domain))
 ]]></Implementation>
@@ -253,7 +253,7 @@
 <Method name="LanguageExists">
 <ClassMethod>1</ClassMethod>
 <CodeMode>expression</CodeMode>
-<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal</FormalSpec>
+<FormalSpec>domain:%String,language:%String,global:%String=$$$MessageDictionaryGlobal(%session.SessionId)</FormalSpec>
 <ReturnType>%Boolean</ReturnType>
 <Implementation><![CDATA[''$DATA(@global@(domain,language))
 ]]></Implementation>
