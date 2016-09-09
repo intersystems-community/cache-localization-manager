@@ -10,6 +10,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		var wNamespace = w.pathname.slice(4, -10);
 		$scope.url = w.protocol + "//" + w.host + wNamespace;
 		$scope.selectedLanguage = "en";
+		$scope.getNamespaces();
 		$scope.isSpellCheck = false;
 		$scope.lastDomain = "";
 		$scope.isTwoTables = false;
@@ -66,7 +67,6 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		};
 		$scope.getDomains();
 		$scope.getCurrentNamespace();
-		$scope.getNamespaces();
 	};
 
 // start of getters - http get functions
@@ -124,6 +124,12 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		then(function (response) {
 			$scope.namespaces = response.data.namespace;
 			$scope.getCurrentNamespace();
+			if (!$scope.currentNamespace){
+				$scope.currentNamespace = $scope.namespaces[1];
+				$scope.getDomains();
+				$scope.changeNamespace($scope.currentNamespace);
+			}
+			$scope.update
 		}, function myError(response){
 			notifications.showError({
 				message: 'namespaces weren\'t downloaded',
@@ -196,6 +202,18 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		});
 	};
 
+	$scope.changeNamespace = function (selectedNamespace) {
+		$http.post($scope.url +  '/namespace/' + selectedNamespace).
+		then(function (response) {
+			Notification.success('namespaces has been changed to ' + selectedNamespace);
+			init();
+			$scope.currentNamespace = selectedNamespace;
+		}, function myError(response){
+			Notification.error('Namespace was not changed.');
+		});
+	};
+
+
 // end of http post/put functions
 
 
@@ -236,16 +254,6 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$scope.getMessages($scope.domain, language);
 	};
 
-	$scope.changeNamespace = function (selectedNamespace) {
-		$http.post($scope.url +  '/namespace/' + selectedNamespace).
-		then(function (response) {
-			Notification.success('namespaces has been changed to ' + selectedNamespace);
-			init();
-			$scope.currentNamespace = selectedNamespace;
-		}, function myError(response){
-			Notification.error('Namespace was not changed.');
-		});
-	};
 
 	$scope.oneTableClicked = function () {
 		$scope.isTwoTables = false;
