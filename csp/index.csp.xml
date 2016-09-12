@@ -108,8 +108,10 @@
 							<td>{{message.id}}</td>
 							<td contenteditable="true" 
 							ng-blur="updateMessage($event, message.text, message.id, selectedLanguage)" 
-							ng-keypress="keyPressed($event, message.text, message.id)">{{message.text}}</td>
-							<td ng-if="isSpellCheck">{{message.mistakes}}</td>
+							ng-keypress="keyPressed($event, message.text, message.id)">
+								<p ng-style="{'max-width' : !isTwoTables ? '480px' : '190px'}">{{message.text}}</p>
+							</td>
+							<td ng-if="isSpellCheck"><p style="max-width: 140px">{{message.mistakes}}</p></td>
 						</tr>
 
 				</tbody>
@@ -155,8 +157,10 @@
 							<td>{{message.id}}</td>
 							<td contenteditable="true" 
 							ng-blur="updateMessage($event, message.text, message.id, selectedLanguage2)" 
-							ng-keypress="keyPressed($event, message.text, message.id)">{{message.text}}</td>
-							<td ng-if="isSpellCheck">{{message.mistakes}}</td>
+							ng-keypress="keyPressed($event, message.text, message.id)">
+								<p ng-style="{'max-width' : !isTwoTables ? '480px' : '190px'}">{{message.text}}</p>
+							</td>
+							<td ng-if="isSpellCheck"><p style="max-width: 140px">{{message.mistakes}}</p></td>
 						</tr>
 
 				</tbody>
@@ -177,6 +181,10 @@
 
 			<div class="three wide column">
 				<div class="ui vertical buttons">
+					<button class="ui large green button" ng-click="setPathClicked()">
+						<csp:text textid="setPath" domain="clm">Set Paths</csp:text>
+					</button>
+					<div class="ui divider"></div>
 					<button class="ui large purple button" ng-click="getMistakes()" ng-disabled="isTwoTables">
 						<p><csp:text textid="spellcheckLabel" domain="clm">Spellcheck</csp:text></p>
 						<span ng-if="isTwoTables" style="color: red; font-size: 14px;">	
@@ -258,6 +266,77 @@
 
 </div>
 <!-- import Domain Modal  -->
+
+
+<!-- setPath Modal  -->
+<div class="ui modal setPath">
+	<div class="header">
+		<csp:text textid="" domain="clm">Please set all the paths.</csp:text>
+	</div>
+	<div class="content">
+		<div class="ui header">
+			<csp:text textid="" domain="clm">CNAPath : </csp:text>
+			<span ng-bind="paths.CNAPath"></span>
+		</div>
+		<div class="ui fluid input">
+			<input type="text" placeholder="{{paths.CNAPath}}" ng-model="paths.CNAPath">
+		</div>
+		<div class="ui header">
+			<csp:text textid="" domain="clm">hunspellPath : </csp:text>
+			<span ng-bind="paths.hunspellPath"></span>
+		</div>
+		<div class="ui fluid input">
+			<input type="text" placeholder="{{paths.hunspellPath}}" ng-model="paths.hunspellPath">
+		</div>
+		<div class="ui header">
+			<csp:text textid="" domain="clm">libcPath : </csp:text>
+			<span ng-bind="paths.libcPath"></span>
+		</div>
+		<div class="ui fluid input">
+			<input type="text" placeholder="{{paths.libcPath}}" ng-model="paths.libcPath">
+		</div>
+		<div class="ui header">
+			<csp:text textid="" domain="clm">affPath : </csp:text>
+			<span ng-bind="paths.affPath"></span>
+		</div>
+		<div class="ui fluid input">
+			<input type="text" placeholder="{{paths.affPath}}" ng-model="paths.affPath">
+		</div>
+		<div class="ui header">
+			<csp:text textid="" domain="clm">dicPath : </csp:text>
+			<span ng-bind="paths.dicPath"></span>
+		</div>
+		<div class="ui fluid input">
+				<input type="text" placeholder="{{paths.dicPath}}" ng-model="paths.dicPath">
+		</div>
+		<div class="ui header">
+			<csp:text textid="" domain="clm">yandexkey : </csp:text>
+			<span ng-bind="paths.yandexKey"></span>
+		</div>
+		<div class="ui fluid input">
+			<input type="text" placeholder="{{paths.yandexkey}}" ng-model="paths.yandexkey">
+		</div>
+	</div>
+
+	<div class="actions">
+		<div class="ui black deny button">
+			<csp:text textid="cancelButton" domain="clm">Cancel</csp:text>
+		</div>
+		<div class="ui positive right icon button" ng-click="setPath();">
+			<csp:text textid="Set Paths" domain="clm">Set Paths</csp:text>
+		</div>
+	</div>
+
+<!-- 
+	
+	set CNAPath = %request.Data("CNAPath", 1)
+	set hunspellPath = %request.Data("hunspellPath", 1)
+	set libcPath = %request.Data("libcPath", 1)
+	set affPath = %request.Data("affPath", 1)
+	set dicPath = %request.Data("dicPath", 1)
+	set yandexKey = %request.Data("yandexKey", 1) -->
+</div>
+<!-- setPath Modal  -->
 
 </body></html>
 ]]></CSP>

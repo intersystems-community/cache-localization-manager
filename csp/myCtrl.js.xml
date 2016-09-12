@@ -257,6 +257,37 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$('.ui.modal.importMessages').modal('show');
 	};
 
+	$scope.setPathClicked = function () {
+		$('.ui.modal.setPath').modal('show');
+		$scope.getPaths();
+
+	};
+
+	$scope.setPath = function () {
+		$http.get(encodeURI($scope.url + '/paths?CNAPath=' + $scope.paths.CNAPath 
+								+ '&libcPath=' + $scope.paths.libcPath 
+								+ '&hunspellPath=' + $scope.paths.hunspellPath
+								+ '&dicPath=' + $scope.paths.dicPath
+								+ '&affPath=' + $scope.paths.affPath
+								+ '&yandexkey=' + $scope.paths.yandexkey)).
+		then(function (response) {
+			Notification.success('All path were set');
+		}, function myError(response){
+			Notification.error('Ops. something went wrong, please try again');
+			console.log(response);
+		});
+	};
+
+	$scope.getPaths = function () {
+		$http.get(encodeURI($scope.url + '/get-paths')).
+		then(function (response) {
+			$scope.paths = response.data[0];
+			console.log($scope.paths);
+		}, function myError(response){
+			Notification.error('Oops. something went wrong, please try again');
+			console.log(response);
+		});		
+	}
 // end of clicks listeners
 
 
@@ -303,10 +334,5 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 
 });
 
-
-
-	// $scope.changeNamespaceClicked = function () {
-	// 	$scope.getNamespaces();
-	// 	$('.ui.modal.changeNamespace').modal('show');
-	// };]]></CSP>
+]]></CSP>
 </Export>
