@@ -65,6 +65,7 @@
  for
  {
   	set nsNext=$Order(r(nsNext))
+  	if (nsNext = "%SYS"){CONTINUE}
   	quit:nsNext=""
   	do result.Insert(nsNext)
  }
@@ -172,7 +173,7 @@
 <ClassMethod>1</ClassMethod>
 <FormalSpec>namespace:%String,SessionId=%session.SessionId</FormalSpec>
 <ReturnType>%String</ReturnType>
-<Implementation><![CDATA[ Set ^["USER"]NameSpace(SessionId) = "^["""_namespace_"""]CacheMsg"
+<Implementation><![CDATA[  Set ^["USER"]NameSpace(SessionId) = "^["""_namespace_"""]CacheMsg"
 ]]></Implementation>
 </Method>
 

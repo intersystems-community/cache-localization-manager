@@ -139,7 +139,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 			$scope.namespaces = response.data.namespace;
 			$scope.getCurrentNamespace();
 			if (!$scope.currentNamespace){
-				$scope.currentNamespace = $scope.namespaces[1];
+				$scope.currentNamespace = $scope.namespaces[0];
 				$scope.getDomains();
 				$scope.changeNamespace($scope.currentNamespace);
 			}
