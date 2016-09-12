@@ -2,7 +2,8 @@
 <Export generator="Cache" version="25">
 <CSP name="libs/css/myStyles.css" application="/csp/clm/" default="1"><![CDATA[
 body {
-	background-color: #E1BEE7;
+	background-color: #FBF6EB;
+	padding: 12px;
 }
 
 ]]></CSP>

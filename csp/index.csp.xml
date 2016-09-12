@@ -35,8 +35,7 @@
 	<div class="ui internally grid">
 		<div class="row">
 			<div class="three wide column">
-				<div class="ui vertical fluid buttons"
-					style="margin-left: 2%">
+				<div class="ui vertical fluid buttons">
 					<button class="ui large purple button">
 						<csp:text textid="domainsLabel" domain="clm">Domains :</csp:text>
 					</button>
@@ -79,12 +78,96 @@
 				<div class="ui equal width grid">
 
 					<div class="column">
-						<main-table></main-table>
+					<table st-table="messages" class="ui celled inverted purple table table-striped">
+					<thead>
+						<tr>
+							<th st-sort="id" class="two wide">id</th>
+							<th class="eight wide purple">message  
+								<div class="ui simple dropdown">
+									{{yandexLanguagesList[selectedLanguage]}}
+									<i class="dropdown icon"></i>
+									<div class="menu">
+										<div class="item ng-binding ng-scope" 
+											ng-repeat="language in domains[domain]" 
+											ng-click="setLanguage(language)">{{yandexLanguagesList[language]}}</div>
+									</div>
+								</div>
+							</th>
+							<th ng-if="isSpellCheck">mistakes</th>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<div class="ui fluid input">
+									<input type="text" placeholder="Search..." ng-model="searchingFilter" class="ng-pristine ng-untouched ng-valid">
+								</div>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="message in messages | filter : searchingFilter">
+							<td>{{message.id}}</td>
+							<td contenteditable="true" 
+							ng-blur="updateMessage($event, message.text, message.id, selectedLanguage)" 
+							ng-keypress="keyPressed($event, message.text, message.id)">{{message.text}}</td>
+							<td ng-if="isSpellCheck">{{message.mistakes}}</td>
+						</tr>
+
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2" class="text-center">
+							<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>	
 
 					</div>
 					<div ng-if="isTwoTables" class="column">
-						<main-table></main-table>
+					
+					<table st-table="messages" class="ui celled inverted purple table table-striped">
+					<thead>
+						<tr>
+							<th st-sort="id" class="two wide">id</th>
+							<th class="eight wide purple">message  
+								<div class="ui simple dropdown">
+									{{yandexLanguagesList[selectedLanguage2]}}
+									<i class="dropdown icon"></i>
+									<div class="menu">
+										<div class="item ng-binding ng-scope" 
+											ng-repeat="language in domains[domain]" 
+											ng-click="setLanguage2(language)">{{yandexLanguagesList[language]}}</div>
+									</div>
+								</div>
+							</th>
+							<th ng-if="isSpellCheck">mistakes</th>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<div class="ui fluid input">
+									<input type="text" placeholder="Search..." ng-model="searchingFilter" class="ng-pristine ng-untouched ng-valid">
+								</div>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="message in messages2 | filter : searchingFilter">
+							<td>{{message.id}}</td>
+							<td contenteditable="true" 
+							ng-blur="updateMessage($event, message.text, message.id, selectedLanguage2)" 
+							ng-keypress="keyPressed($event, message.text, message.id)">{{message.text}}</td>
+							<td ng-if="isSpellCheck">{{message.mistakes}}</td>
+						</tr>
 
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2" class="text-center">
+							<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+						</td>
+					</tr>
+				</tfoot>
+			</table>	
 					</div>
 				</div>
 					
@@ -93,8 +176,7 @@
 
 
 			<div class="three wide column">
-				<div class="ui vertical buttons"
-					style="margin-right: 2%">
+				<div class="ui vertical buttons">
 					<button class="ui large purple button" ng-click="getMistakes()" ng-disabled="isTwoTables">
 						<p><csp:text textid="spellcheckLabel" domain="clm">Spellcheck</csp:text></p>
 						<span ng-if="isTwoTables" style="color: red; font-size: 14px;">	

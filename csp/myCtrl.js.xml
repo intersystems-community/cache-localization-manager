@@ -10,6 +10,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		var wNamespace = w.pathname.slice(4, -10);
 		$scope.url = w.protocol + "//" + w.host + wNamespace;
 		$scope.selectedLanguage = "en";
+		$scope.selectedLanguage2 = "en";
 		$scope.getNamespaces();
 		$scope.isSpellCheck = false;
 		$scope.lastDomain = "";
@@ -93,6 +94,19 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		then(function (response) {
 			$scope.isSpellCheck = false;
 			$scope.messages = response.data;
+		}, function myError(response){
+			notifications.showError({
+				message: 'messages weren\'t downloaded',
+				hideDelay: 1500,
+				hide: true});
+		});
+	};
+
+	$scope.getMessages2 = function (domain, language) {
+		$http.get($scope.url + '/messages?domain=' + domain + '&language=' + language + '&spellcheck=false').
+		then(function (response) {
+			$scope.isSpellCheck = false;
+			$scope.messages2 = response.data;
 		}, function myError(response){
 			notifications.showError({
 				message: 'messages weren\'t downloaded',
@@ -221,8 +235,11 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 
 	$scope.domainClicked = function (domain) {
 		$scope.selectedLanguage = $scope.domains[domain][0];
+		$scope.selectedLanguage2 = $scope.domains[domain][0];
+		$scope.oneTableClicked();
 		$scope.domain = domain;
 		$scope.getMessages(domain, $scope.selectedLanguage);
+		$scope.getMessages2(domain, $scope.selectedLanguage);
 	};
 
 	$scope.addNewLocalizationClicked = function () {
@@ -243,9 +260,9 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 // end of clicks listeners
 
 
-	$scope.updateMessage = function (event, text, id) {
+	$scope.updateMessage = function (event, text, id, language) {
 		if (text !== event.target.textContent){
-			$scope.putUpdateMessage($scope.domain, $scope.selectedLanguage, id, event.target.textContent);
+			$scope.putUpdateMessage($scope.domain, language, id, event.target.textContent);
 		}
 	};
 
@@ -254,13 +271,20 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$scope.getMessages($scope.domain, language);
 	};
 
+	$scope.setLanguage2 = function (language) {
+		$scope.selectedLanguage2 = language;
+		$scope.getMessages2($scope.domain, language);
+	};
+
 
 	$scope.oneTableClicked = function () {
 		$scope.isTwoTables = false;
+		$scope.selectedLanguage2 = $scope.selectedLanguage;
 	};
 
 	$scope.twoTablesClicked = function () {
 		$scope.isTwoTables = true;
+		$scope.getMessages2($scope.domain, $scope.selectedLanguage2);
 	};	
 
 	$scope.deleteThisLanguage = function () {
