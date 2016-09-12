@@ -21,7 +21,7 @@
 	<Route Url="/import" Method="POST" Call="UploadDomain"/>
 	<Route Url="/paths" Method="GET" Call="SetPaths"/>
  	<Route Url="/domains" Method="GET" Call="GetDomains"/>
- 	<Route Url="/is-path-set-up" Method="GET" Call="isPathSetup"/>
+ 	<Route Url="/get-paths" Method="GET" Call="GetPaths"/>
 </Routes>
 ]]></Data>
 </XData>
@@ -87,8 +87,18 @@
 	set libcPath = %request.Data("libcPath", 1)
 	set affPath = %request.Data("affPath", 1)
 	set dicPath = %request.Data("dicPath", 1)
+	set yandexkey = %request.Data("yandexkey", 1)
 	
-	do ##class(CLM.Utils).SetPaths(CNAPath, hunspellPath, libcPath, affPath, dicPath)
+	do ##class(CLM.Utils).SetPaths(CNAPath, hunspellPath, libcPath, affPath, dicPath, yandexkey)
+]]></Implementation>
+</Method>
+
+<Method name="GetPaths">
+<ClassMethod>1</ClassMethod>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+	do ##class(CLM.Utils).GetPaths()
+	return $$$OK
 ]]></Implementation>
 </Method>
 

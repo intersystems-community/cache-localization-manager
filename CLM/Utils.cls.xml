@@ -76,26 +76,47 @@
 
 <Method name="SetPaths">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>CNAPath:%String,hunspellPath:%String,libcPath:%String,affPath:%String,dicPath:%String,global:%String=$$$LibsAndDicsPathGlobal</FormalSpec>
+<FormalSpec>CNAPath:%String="",hunspellPath:%String="",libcPath:%String="",affPath:%String="",dicPath:%String="",yandexkey:%String="",global:%String=$$$LibsAndDicsPathGlobal</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
  
  if $data(CNAPath){
  	set @global@("CNAPath") = CNAPath 
  }
- if $data(CNAPath){
+ if $data(hunspellPath){
 	set @global@("hunspellPath") = hunspellPath
  }
- if $data(CNAPath){
-	set @global@("libcPath") = libcPath	
+ if $data(libcPath){
+	set @global@("libcPath") = libcPath
  }		
- if $data(CNAPath){
-	set @global@("affPath") = affPath	
+ if $data(affPath){
+	set @global@("affPath") = affPath
  }		
- if $data(CNAPath){
-	set @global@("dicPath") = dicPath	 
- 	}				
+ if $data(dicPath){
+	set @global@("dicPath") = dicPath
+ }
+ if $data(yandexkey){
+	set @global@("yandexkey") = yandexkey
+ }
  return $$$OK
+]]></Implementation>
+</Method>
+
+<Method name="GetPaths">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>global:%String=$$$LibsAndDicsPathGlobal</FormalSpec>
+<ReturnType>%Status</ReturnType>
+<Implementation><![CDATA[
+ set result = ##class(%ListOfObjects).%New()
+ set message = ##class(%ZEN.proxyObject).%New()
+ set message.CNAPath = @global@("CNAPath")
+ set message.hunspellPath = @global@("hunspellPath")
+ set message.libcPath = @global@("libcPath")
+ set message.affPath = @global@("affPath")
+ set message.dicPath = @global@("dicPath")
+ set message.yandexkey = @global@("yandexkey")
+ do result.Insert(message)
+ return ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,,..#FormatJSON)
 ]]></Implementation>
 </Method>
 
