@@ -9,7 +9,7 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 ```
   Set pVars("Namespace") = "<The namespace where you want CLM to be installed>" //e.g. SAMPLES
   Set pVars("SourceDir") = "<The folder for the offline installation>"          //e.g. C:\temp\CLM\
-  USER> do ##class(CLM.Installer).Setup(pVars) //If you do not specify the default pVars then CLM namespace will be chosen by default
+  USER> do ##class(CLM.Installer).Setup(.pVars) //If you do not specify the default pVars then CLM namespace will be chosen by default
 ```
 
 
