@@ -264,7 +264,6 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 	Do tInstaller.PopNS()
 	
 	Do tInstaller.PushNS(Namespace)
-	Set ^["USER"]NameSpace = "^["""_Namespace_"""]CacheMsg"
 	Set ^Git("settings", "groupByFolder") = 1
 	Set ^CLM("yandexkey") 		= "trnsl.1.1.20160718T150901Z.31e0f759867d618c.2825e755db8a013f327016f007db3c619bc09e5e"
 	Set ^CLM("SSLConfig") 		= "CLM"
