@@ -82,14 +82,28 @@
 <Implementation><![CDATA[
 	set %response.ContentType = "application/json"
 	
-	set CNAPath = %request.Data("CNAPath", 1)
-	set hunspellPath = %request.Data("hunspellPath", 1)
-	set libcPath = %request.Data("libcPath", 1)
-	set affPath = %request.Data("affPath", 1)
-	set dicPath = %request.Data("dicPath", 1)
-	set yandexkey = %request.Data("yandexkey", 1)
+	if $data(%request.Data("CNAPath", 1)){
+		set CNAPath = %request.Data("CNAPath", 1)
+ 	}
+ 	if $data(%request.Data("hunspellPath", 1)){
+	 	set hunspellPath = %request.Data("hunspellPath", 1)
+ 	}
+ 	if $data(%request.Data("libcPath", 1)){
+		set libcPath = %request.Data("libcPath", 1)
+ 	}		
+ 	if $data(%request.Data("affPath", 1)){
+		set affPath = %request.Data("affPath", 1)
+ 	}		
+ 	if $data(%request.Data("dicPath", 1)){
+		set dicPath = %request.Data("dicPath", 1)
+ 	}
+ 	if $data(%request.Data("yandexkey", 1)){
+		set yandexkey = %request.Data("yandexkey", 1)
+ 	}
+		
 	
 	do ##class(CLM.Utils).SetPaths(CNAPath, hunspellPath, libcPath, affPath, dicPath, yandexkey)
+	return $$$OK
 ]]></Implementation>
 </Method>
 

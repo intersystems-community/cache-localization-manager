@@ -86,6 +86,8 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 				message: 'domains weren\'t downloaded',
 				hideDelay: 1500,
 				hide: true});
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -99,6 +101,8 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 				message: 'messages weren\'t downloaded',
 				hideDelay: 1500,
 				hide: true});
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -112,6 +116,8 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 				message: 'messages weren\'t downloaded',
 				hideDelay: 1500,
 				hide: true});
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -121,15 +127,15 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 			$scope.isSpellCheck = true;
 			$scope.messages = response.data;
 			Notification.success('mistakes are listed below');
-			notifications.showSuccess({
-				message: 'mistakes are listed below',
-				hideDelay: 1500,
-				hide: true});
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		}, function myError(response){
 			notifications.showError({
 				message: 'mistakes weren\'t downloaded',
 				hideDelay: 1500,
 				hide: true});
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	}
 
@@ -149,6 +155,8 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 				message: 'namespaces weren\'t downloaded',
 				hideDelay: 1500,
 				hide: true});
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	}
 
@@ -161,6 +169,8 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 				message: 'Wasn\'t possible to export messages.',
 				hideDelay: 1500,
 				hide: true});
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -173,6 +183,8 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 				message: 'current namespace wasn\'t downloaded',
 				hideDelay: 1500,
 				hide: true});
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -185,11 +197,15 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$http.post($scope.url +  '/add-new-localization?domain=' + domain + "&from=" + languageFrom + '&to=' + languageTo).
 		then(function (response) {
 			Notification.success($scope.yandexLanguagesList[languageTo] + ' was successfully added to ' + domain + ' domain!');
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 			$scope.getDomains();
 			$scope.domainClicked(domain);
 			$scope.language = languageTo;
 		}, function myError(response){
 			Notification.error('New Localization Was Not Added.');
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -197,8 +213,10 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$http.put(encodeURI($scope.url + '/messages?domain=' + domain + '&language=' + language + '&id=' + id + '&text=' + text)).
 		then(function (response) {
 			Notification.success(text + ' was successfully replaced into ' + domain + ' domain!');
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		}, function myError(response){
 			Notification.error('message was not updated.');
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -209,10 +227,14 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$http.post(uploadUrl, file)
 		.success(function(){
 			Notification.success('was imported!');
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 			init();
 		})
 		.error(function(){
 			Notification.error('was not imported.');
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -220,10 +242,14 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$http.post($scope.url +  '/namespace/' + selectedNamespace).
 		then(function (response) {
 			Notification.success('namespaces has been changed to ' + selectedNamespace);
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 			init();
 			$scope.currentNamespace = selectedNamespace;
 		}, function myError(response){
 			Notification.error('Namespace was not changed.');
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
 
@@ -257,6 +283,39 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		$('.ui.modal.importMessages').modal('show');
 	};
 
+	$scope.setPathClicked = function () {
+		$('.ui.modal.setPath').modal('show');
+		$scope.getPaths();
+
+	};
+
+	$scope.setPath = function () {
+		$http.get(encodeURI($scope.url + '/paths?CNAPath=' + $scope.paths.CNAPath 
+								+ '&libcPath=' + $scope.paths.libcPath 
+								+ '&hunspellPath=' + $scope.paths.hunspellPath
+								+ '&dicPath=' + $scope.paths.dicPath
+								+ '&affPath=' + $scope.paths.affPath
+								+ '&yandexkey=' + $scope.paths.yandexkey)).
+		then(function (response) {
+			Notification.success('All path were set');
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
+		}, function myError(response){
+			Notification.error('Ops. something went wrong, please try again');
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
+		});
+	};
+
+	$scope.getPaths = function () {
+		$http.get(encodeURI($scope.url + '/get-paths')).
+		then(function (response) {
+			$scope.paths = response.data[0];
+		}, function myError(response){
+			Notification.error('Oops. something went wrong, please try again');
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
+		});		
+	}
 // end of clicks listeners
 
 
@@ -293,20 +352,32 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 			$scope.lastDomain = $scope.domain;
 			$scope.getDomains();
 			Notification.success($scope.yandexLanguagesList[$scope.selectedLanguage] + ' was deleted from ' + $scope.domain);
+
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		}, function myError(response){
 			Notification.error('current language wasn\'t deleted');
+			
+			setTimeout('document.getElementsByClassName("message")[0].click();', 3000);
 		});
 	};
+
+	$(window).scroll(function() {
+
+		if ($(this).scrollTop()>200)
+		{
+			$('#scrollTopButton').fadeIn();
+		}
+		else
+		{
+			$('#scrollTopButton').fadeOut();
+		}
+	});
+
 
 	init();
 
 
 });
 
-
-
-	// $scope.changeNamespaceClicked = function () {
-	// 	$scope.getNamespaces();
-	// 	$('.ui.modal.changeNamespace').modal('show');
-	// };]]></CSP>
+]]></CSP>
 </Export>
