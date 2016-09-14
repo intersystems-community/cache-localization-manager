@@ -329,6 +329,19 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 		});
 	};
 
+	$(window).scroll(function() {
+
+		if ($(this).scrollTop()>200)
+		{
+			$('#scrollTopButton').fadeIn();
+		}
+		else
+		{
+			$('#scrollTopButton').fadeOut();
+		}
+	});
+
+
 	init();
 
 

@@ -34,7 +34,7 @@
 
 	<div class="ui internally grid">
 		<div class="row">
-			<div class="three wide column">
+			<div class="three wide column" href="#">
 				<div class="ui vertical fluid buttons">
 					<button class="ui large purple button">
 						<csp:text textid="domainsLabel" domain="clm">Domains :</csp:text>
@@ -213,6 +213,14 @@
 		</div>
 	</div>
 
+
+	<a href="#" class="scrollToTop" style="position:fixed;left:30px;bottom:30px;" id="scrollTopButton">	
+	<button class="huge ui pink button">
+		<span>Scroll Top</span>
+	</button>
+	</a>
+
+
 <!-- Add New Localization Modal  -->
 <div class="ui modal addNewLocalization">
 	<div class="header">
@@ -326,15 +334,6 @@
 			<csp:text textid="Set Paths" domain="clm">Set Paths</csp:text>
 		</div>
 	</div>
-
-<!-- 
-	
-	set CNAPath = %request.Data("CNAPath", 1)
-	set hunspellPath = %request.Data("hunspellPath", 1)
-	set libcPath = %request.Data("libcPath", 1)
-	set affPath = %request.Data("affPath", 1)
-	set dicPath = %request.Data("dicPath", 1)
-	set yandexKey = %request.Data("yandexKey", 1) -->
 </div>
 <!-- setPath Modal  -->
 
