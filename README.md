@@ -28,7 +28,7 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 
 ## Settings
 
-You can set CLM settings in terminal with `do ##class(CLM.Utils).SetSetting(SettingName, Value)` comand.
+You may use UI to set all the libraries' and dictionaries path.
 You can set the following settings:
 
 | Setting      | Sample value                    | Description                                                                       |
