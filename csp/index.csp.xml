@@ -279,46 +279,46 @@
 <!-- setPath Modal  -->
 <div class="ui modal setPath">
 	<div class="header">
-		<csp:text textid="" domain="clm">Please set all the paths.</csp:text>
+		<csp:text textid="" domain="CLM">Please set all the paths.</csp:text>
 	</div>
 	<div class="content">
 		<div class="ui header">
-			<csp:text textid="" domain="clm">CNAPath : </csp:text>
+			<csp:text textid="" domain="CLM">CNAPath : </csp:text>
 			<span ng-bind="paths.CNAPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.CNAPath}}" ng-model="paths.CNAPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="clm">hunspellPath : </csp:text>
+			<csp:text textid="" domain="CLM">hunspellPath : </csp:text>
 			<span ng-bind="paths.hunspellPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.hunspellPath}}" ng-model="paths.hunspellPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="clm">libcPath : </csp:text>
+			<csp:text textid="" domain="CLM">libcPath : </csp:text>
 			<span ng-bind="paths.libcPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.libcPath}}" ng-model="paths.libcPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="clm">affPath : </csp:text>
+			<csp:text textid="" domain="CLM">affPath : </csp:text>
 			<span ng-bind="paths.affPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.affPath}}" ng-model="paths.affPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="clm">dicPath : </csp:text>
+			<csp:text textid="" domain="CLM">dicPath : </csp:text>
 			<span ng-bind="paths.dicPath"></span>
 		</div>
 		<div class="ui fluid input">
 				<input type="text" placeholder="{{paths.dicPath}}" ng-model="paths.dicPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="clm">yandexkey : </csp:text>
+			<csp:text textid="" domain="CLM">yandexkey : </csp:text>
 			<span ng-bind="paths.yandexKey"></span>
 		</div>
 		<div class="ui fluid input">
@@ -328,10 +328,10 @@
 
 	<div class="actions">
 		<div class="ui black deny button">
-			<csp:text textid="cancelButton" domain="clm">Cancel</csp:text>
+			<csp:text textid="cancelButton" domain="CLM">Cancel</csp:text>
 		</div>
 		<div class="ui positive right icon button" ng-click="setPath();">
-			<csp:text textid="Set Paths" domain="clm">Set Paths</csp:text>
+			<csp:text textid="Set Paths" domain="CLM">Set Paths</csp:text>
 		</div>
 	</div>
 </div>
