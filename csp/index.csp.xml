@@ -36,10 +36,10 @@
 		<div class="row">
 			<div class="three wide column" href="#">
 				<div class="ui vertical fluid buttons">
-					<button class="ui large purple button">
+					<button class="ui large blue button">
 						<csp:text textid="domainsLabel" domain="clm">Domains :</csp:text>
 					</button>
-					<button class="ui large yellow button" 
+					<button class="ui large white button" 
 							ng-repeat="(domain, languages) in domains"
 							ng-click="domainClicked(domain)">{{domain}}</button>
 				</div>
@@ -47,7 +47,7 @@
 			<div class="ten wide column">
 			<div class="row">
 
-				<div class="ui simple dropdown purple button left floated">
+				<div class="ui simple dropdown blue button left floated">
 					<csp:text textid="currentNamespaceLabel" domain="clm">Current Namespace : </csp:text>
 					{{currentNamespace}}
 					<i class="dropdown icon"></i>
@@ -61,12 +61,12 @@
 
 			<div class="row">
 				<div class="ui buttons right floated">
-					<button ng-class="isTwoTables ? 'ui yellow button' :'ui purple button'"
+					<button ng-class="isTwoTables ? 'ui white button' :'ui blue button'"
 							ng-click="oneTableClicked()">
 					<csp:text textid="oneTableLabel" domain="clm">One Table</csp:text>
 					</button>
 					<div class="or"></div>
-					<button ng-class="isTwoTables ? 'ui purple button' :'ui yellow button'"
+					<button ng-class="isTwoTables ? 'ui blue button' :'ui white button'"
 							ng-click="twoTablesClicked()">
 					<csp:text textid="twoTablesLabel" domain="clm">Two Tables</csp:text>
 					</button>
@@ -78,11 +78,11 @@
 				<div class="ui equal width grid">
 
 					<div class="column">
-					<table st-table="messages" class="ui celled inverted purple table table-striped">
+					<table st-table="messages" class="ui celled blue table table-striped">
 					<thead>
 						<tr>
 							<th st-sort="id" class="two wide">id</th>
-							<th class="eight wide purple">message  
+							<th class="eight wide blue">message  
 								<div class="ui simple dropdown">
 									{{yandexLanguagesList[selectedLanguage]}}
 									<i class="dropdown icon"></i>
@@ -127,11 +127,11 @@
 					</div>
 					<div ng-if="isTwoTables" class="column">
 					
-					<table st-table="messages" class="ui celled inverted purple table table-striped">
+					<table st-table="messages" class="ui celled blue table table-striped">
 					<thead>
 						<tr>
 							<th st-sort="id" class="two wide">id</th>
-							<th class="eight wide purple">message  
+							<th class="eight wide blue">message  
 								<div class="ui simple dropdown">
 									{{yandexLanguagesList[selectedLanguage2]}}
 									<i class="dropdown icon"></i>
@@ -185,19 +185,19 @@
 						<csp:text textid="setPath" domain="clm">Set Paths</csp:text>
 					</button>
 					<div class="ui divider"></div>
-					<button class="ui large purple button" ng-click="getMistakes()" ng-disabled="isTwoTables">
+					<button class="ui large blue button" ng-click="getMistakes()" ng-disabled="isTwoTables">
 						<p><csp:text textid="spellcheckLabel" domain="clm">Spellcheck</csp:text></p>
 						<span ng-if="isTwoTables" style="color: red; font-size: 14px;">	
 							<csp:text textid="spellcheckWarning" domain="clm">(Please use only with one table)</csp:text>
 						</span>
 					</button>
-					<button class="ui large yellow button" ng-click="addNewLocalizationClicked()">
+					<button class="ui large blue button" ng-click="addNewLocalizationClicked()">
 						<csp:text textid="addNewLocalizationLabel" domain="clm">Add New Localization</csp:text>
 					</button>
-					<button class="ui large purple button" ng-click="exportMessages()">
+					<button class="ui large blue button" ng-click="exportMessages()">
 						<csp:text textid="exportLabel" domain="clm">Export Current Messages</csp:text>
 					</button>
-					<button class="ui large yellow button" ng-click="importMessagesClicked()">
+					<button class="ui large blue button" ng-click="importMessagesClicked()">
 						<csp:text textid="importLabel" domain="clm">Import Current Messages</csp:text>
 					</button>
 					<div class="ui divider"></div>
@@ -215,7 +215,7 @@
 
 
 	<a href="#" class="scrollToTop" style="position:fixed;left:30px;bottom:30px;" id="scrollTopButton">	
-	<button class="huge ui pink button">
+	<button class="huge ui blue button">
 		<span>Scroll Top</span>
 	</button>
 	</a>
