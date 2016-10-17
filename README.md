@@ -7,9 +7,7 @@ Tool for translating Caché [message dictionaries](http://docs.intersystems.com/
 2. Import it to any Caché namespace, e.g. to USER.
 3. Run in terminal:
 ```
-  Set pVars("Namespace") = "<The namespace where you want CLM to be installed>" //e.g. SAMPLES
-  Set pVars("SourceDir") = "<The folder for the offline installation>"          //e.g. C:\temp\CLM\
-  USER> do ##class(CLM.Installer).setup(.pVars) //If you do not specify the default pVars then CLM namespace will be chosen by default
+  USER> do ##class(CLM.Installer).setup()
 ```
 
 
