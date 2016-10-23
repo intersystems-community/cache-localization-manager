@@ -2,9 +2,13 @@
 <Export generator="Cache" version="25">
 <CSP name="libs/css/myStyles.css" application="/csp/clm/" default="1"><![CDATA[
 body {
-	background-color: #FBF6EB;
+	background-color: rgba(00,00,00,.07);
 	padding: 12px;
 }
 
-]]></CSP>
+.yandexCredits {
+	position: absolute;
+	right: 40px;
+	bottom: 40px;
+}]]></CSP>
 </Export>

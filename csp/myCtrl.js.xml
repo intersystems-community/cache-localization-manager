@@ -44,7 +44,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
             id: "Indonesian",
             it: "Italian",
             ja: "Japanese",
-            kk: "Kazan",
+            kk: "Kazakh",
             ko: "Korean",
             la: "Latin",
             lv: "Latvian",

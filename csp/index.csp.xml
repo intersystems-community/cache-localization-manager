@@ -219,7 +219,12 @@
 		<span>Scroll Top</span>
 	</button>
 	</a>
-
+	
+<!-- yandex  credits -->
+<div class="yandexCredits">
+	
+<a href="https://translate.yandex.com/"><span style="font-size: 18px">Powered by Yandex.Translate</span></a>
+</div>
 
 <!-- Add New Localization Modal  -->
 <div class="ui modal addNewLocalization">
