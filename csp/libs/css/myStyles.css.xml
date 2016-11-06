@@ -10,5 +10,7 @@ body {
 	position: absolute;
 	right: 40px;
 	bottom: 40px;
-}]]></CSP>
+	position:fixed;
+}
+]]></CSP>
 </Export>
