@@ -178,7 +178,7 @@ app.controller("myCtrl", function($scope, $http, Notification, $filter) {
 	$scope.getCurrentNamespace = function () {
 		$http.get(encodeURI($scope.url + '/current-namespace')).
 		then(function (response) {
-			$scope.currentNamespace = response.data.СurrentNS;
+			$scope.currentNamespace = response.data.CurrentNS;
 		}, function myError(response){
 			notifications.showError({
 				message: 'current namespace wasn\'t downloaded',
