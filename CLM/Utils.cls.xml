@@ -26,7 +26,7 @@
 			}
 			do languageList.Insert(language)
 		}
-		set $PROPERTY(result, domain) = languageList 
+ 		set $PROPERTY(result, domain) = languageList 
 	}
 	return $$$OK
 ]]></Implementation>
@@ -65,7 +65,7 @@
  for
  {
   	set nsNext=$Order(r(nsNext))
-  	if (nsNext = "%SYS"){CONTINUE}
+  	if (nsNext = "%SYS" || $f(nsNext,"^^") > 0){CONTINUE}
   	quit:nsNext=""
   	do result.Insert(nsNext)
  }
