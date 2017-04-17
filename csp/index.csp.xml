@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-04-17 17:54:37">
+<Export generator="Cache" version="25" zv="Cache for UNIX (SUSE Linux Enterprise Server for x86-64) 2016.1 (Build 656U)" ts="2017-04-17 19:02:39">
 <CSP name="index.csp" application="/csp/clm/" default="1"><![CDATA[
 <!DOCTYPE html>
 
@@ -37,7 +37,7 @@
 			<div class="three wide column" href="#">
 				<div class="ui vertical fluid buttons">
 					<button class="ui large blue button">
-						<csp:text textid="domainsLabel" domain="CLM">Domains :</csp:text>
+						<csp:text textid="domainsLabel" domain="clm">Domains :</csp:text>
 					</button>
 					<button class="ui large white button" 
 							ng-repeat="(domain, languages) in domains"
@@ -48,7 +48,7 @@
 			<div class="row">
 
 				<div class="ui simple dropdown blue button left floated">
-					<csp:text textid="currentNamespaceLabel" domain="CLM">Current Namespace : </csp:text>
+					<csp:text textid="currentNamespaceLabel" domain="clm">Current Namespace : </csp:text>
 					{{currentNamespace}}
 					<i class="dropdown icon"></i>
 					<div class="menu">
@@ -63,12 +63,12 @@
 				<div class="ui buttons right floated">
 					<button ng-class="isTwoTables ? 'ui white button' :'ui blue button'"
 							ng-click="oneTableClicked()">
-					<csp:text textid="oneTableLabel" domain="CLM">One Table</csp:text>
+					<csp:text textid="oneTableLabel" domain="clm">One Table</csp:text>
 					</button>
 					<div class="or"></div>
 					<button ng-class="isTwoTables ? 'ui blue button' :'ui white button'"
 							ng-click="twoTablesClicked()">
-					<csp:text textid="twoTablesLabel" domain="CLM">Two Tables</csp:text>
+					<csp:text textid="twoTablesLabel" domain="clm">Two Tables</csp:text>
 					</button>
 				</div>
 			</div>
@@ -182,29 +182,29 @@
 			<div class="three wide column">
 				<div class="ui vertical buttons">
 					<button class="ui large green button" ng-click="setPathClicked()">
-						<csp:text textid="setPath" domain="CLM">Set Paths</csp:text>
+						<csp:text textid="setPath" domain="clm">Set Paths</csp:text>
 					</button>
 					<div class="ui divider"></div>
 					<button class="ui large blue button" ng-click="getMistakes()" ng-disabled="isTwoTables">
-						<p><csp:text textid="spellcheckLabel" domain="CLM">Spellcheck</csp:text></p>
+						<p><csp:text textid="spellcheckLabel" domain="clm">Spellcheck</csp:text></p>
 						<span ng-if="isTwoTables" style="color: red; font-size: 14px;">	
-							<csp:text textid="spellcheckWarning" domain="CLM">(Please use only with one table)</csp:text>
+							<csp:text textid="spellcheckWarning" domain="clm">(Please use only with one table)</csp:text>
 						</span>
 					</button>
 					<button class="ui large blue button" ng-click="addNewLocalizationClicked()">
-						<csp:text textid="addNewLocalizationLabel" domain="CLM">Add New Localization</csp:text>
+						<csp:text textid="addNewLocalizationLabel" domain="clm">Add New Localization</csp:text>
 					</button>
 					<button class="ui large blue button" ng-click="exportMessages()">
-						<csp:text textid="exportLabel" domain="CLM">Export Current Messages</csp:text>
+						<csp:text textid="exportLabel" domain="clm">Export Current Messages</csp:text>
 					</button>
 					<button class="ui large blue button" ng-click="importMessagesClicked()">
-						<csp:text textid="importLabel" domain="CLM">Import Current Messages</csp:text>
+						<csp:text textid="importLabel" domain="clm">Import Current Messages</csp:text>
 					</button>
 					<div class="ui divider"></div>
 					<button class="ui large red small button" ng-click="deleteThisLanguage()">
-						<csp:text textid="deleteLabel" domain="CLM">Delete</csp:text>
+						<csp:text textid="deleteLabel" domain="clm">Delete</csp:text>
 						<br>{{yandexLanguagesList[selectedLanguage]}}
-						<br><csp:text textid="fromLabel" domain="CLM">from</csp:text>
+						<br><csp:text textid="fromLabel" domain="clm">from</csp:text>
 						<br>{{domain}}, {{currentNamespace}}
 					</button>
 				</div>
@@ -229,11 +229,11 @@
 <!-- Add New Localization Modal  -->
 <div class="ui modal addNewLocalization">
 	<div class="header">
-		<csp:text textid="addNewLocalizationHeader" domain="CLM">Adding a New Localization</csp:text>
+		<csp:text textid="addNewLocalizationHeader" domain="clm">Adding a New Localization</csp:text>
 	</div>
 	<div class="content">
 		<div class="ui header ng-binding">
-			<csp:text textid="chooseLanguageLabel" domain="CLM">Please choose the language to add to</csp:text>
+			<csp:text textid="chooseLanguageLabel" domain="clm">Please choose the language to add to</csp:text>
 			{{domain}}, {{currentNamespace}}
 		</div>
 
@@ -243,10 +243,10 @@
 	</div>
 	<div class="actions">
 		<div class="ui black deny button">
-			<csp:text textid="cancelButton" domain="CLM">Cancel</csp:text>
+			<csp:text textid="cancelButton" domain="clm">Cancel</csp:text>
 		</div>
 		<div class="ui positive right icon button" ng-click="postAddNewLocalization(domain, selectedLanguage, newLanguage);">
-			<csp:text textid="addButton" domain="CLM">Add</csp:text>
+			<csp:text textid="addButton" domain="clm">Add</csp:text>
 		</div>
 	</div>
 </div>
@@ -256,12 +256,12 @@
 <div class="ui modal importMessages">
 
 	<div class="header">
-		<csp:text textid="importLabel" domain="CLM">Importing Messages</csp:text>
+		<csp:text textid="importLabel" domain="clm">Importing Messages</csp:text>
 	</div>
 
 	<div class="content">
 		<div class="ui header">
-			<csp:text textid="choosleFileLabel" domain="CLM">Please select file that you want to import(Should be XML file.)</csp:text>
+			<csp:text textid="choosleFileLabel" domain="clm">Please select file that you want to import(Should be XML file.)</csp:text>
 		</div>
 		<div class="ui fluid icon input">
 			<input type="file" file-model="myFile">
@@ -270,10 +270,10 @@
 
 	<div class="actions">
 		<div class="ui black deny button">
-			<csp:text textid="cancelButton" domain="CLM">Cancel</csp:text>
+			<csp:text textid="cancelButton" domain="clm">Cancel</csp:text>
 		</div>
 		<div class="ui positive right icon button" ng-click="uploadFile();">
-			<csp:text textid="importButton" domain="CLM">Import</csp:text>
+			<csp:text textid="importButton" domain="clm">Import</csp:text>
 		</div>
 	</div>
 
@@ -284,46 +284,46 @@
 <!-- setPath Modal  -->
 <div class="ui modal setPath">
 	<div class="header">
-		Please set all the paths.
+		<csp:text textid="" domain="clm">Please set all the paths.</csp:text>
 	</div>
 	<div class="content">
 		<div class="ui header">
-			CNAPath : 
+			<csp:text textid="" domain="clm">CNAPath : </csp:text>
 			<span ng-bind="paths.CNAPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.CNAPath}}" ng-model="paths.CNAPath">
 		</div>
 		<div class="ui header">
-			hunspellPath : 
+			<csp:text textid="" domain="clm">hunspellPath : </csp:text>
 			<span ng-bind="paths.hunspellPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.hunspellPath}}" ng-model="paths.hunspellPath">
 		</div>
 		<div class="ui header">
-			libcPath : 
+			<csp:text textid="" domain="clm">libcPath : </csp:text>
 			<span ng-bind="paths.libcPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.libcPath}}" ng-model="paths.libcPath">
 		</div>
 		<div class="ui header">
-			affPath : 
+			<csp:text textid="" domain="clm">affPath : </csp:text>
 			<span ng-bind="paths.affPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.affPath}}" ng-model="paths.affPath">
 		</div>
 		<div class="ui header">
-			dicPath : 
+			<csp:text textid="" domain="clm">dicPath : </csp:text>
 			<span ng-bind="paths.dicPath"></span>
 		</div>
 		<div class="ui fluid input">
 				<input type="text" placeholder="{{paths.dicPath}}" ng-model="paths.dicPath">
 		</div>
 		<div class="ui header">
-			yandexkey : 
+			<csp:text textid="" domain="clm">yandexkey : </csp:text>
 			<span ng-bind="paths.yandexKey"></span>
 		</div>
 		<div class="ui fluid input">
@@ -333,10 +333,10 @@
 
 	<div class="actions">
 		<div class="ui black deny button">
-			<csp:text textid="cancelButton" domain="CLM">Cancel</csp:text>
+			<csp:text textid="cancelButton" domain="clm">Cancel</csp:text>
 		</div>
 		<div class="ui positive right icon button" ng-click="setPath();">
-			<csp:text textid="Set Paths" domain="CLM">Set Paths</csp:text>
+			<csp:text textid="Set Paths" domain="clm">Set Paths</csp:text>
 		</div>
 	</div>
 </div>
