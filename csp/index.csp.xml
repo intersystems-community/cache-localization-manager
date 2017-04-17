@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-04-16 22:26:40">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-04-17 17:54:37">
 <CSP name="index.csp" application="/csp/clm/" default="1"><![CDATA[
 <!DOCTYPE html>
 
@@ -284,46 +284,46 @@
 <!-- setPath Modal  -->
 <div class="ui modal setPath">
 	<div class="header">
-		<csp:text textid="" domain="CLM">Please set all the paths.</csp:text>
+		Please set all the paths.
 	</div>
 	<div class="content">
 		<div class="ui header">
-			<csp:text textid="" domain="CLM">CNAPath : </csp:text>
+			CNAPath : 
 			<span ng-bind="paths.CNAPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.CNAPath}}" ng-model="paths.CNAPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="CLM">hunspellPath : </csp:text>
+			hunspellPath : 
 			<span ng-bind="paths.hunspellPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.hunspellPath}}" ng-model="paths.hunspellPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="CLM">libcPath : </csp:text>
+			libcPath : 
 			<span ng-bind="paths.libcPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.libcPath}}" ng-model="paths.libcPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="CLM">affPath : </csp:text>
+			affPath : 
 			<span ng-bind="paths.affPath"></span>
 		</div>
 		<div class="ui fluid input">
 			<input type="text" placeholder="{{paths.affPath}}" ng-model="paths.affPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="CLM">dicPath : </csp:text>
+			dicPath : 
 			<span ng-bind="paths.dicPath"></span>
 		</div>
 		<div class="ui fluid input">
 				<input type="text" placeholder="{{paths.dicPath}}" ng-model="paths.dicPath">
 		</div>
 		<div class="ui header">
-			<csp:text textid="" domain="CLM">yandexkey : </csp:text>
+			yandexkey : 
 			<span ng-bind="paths.yandexKey"></span>
 		</div>
 		<div class="ui fluid input">
