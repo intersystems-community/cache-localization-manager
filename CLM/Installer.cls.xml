@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-04-18 23:32:10">
 <Class name="CLM.Installer">
+<TimeChanged>64391,84596.581078</TimeChanged>
 <TimeCreated>64120,64312.465289</TimeCreated>
 
 <XData name="Install">
@@ -80,7 +81,7 @@ do ##class(CLM.Installer).setup(.pVars)</Description>
 
 <Method name="Update">
 <ClassMethod>1</ClassMethod>
-<FormalSpec>Namespace=$Namespace,Owner:%String="intersystems-ru",Repository:%String="cache-localization-manager",Branch:%String,Username:%String,Password:%String</FormalSpec>
+<FormalSpec>Namespace=$Namespace,Owner:%String="intersystems-ru",Repository:%String="cache-localization-manager",Branch:%String,Username:%String="clminstaller",Password:%String="clminstaller2016"</FormalSpec>
 <ReturnType>%Status</ReturnType>
 <Implementation><![CDATA[
 	Set namespace = $Namespace
