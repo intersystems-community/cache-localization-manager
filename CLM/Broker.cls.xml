@@ -40,7 +40,6 @@
 	set %response.ContentType = "application/json"
 	do ##class(CLM.Utils).GetGlobalStructure(,.result,)
 	do ##class(%ZEN.Auxiliary.jsonProvider).%ObjectToJSON(result,,"aeltow")
-	return %response
 	return $$$OK
 ]]></Implementation>
 </Method>
